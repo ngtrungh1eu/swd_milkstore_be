@@ -1,0 +1,17 @@
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\bin\Debug\net6.0\BussinessLogic.deps.json
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\bin\Debug\net6.0\BussinessLogic.runtimeconfig.json
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\bin\Debug\net6.0\BussinessLogic.dll
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\bin\Debug\net6.0\BussinessLogic.pdb
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\bin\Debug\net6.0\DataAccess.dll
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.AssemblyReference.cache
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.AssemblyInfoInputs.cache
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.AssemblyInfo.cs
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.CopyComplete
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.dll
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\refint\BussinessLogic.dll
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.pdb
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\BussinessLogic.genruntimeconfig.cache
+C:\Users\ROG STRIX\source\repos\LoginAll\BussinessLogic\obj\Debug\net6.0\ref\BussinessLogic.dll
