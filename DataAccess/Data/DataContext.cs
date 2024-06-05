@@ -35,11 +35,14 @@ namespace DataAccess.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Promotion> Promotions { get; set; }
 
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+            .HasMany(x => x.Promotes)
+            .WithMany(y => y.Products)
+            .UsingEntity(j => j.ToTable("ProductPromote"));
+        }
     }
 }
-
-
-    
-

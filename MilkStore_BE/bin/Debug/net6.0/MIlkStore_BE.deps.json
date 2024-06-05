@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "MIlkStore_BE/1.0.0": {
+      "MilkStore_BE/1.0.0": {
         "dependencies": {
           "AutoMapper": "12.0.1",
           "BussinessLogic": "1.0.0",
@@ -17,7 +17,7 @@
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
-          "MIlkStore_BE.dll": {}
+          "MilkStore_BE.dll": {}
         }
       },
       "AutoMapper/12.0.1": {
@@ -673,7 +673,7 @@
     }
   },
   "libraries": {
-    "MIlkStore_BE/1.0.0": {
+    "MilkStore_BE/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

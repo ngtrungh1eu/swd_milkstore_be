@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Brand
+    public class Feedback
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BrandId { get; set; }
-        [StringLength(50)]
-        public string? BrandName { get; set; }
-        public string? BrandImg {  get; set; }
-        public string? MadeIn { get; set; }
-        public virtual ICollection<Product> Products  { get; set; }
+        public int FeedbackId {  get; set; }
+        public int Rate { get; set; }
+        public string Comment { get; set; }
+        public int ReplyId { get; set; }
+        public DateTime CreateAT { get; set; }
+        public DateTime UpdateAt { get; set; }
     }
 }

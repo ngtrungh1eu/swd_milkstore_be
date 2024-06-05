@@ -30,6 +30,7 @@ namespace DataAccess.Models
         [ForeignKey("BrandId")]
         public Brand? Brand { get; set; }
         public int? ProductPromoteId { get; set; }
+        public virtual ICollection<Promotion> Promotes { get; set; }
 
     }
 }
