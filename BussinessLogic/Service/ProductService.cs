@@ -45,7 +45,6 @@ namespace BussinessLogic.Service
                     ProductImg = request.ProductImg,
                     ProductTitle = request.ProductTitle,
                     ProductDescription = request.ProductDescription,
-                    Rate = request.Rate,
                     ByAge = request.ByAge,
                     ProductPrice = request.ProductPrice,
                     Quantity = request.Quantity,
@@ -53,7 +52,6 @@ namespace BussinessLogic.Service
                     PreOrderAmount = request.PreOrderAmount,
                     isPromote = request.isPromote,
                     BrandId = request.BrandId,
-                    ProductPromoteId = request.ProductPromoteId,
                 };
 
                 if (!await _productRepository.CreateProduct(_newProduct))
@@ -218,7 +216,6 @@ namespace BussinessLogic.Service
                 existingProduct.ProductTitle = request.ProductTitle;
                 existingProduct.ProductTitle = request.ProductTitle;
                 existingProduct.ProductDescription = request.ProductDescription;
-                existingProduct.Rate = request.Rate;
                 existingProduct.ByAge = request.ByAge;
                 existingProduct.ProductPrice = request.ProductPrice;
                 existingProduct.Quantity = request.Quantity;
@@ -226,7 +223,6 @@ namespace BussinessLogic.Service
                 existingProduct.PreOrderAmount = request.PreOrderAmount;
                 existingProduct.isPromote = request.isPromote;
                 existingProduct.BrandId = request.BrandId;
-                existingProduct.ProductPromoteId = request.ProductPromoteId;
 
 
                 if (!await _productRepository.UpdateProduct(existingProduct))

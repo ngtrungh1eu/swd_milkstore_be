@@ -14,5 +14,7 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoleId { get; set; }
         public string RoleType { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }

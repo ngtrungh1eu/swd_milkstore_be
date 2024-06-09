@@ -14,5 +14,9 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartId { get; set; }
         public int TotalItem { get; set; }
+
+        public int UserId { get; set; }
+        public User User { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
     }
 }

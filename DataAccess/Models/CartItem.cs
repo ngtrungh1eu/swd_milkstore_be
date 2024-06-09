@@ -8,16 +8,18 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Brand
+    public class CartItem
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BrandId { get; set; }
-        [StringLength(50)]
-        public string BrandName { get; set; }
-        public string? BrandImg {  get; set; }
-        public string? MadeIn { get; set; }
+        public int CartItemId { get; set; }
 
-        public virtual ICollection<Product> Products  { get; set; }
+        public int CartId { get; set; }
+        public Cart Cart { get; set; }
+        
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
+        public int Quantity { get; set; }
     }
 }
