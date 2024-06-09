@@ -15,11 +15,12 @@ namespace DataAccess.Models
         public int PromotionId { get; set; }
 
         [StringLength(50)]
-        public string? PromotionName { get; set; }
-        public DateTime? StartAt { get; set; }
-        public DateTime? EndAt { get; set;}
-        public int? Promote {  get; set; }
+        public string PromotionName { get; set; }
+        public DateTime StartAt { get; set; }
+        public DateTime EndAt { get; set;}
+        public int Promote {  get; set; }
         public string? PromotionImg {  get; set; }
+
         public virtual ICollection<Product> Products { get; set; }
     }
 }

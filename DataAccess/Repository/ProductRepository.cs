@@ -42,7 +42,6 @@ namespace DataAccess.Repository
                         {
                            ProductId = p.ProductId,
                            BrandId = b.BrandId,
-                           ProductPromoteId = p.ProductPromoteId,
                            ProductImg = p.ProductImg,
                            ProductName = p.ProductName,
                            Brand = b.BrandName,
@@ -53,10 +52,9 @@ namespace DataAccess.Repository
                            ByAge = p.ByAge,
                            ProductPrice = p.ProductPrice,
                            Quantity = p.Quantity,
-                           Rate = p.Rate,
                            isPreOrder = p.isPreOrder,
                            PreOrderAmount = p.PreOrderAmount,
-                           isPromote = p.isPromote
+                           isPromote = 1
                         };
             return await query.FirstOrDefaultAsync();
         }

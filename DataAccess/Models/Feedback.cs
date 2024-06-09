@@ -15,8 +15,14 @@ namespace DataAccess.Models
         public int FeedbackId {  get; set; }
         public int Rate { get; set; }
         public string Comment { get; set; }
-        public int ReplyId { get; set; }
-        public DateTime CreateAT { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public int? ReplyId { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
+
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
+
+        public int PreOrderId { get; set; }
+        public PreOrder PreOrder { get; set; }
     }
 }

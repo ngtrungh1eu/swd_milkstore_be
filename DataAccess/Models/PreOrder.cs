@@ -8,23 +8,24 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Order
+    public class PreOrder
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
+        public int PreOrderId { get; set; }
         public int? StaffId { get; set; }
         public string DeliverAddress { get; set; }
-        public string Phone {  get; set; }
-        public string FullName { get; set; }
         public string PaymentMethod { get; set; }
         public string Status { get; set; }
-        public DateTime OrderDate {  get; set; }
-        public double TotalPrice { get; set; }
+        public string PreOrderDate { get; set; }
+        public int Quantity { get; set; }
+        public double? UnitPrice { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }
+
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
         public Feedback Feedback { get; set; }
-        public virtual ICollection<ProductOrder> ProductOrders { get; set; }
     }
 }
