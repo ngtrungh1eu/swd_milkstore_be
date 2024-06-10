@@ -28,3 +28,19 @@ E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\Data
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\appsettings.json
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\bin\Debug\net6.0\appsettings.json
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.dll
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.sourcelink.json
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.dll
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
+D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

@@ -1,147 +1,132 @@
-﻿using DataAccess.Data;
+﻿using BussinessLogic.Service;
 using DataAccess.Models;
-using Microsoft.AspNetCore.Http;
+using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
 
-namespace LoginAll.Controllers
+namespace MilkStore_BE.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly DataContext _context;
-
-        public UserController(DataContext context)
+        private readonly AuthService _authService;
+        private readonly ICartRepository _cartRepository;
+        public UserController(AuthService authService)
         {
-            _context = context;
+            _authService = authService;
+        }
+
+        public UserController(ICartRepository cartRepository)
+        {
+            _cartRepository = cartRepository;
+        }
+
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> AuthenticateAsync([FromBody] UserLoginRequest model)
+        {
+            var user = await _authService.AuthenticateUserAsync(model.UserName, model.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            // Xác thực thành công, trả về thông tin người dùng (EX sẽ bổ sung JWT token)
+            
+            return Ok(user);
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterRequest request)
+        public async Task<IActionResult> RegisterAsync([FromBody] UserRegisterRequest model)
         {
-            if (_context.Users.Any(u => u.Email == request.Email))
-            {
-                return BadRequest("User already exists");
-            }
+            // Kiểm tra xác thực thông tin đăng ký
+            if (string.IsNullOrWhiteSpace(model.UserName) || string.IsNullOrWhiteSpace(model.Password) || string.IsNullOrWhiteSpace(model.FullName))
+                return BadRequest(new { message = "Username, password, and full name are required" });
 
-            CreatePasswordHash(request.Password,
-
-                out byte[] passwordHash, 
-                out byte[] passwordSalt);
             var user = new User
             {
-                Email = request.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                VerificationToken = CreateRandomToken()
+                UserName = model.UserName,
+                Password = model.Password,
+                FullName = model.FullName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                Address = model.Address,
+                Phone = model.Phone,
+                //Image = model.Image,
+                //IsDisable = model.IsDisable
+
+                
             };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            bool result = await _authService.RegisterUserAsync(user, model.Password);
 
-            return Ok("User successfully created!");
+            if (!result)
+                return BadRequest(new { message = "Username already exists" });
+
+            return Ok(new { message = "User registered successfully" });
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginRequest request)
+        [HttpPost("addToCart")]
+        public async Task<IActionResult> AddToCartAsync([FromBody] AddToCartRequest model)
         {
-           var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-            if (user == null)
-            {
-                return BadRequest("User not found.  ");
-            }
-
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            {
-                return BadRequest("Password is incorrect");
-            }
-
-            if (user.VerifiedAt == null)
-            {
-                return BadRequest("Not verified!!!");
-            }
-
-            return Ok($"Welcome back, {user.Email}! :)");
+            var cart = new Cart(_cartRepository);
+            await cart.AddToCartAsync(model.UserId, model.ProductId, model.Quantity);
+            return Ok();
         }
 
-        [HttpPost("verify")]
-        public async Task<IActionResult> Verify(string token)
+        [HttpDelete("deleteCartItem/{cartItemId}")]
+        public async Task<IActionResult> DeleteCartItemAsync(int cartItemId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
-            if (user == null)
-            {
-                return BadRequest("Invalid token.");
-            }
-
-            user.VerifiedAt = DateTime.Now;
-            await _context.SaveChangesAsync();
-           
-
-            return Ok("User verified! :)");
+            var cart = new Cart(_cartRepository);
+            await cart.DeleteCartItemAsync(cartItemId);
+            return Ok();
         }
 
-        [HttpPost("fogot-password")]
-        public async Task<IActionResult> ForgotPassword(string email)
+    }
+
+    public class UserLoginRequest
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class UserRegisterRequest
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string FullName { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public bool? Gender { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        //public string Image { get; set; }
+        //public bool IsDisable { get; set; }
+
+        
+    }
+
+    public class AddToCartRequest
+    {
+        public int UserId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    public class Cart
+    {
+        private readonly ICartRepository _cartRepository;
+
+        public Cart(ICartRepository cartRepository)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null)
-            {
-                return BadRequest("User not Found.");
-            }
-
-            user.PasswordResetToken = CreateRandomToken();
-            user.ResetTokenExpires = DateTime.Now.AddDays(1);
-            await _context.SaveChangesAsync();
-
-
-            return Ok("U May Now Reset Your Password");
+            _cartRepository = cartRepository;
         }
 
-        [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        public async Task AddToCartAsync(int userId, int productId, int quantity)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.PasswordResetToken == request.Token);
-            if (user == null || user.ResetTokenExpires < DateTime.Now)
-            {
-                return BadRequest("Invalid Token");
-            }
-
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            user.PasswordResetToken = null;
-            user.ResetTokenExpires = null;
-            await _context.SaveChangesAsync();
-
-
-            return Ok("Password Successfully Reset");
+            await _cartRepository.AddToCartAsync(userId, productId, quantity);
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) 
+        public async Task DeleteCartItemAsync(int cartItemId)
         {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
+            await _cartRepository.DeleteCartItemAsync(cartItemId);
         }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac
-                    .ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
-
-
-        private string CreateRandomToken()
-        {
-            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-        }
-
     }
 }
