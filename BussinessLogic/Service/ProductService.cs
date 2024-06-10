@@ -156,10 +156,10 @@ namespace BussinessLogic.Service
                     _response.Message = "Not Found";
                     return _response;
                 }
-                var prodcutDto = _mapper.Map<ProductModelDTO>(product);
+                var productDto = _mapper.Map<ProductModelDTO>(product);
                 _response.Success = true;
                 _response.Message = "OK";
-                _response.Data = prodcutDto;
+                _response.Data = productDto;
 
             }
             catch (Exception ex)
