@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace DataAccess.Repository
 {
     public interface IUserRepository
@@ -72,5 +73,4 @@ namespace DataAccess.Repository
             return await _context.SaveChangesAsync() > 0;
         }
     }
-
 }

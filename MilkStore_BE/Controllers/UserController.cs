@@ -11,13 +11,10 @@ namespace MilkStore_BE.Controllers
     {
         private readonly AuthService _authService;
         private readonly ICartRepository _cartRepository;
-        public UserController(AuthService authService)
+
+        public UserController(AuthService authService, ICartRepository cartRepository)
         {
             _authService = authService;
-        }
-
-        public UserController(ICartRepository cartRepository)
-        {
             _cartRepository = cartRepository;
         }
 
@@ -29,8 +26,8 @@ namespace MilkStore_BE.Controllers
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            // Xác thực thành công, trả về thông tin người dùng (EX sẽ bổ sung JWT token)
-            
+            // Xác thực thành công, trả về thông tin người dùng (ví dụ: JWT token)
+            // Trong ví dụ này, chỉ trả về thông tin người dùng để minh họa
             return Ok(user);
         }
 
@@ -52,8 +49,6 @@ namespace MilkStore_BE.Controllers
                 Phone = model.Phone,
                 //Image = model.Image,
                 //IsDisable = model.IsDisable
-
-                
             };
 
             bool result = await _authService.RegisterUserAsync(user, model.Password);
@@ -79,7 +74,6 @@ namespace MilkStore_BE.Controllers
             await cart.DeleteCartItemAsync(cartItemId);
             return Ok();
         }
-
     }
 
     public class UserLoginRequest
@@ -97,10 +91,6 @@ namespace MilkStore_BE.Controllers
         public bool? Gender { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        //public string Image { get; set; }
-        //public bool IsDisable { get; set; }
-
-        
     }
 
     public class AddToCartRequest
