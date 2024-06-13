@@ -8,6 +8,10 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DataAccess
+<<<<<<< HEAD
 build_property.ProjectDir = E:\project\swd_milkstore_be\DataAccess\
+=======
+build_property.ProjectDir = D:\win\NGUYENXUANQUANG\2024.Summer\SWD392\swd_milkstore_be\DataAccess\
+>>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

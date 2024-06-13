@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "0rwFWla7vcKDrwMv0b/hNO7qbdxSpBTNk8s+OJMBx1MgzRK/DzQv264tjFyIzizbEYbhOKBv9nAT8vfLIIZ67Q==",
   "success": true,
   "projectFilePath": "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+=======
+  "dgSpecHash": "8VS8xH/CUMK7UB8vSS86pq3J4lydNFd0hp0LUWbVvtIa6dYjB1zKFbQVzj3VV6oE80hKx9mfPWBN+P1bg/Xtyg==",
+  "success": true,
+  "projectFilePath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+>>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
   "expectedPackageFiles": [
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

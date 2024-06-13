@@ -3413,11 +3413,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
       "projectName": "BussinessLogic",
       "projectPath": "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
       "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
       "outputPath": "E:\\project\\swd_milkstore_be\\BussinessLogic\\obj\\",
+=======
+      "projectUniqueName": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+      "projectName": "BussinessLogic",
+      "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+      "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
+      "outputPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\obj\\",
+>>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ROG STRIX\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3434,8 +3442,13 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+<<<<<<< HEAD
             "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
               "projectPath": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
+=======
+            "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
+>>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
             }
           }
         }
