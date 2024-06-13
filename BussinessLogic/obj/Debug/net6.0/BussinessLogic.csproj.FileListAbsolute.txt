@@ -32,3 +32,20 @@ E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.pdb
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\ref\BussinessLogic.dll
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\appsettings.json
+E:\project\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\appsettings.json
+E:\project\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\BussinessLogic.deps.json
+E:\project\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\BussinessLogic.dll
+E:\project\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\BussinessLogic.pdb
+E:\project\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\DataAccess.dll
+E:\project\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\DataAccess.pdb
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.AssemblyReference.cache
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.AssemblyInfoInputs.cache
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.AssemblyInfo.cs
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.CoreCompileInputs.cache
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.sourcelink.json
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.CopyComplete
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.dll
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\refint\BussinessLogic.dll
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.pdb
+E:\project\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\ref\BussinessLogic.dll
