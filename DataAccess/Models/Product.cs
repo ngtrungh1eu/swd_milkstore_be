@@ -16,15 +16,19 @@ namespace DataAccess.Models
         [Required]
         [StringLength(50)]
         public string ProductName { get; set; }
-        public string? ProductTitle { get; set; }
         public string? ProductDescription { get; set; }
         public string ProductImg {  get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Product price cannot be negative.")]
         public double ProductPrice { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Product quantity cannot be negative.")]
         public int Quantity { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Age cannot be negative.")]
         public int ByAge { get; set; }
         public bool? isPreOrder { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Pre-Order amount cannot be negative.")]
         public int? PreOrderAmount { get; set; }
         public bool? isPromote { get; set; }
+        public bool isDisable { get; set; }
         
         public int BrandId { get; set; }
         public Brand Brand { get; set; }

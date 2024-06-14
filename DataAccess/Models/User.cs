@@ -22,6 +22,7 @@ namespace DataAccess.Models
         public string? Address { get; set; }
         public string? Phone { get; set; }
         public string? Image {  get; set; }
+        public string? status { get; set; }
         public bool IsDisable { get; set; }
         public string Email { get; set; } = string.Empty;
         public byte[]? PasswordHash { get; set; } = new byte[32];

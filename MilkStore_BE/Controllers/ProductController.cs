@@ -40,34 +40,19 @@ namespace MIlkStore_BE.Controllers
             return Ok(ServiceFound);
         }
         
-        [HttpGet("Model/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult<DataAccess.Models.Product>> GetProductModelById(int id)
+        [HttpPost("CreateProduct")]
+        public async Task<ActionResult<DataAccess.Models.Product>> CreateProduct(ProductDTO request)
         {
-            if (id <= 0)
-            {
-                return BadRequest(id);
-            }
-            var ServiceFound = await _service.GetProductModelById(id);
-            if (ServiceFound == null)
-            {
-                return NotFound();
-            }
-            return Ok(ServiceFound);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<DataAccess.Models.Product>> AddService(ProductDTO request)
-        {
-
-
             var newProduct = await _service.CreateProduct(request);
+
             if (newProduct.Success == false && newProduct.Message == "Existed")
             {
-                return Ok(newProduct);
+                return StatusCode(409, newProduct);
+            }
+
+            if (newProduct.Success == false && newProduct.Message == "Negative value does not allowed")
+            {
+                return BadRequest(newProduct);
             }
 
             if (newProduct.Success == false && newProduct.Message == "RepoError")
@@ -83,20 +68,27 @@ namespace MIlkStore_BE.Controllers
             }
             return Ok(newProduct.Data);
         }
-        [HttpPut]
-        public async Task<ActionResult> UpdateProduct(ProductDTO request)
+
+        [HttpPut("UpdateProduct/{id}")]
+        public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductDTO request)
         {
             if (request == null)
             {
                 return BadRequest(ModelState);
             }
 
+            request.ProductId = id;
 
             var updateProduct = await _service.UpdateProduct(request);
 
             if (updateProduct.Success == false && updateProduct.Message == "NotFound")
             {
-                return Ok(updateProduct);
+                return StatusCode(404, updateProduct);
+            }
+
+            if (updateProduct.Success == false && updateProduct.Message == "Negative value does not allowed")
+            {
+                return BadRequest(updateProduct);
             }
 
             if (updateProduct.Success == false && updateProduct.Message == "RepoError")
@@ -112,36 +104,61 @@ namespace MIlkStore_BE.Controllers
             }
 
 
-            return Ok(updateProduct);
+            return Ok(updateProduct.Data);
 
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        [HttpPut("DisableProduct/{id}")]
+        public async Task<ActionResult> DisableProduct(int id)
         {
-            var deleteProduct = await _service.DeleteProduct(id);
+            var disableProduct = await _service.DisableProduct(id);
 
-
-            if (deleteProduct.Success == false && deleteProduct.Message == "NotFound")
+            if (disableProduct.Success == false && disableProduct.Message == "Not Found")
             {
-                ModelState.AddModelError("", "Service Not found");
-                return StatusCode(404, ModelState);
+                return StatusCode(404, disableProduct);
             }
 
-            if (deleteProduct.Success == false && deleteProduct.Message == "RepoError")
+            if ( disableProduct.Success == false && disableProduct.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting Product");
+                ModelState.AddModelError("", $"Something went wrong in Repository Layer when disable product");
                 return StatusCode(500, ModelState);
             }
 
-            if (deleteProduct.Success == false && deleteProduct.Message == "Error")
+            if (disableProduct.Success == false && disableProduct.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting Product");
+                ModelState.AddModelError("", $"Something went wrong in Service Layer when disable product");
                 return StatusCode(500, ModelState);
             }
 
-            return NoContent();
-
+            return Ok(disableProduct.Data);
         }
+
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult> DeleteProduct(int id)
+        //{
+        //    var deleteProduct = await _service.DeleteProduct(id);
+
+
+        //    if (deleteProduct.Success == false && deleteProduct.Message == "NotFound")
+        //    {
+        //        ModelState.AddModelError("", "Service Not found");
+        //        return StatusCode(404, ModelState);
+        //    }
+
+        //    if (deleteProduct.Success == false && deleteProduct.Message == "RepoError")
+        //    {
+        //        ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting Product");
+        //        return StatusCode(500, ModelState);
+        //    }
+
+        //    if (deleteProduct.Success == false && deleteProduct.Message == "Error")
+        //    {
+        //        ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting Product");
+        //        return StatusCode(500, ModelState);
+        //    }
+
+        //    return NoContent();
+
+        //}
     }
 }

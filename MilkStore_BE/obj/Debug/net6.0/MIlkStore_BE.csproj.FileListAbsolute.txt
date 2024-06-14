@@ -71,7 +71,6 @@ E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\LoginAll\obj\Debug\net6.0\MIlkSt
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\LoginAll\obj\Debug\net6.0\ref\MIlkStore_BE.dll
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\LoginAll\bin\Debug\net6.0\AutoMapper.dll
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\LoginAll\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
-E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\MilkStore_BE\bin\Debug\net6.0\appsettings.Development.json
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\MilkStore_BE\bin\Debug\net6.0\appsettings.json
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\MilkStore_BE\bin\Debug\net6.0\MIlkStore_BE.exe
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\MilkStore_BE\bin\Debug\net6.0\MIlkStore_BE.deps.json

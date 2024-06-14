@@ -109,7 +109,7 @@ namespace DataAccess.Data
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.ProductOrders)
                 .WithOne(po => po.Order)
-                .HasForeignKey(po => po.ProductId)
+                .HasForeignKey(po => po.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Configure many-to-one relationship between ProductOrder and Product

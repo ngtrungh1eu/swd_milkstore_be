@@ -31,4 +31,3 @@ E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\refint\BussinessLogic.dll
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.pdb
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\ref\BussinessLogic.dll
-E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\appsettings.json

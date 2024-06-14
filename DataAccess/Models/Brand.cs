@@ -17,7 +17,7 @@ namespace DataAccess.Models
         public string BrandName { get; set; }
         public string? BrandImg {  get; set; }
         public string? MadeIn { get; set; }
-
+        public string description { get; set; }
         public virtual ICollection<Product> Products  { get; set; }
     }
 }

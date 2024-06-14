@@ -83,6 +83,10 @@ namespace DataAccess.Migrations
                     b.Property<string>("MadeIn")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BrandId");
 
                     b.ToTable("Brands");
@@ -121,11 +125,22 @@ namespace DataAccess.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("CartItemId");
 
@@ -305,11 +320,11 @@ namespace DataAccess.Migrations
                     b.Property<double>("ProductPrice")
                         .HasColumnType("float");
 
-                    b.Property<string>("ProductTitle")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isDisable")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("isPreOrder")
                         .HasColumnType("bit");
@@ -332,11 +347,19 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductOrderId"), 1L, 1);
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -345,6 +368,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ProductOrderId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -463,6 +488,9 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTime?>("VerifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -606,7 +634,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataAccess.Models.Order", "Order")
                         .WithMany("ProductOrders")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

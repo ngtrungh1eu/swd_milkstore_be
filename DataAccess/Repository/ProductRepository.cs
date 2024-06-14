@@ -1,5 +1,4 @@
 ﻿using DataAccess.Data;
-using DataAccess.EntityModel;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +12,10 @@ namespace DataAccess.Repository
     public interface IProductRepository
     {
         Task<ICollection<Product>> ListAllProduct();
-        Task<ProductModel> GetProductModelById(int id);
         Task<Product> GetProductById(int id);
         Task<bool> CreateProduct(Product product);
         Task<bool> UpdateProduct(Product product);
+        Task<bool> DisableProduct(int id);
         Task<bool> DeleteProduct(Product product);
     }
 
@@ -31,32 +30,6 @@ namespace DataAccess.Repository
         async Task<ICollection<Product>> IProductRepository.ListAllProduct()
         {
             return await _context.Products.ToListAsync();
-        }
-
-        async Task<ProductModel> IProductRepository.GetProductModelById(int id)
-        {
-            var query = from p in _context.Products
-                        join b in _context.Brands on p.BrandId equals b.BrandId
-                        where p.ProductId == id
-                        select new ProductModel
-                        {
-                           ProductId = p.ProductId,
-                           BrandId = b.BrandId,
-                           ProductImg = p.ProductImg,
-                           ProductName = p.ProductName,
-                           Brand = b.BrandName,
-                           BrandImg = b.BrandImg,
-                           MadeIn = b.MadeIn,
-                           ProductTitle = p.ProductTitle,
-                           ProductDescription = p.ProductDescription,
-                           ByAge = p.ByAge,
-                           ProductPrice = p.ProductPrice,
-                           Quantity = p.Quantity,
-                           isPreOrder = p.isPreOrder,
-                           PreOrderAmount = p.PreOrderAmount,
-                           isPromote = 1
-                        };
-            return await query.FirstOrDefaultAsync();
         }
 
         async Task<bool> IProductRepository.CreateProduct(Product product)
@@ -80,6 +53,20 @@ namespace DataAccess.Repository
         async Task<Product> IProductRepository.GetProductById(int id)
         {
             return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+        }
+
+        async Task<bool> IProductRepository.DisableProduct(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            if (product == null || product.isDisable == true)
+            {
+                return false;
+            }
+
+            product.isDisable = true;
+            _context.Products.Update(product);
+
+            return await _context.SaveChangesAsync() > 0 ? true : false;
         }
     }
 }
