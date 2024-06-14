@@ -17,7 +17,7 @@ namespace BussinessLogic.DTO.Order
         public string Status { get; set; }
         public DateTime OrderDate { get; set; }
         public double TotalPrice { get; set; }
-
         public int UserId { get; set; }
+        public ICollection<ProductOrderDTO> ProductOrders { get; set; }
     }
 }

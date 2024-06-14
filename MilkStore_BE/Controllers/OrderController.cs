@@ -41,13 +41,13 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateOrder/{id}")]
-        public async Task<ActionResult<Order>> CreateOrder([FromBody] int cartId)
+        public async Task<ActionResult<Order>> CreateOrder(int id)
         {
 
-            var newOrder = await _service.CreateOrder(cartId);
+            var newOrder = await _service.CreateOrder(id);
             if (newOrder.Success == false && newOrder.Message == "Existed")
             {
-                return Ok(newOrder);
+                return StatusCode(409, newOrder);
             }
 
             if (newOrder.Success == false && newOrder.Message == "Repo Error")
@@ -65,14 +65,14 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateProgress/{id}")]
-        public async Task<ActionResult<Order>> UpdateProgress(int orderId, [FromBody] string status)
+        public async Task<ActionResult<Order>> UpdateProgress(int id,[FromBody] string status)
         {
-            if (orderId == null || status == null)
+            if (id == null || status == null)
             {
                 return BadRequest(ModelState);
             }
 
-            var updateProgress = await _service.UpdateProcess(orderId, status);
+            var updateProgress = await _service.UpdateProcess(id);
 
             if (updateProgress.Success == false && updateProgress.Message == "Not Found")
             {
@@ -94,18 +94,18 @@ namespace MilkStore_BE.Controllers
         }
         
         [HttpPut("CancelOrder/{id}")]
-        public async Task<ActionResult<Order>> CancelOrder(int orderId)
+        public async Task<ActionResult<Order>> CancelOrder(int id)
         {
-            if (orderId == null)
+            if (id == null)
             {
                 return BadRequest(ModelState);
             }
 
-            var cancelOrder = await _service.CancelOrder(orderId);
+            var cancelOrder = await _service.CancelOrder(id);
 
             if (cancelOrder.Success == false && cancelOrder.Message == "Not Found")
             {
-                return Ok(cancelOrder);
+                return StatusCode(404, cancelOrder);
             }
 
             if (cancelOrder.Success == false && cancelOrder.Message == "Repo Error")

@@ -1,0 +1,16 @@
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Release\net6.0\BussinessLogic.deps.json
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Release\net6.0\BussinessLogic.dll
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Release\net6.0\BussinessLogic.pdb
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Release\net6.0\DataAccess.dll
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\bin\Release\net6.0\DataAccess.pdb
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.csproj.AssemblyReference.cache
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.AssemblyInfoInputs.cache
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.AssemblyInfo.cs
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.csproj.CoreCompileInputs.cache
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.sourcelink.json
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.csproj.CopyComplete
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.dll
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\refint\BussinessLogic.dll
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\BussinessLogic.pdb
+E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\BussinessLogic\obj\Release\net6.0\ref\BussinessLogic.dll

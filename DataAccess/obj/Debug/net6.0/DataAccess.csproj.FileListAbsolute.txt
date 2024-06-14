@@ -27,4 +27,3 @@ E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\Data
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.pdb
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
-E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\appsettings.json

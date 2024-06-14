@@ -10,7 +10,6 @@ namespace BussinessLogic.DTO.Product
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public string? ProductTitle { get; set; }
         public string? ProductDescription { get; set; }
         public string? ProductImg { get; set; }
         public double ProductPrice { get; set; }
@@ -19,6 +18,7 @@ namespace BussinessLogic.DTO.Product
         public bool isPreOrder { get; set; }
         public int? PreOrderAmount { get; set; }
         public bool isPromote { get; set; }
+        public bool isDisable {  get; set; }
         public int BrandId { get; set; }
     }
 }

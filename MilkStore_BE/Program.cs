@@ -4,10 +4,22 @@ using BussinessLogic.Service;
 using DataAccess.Data;
 using DataAccess.Repository;
 
+var AllowSpecificOrigins = "_allowSpecificOrigin";
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost:7269")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                      });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,6 +47,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSwagger();
+
+app.UseSwaggerUI();
+
+app.UseCors(AllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

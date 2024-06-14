@@ -2,7 +2,6 @@
 using BussinessLogic.DTO;
 using BussinessLogic.DTO.Order;
 using BussinessLogic.DTO.Product;
-using BussinessLogic.DTO.ProductDTO;
 using DataAccess.Models;
 using DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,7 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<List<OrderDTO>>> GetOrderList();
         Task<ServiceResponse<OrderDTO>> GetOrderById(int id);
         Task<ServiceResponse<OrderDTO>> CreateOrder(int cartId);
-        Task<ServiceResponse<OrderDTO>> UpdateProcess(int id, string status);
+        Task<ServiceResponse<OrderDTO>> UpdateProcess(int id);
         Task<ServiceResponse<OrderDTO>> CancelOrder(int id);
     }
     public class OrderService : IOrderService
@@ -55,7 +54,7 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                if (existingOrder != null && existingOrder.Status == "Đang Xác Nhận")
+                if (existingOrder != null && existingOrder.Status == "Processing")
                 {
                     var cancelledOrder = await _repository.GetOrderById(id);
                     _response.Success = true;
@@ -79,22 +78,11 @@ namespace BussinessLogic.Service
             ServiceResponse<OrderDTO> _response = new();
             try
             {
-                bool isCreated = await _repository.CreateOrder(cartId);
-
-                if (!isCreated)
-                {
-                    _response.Error = "Repo Error";
-                    _response.Success = false;
-                    _response.Data = null;
-                    return _response;
-                }
-
-                // Fetch the created order to return it in the response
                 var createdOrder = await _repository.CreateOrder(cartId);
 
                 if (createdOrder == null)
                 {
-                    _response.Error = "Order Not Found";
+                    _response.Error = "Repo Error";
                     _response.Success = false;
                     _response.Data = null;
                     return _response;
@@ -168,7 +156,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<OrderDTO>> IOrderService.UpdateProcess(int id, string status)
+        async Task<ServiceResponse<OrderDTO>> IOrderService.UpdateProcess(int id)
         {
             ServiceResponse<OrderDTO> _response = new();
             try
@@ -182,7 +170,7 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                if (!await _repository.UpdateProcess(id, status))
+                if (!await _repository.UpdateProcess(id))
                 {
                     _response.Success = false;
                     _response.Data = null;
@@ -190,7 +178,15 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                if (existingOrder != null && existingOrder.Status != "Đã Hủy")
+                if (existingOrder != null && existingOrder.Status == "Cancelled")
+                {
+                    _response.Success = false;
+                    _response.Data = null;
+                    _response.Message = "Order has been cancelled!";
+                    return _response;
+                }
+
+                if (existingOrder != null && existingOrder.Status != "Cancelled")
                 {
                     var updateProcess = await _repository.GetOrderById(id);
                     _response.Success = true;

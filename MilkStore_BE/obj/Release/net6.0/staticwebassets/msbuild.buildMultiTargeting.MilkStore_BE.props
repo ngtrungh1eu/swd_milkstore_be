@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MilkStore_BE.props" />
+</Project>
