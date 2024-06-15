@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessLogic.DTO.BrandDTO
+namespace BussinessLogic.DTO.Brand
 {
     public class BrandDTO
     {

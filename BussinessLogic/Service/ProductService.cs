@@ -18,8 +18,10 @@ namespace BussinessLogic.Service
     public interface IProductService
     {
         Task<ServiceResponse<List<ProductDTO>>> ListAllProduct();
+        Task<ServiceResponse<List<ProductDTO>>> GetListProductPromotion();
         Task<ServiceResponse<ProductModelDTO>> GetProductModelById(int id);
         Task<ServiceResponse<ProductDTO>> GetProductById(int id);
+        Task<Product> GetProductEntityById(int id);
         Task<ServiceResponse<ProductDTO>> CreateProduct(ProductDTO product);
         Task<ServiceResponse<ProductDTO>> UpdateProduct(ProductDTO product);
         Task<ServiceResponse<ProductDTO>> DeleteProduct(int id);
@@ -197,6 +199,31 @@ namespace BussinessLogic.Service
             return _response;
         }
 
+        async Task<ServiceResponse<List<ProductDTO>>> IProductService.GetListProductPromotion()
+        {
+            ServiceResponse<List<ProductDTO>> _response = new();
+            try
+            {
+                var listProduct = await _productRepository.GetListProductPromotion();
+                var listProductDto = new List<ProductDTO>();
+                foreach (var product in listProduct)
+                {
+                    listProductDto.Add(_mapper.Map<ProductDTO>(product));
+                }
+                _response.Success = true;
+                _response.Data = listProductDto;
+                _response.Message = "OK";
+            }
+            catch (Exception ex)
+            {
+                _response.Success = false;
+                _response.Message = "Error";
+                _response.Data = null;
+                _response.ErrorMessages = new List<string> { Convert.ToString(ex.Message) };
+            }
+            return _response;
+        }
+
         async Task<ServiceResponse<ProductDTO>> IProductService.UpdateProduct(ProductDTO request)
         {
             ServiceResponse<ProductDTO> _response = new();
@@ -246,6 +273,11 @@ namespace BussinessLogic.Service
                 _response.ErrorMessages = new List<string> { Convert.ToString(ex.Message) };
             }
             return _response;
+        }
+
+        async Task<Product> IProductService.GetProductEntityById(int id)
+        {
+            return await _productRepository.GetProductById(id);
         }
     }
 }

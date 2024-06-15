@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "ASyIsqLQLxE6m6SbYAb85mTC2kbDL8sXl9fn/7tyK3ezhlmW9zbSkI1vwzs0YyuIwSfItBFqsBKlGJrgsOG6sQ==",
+  "dgSpecHash": "ihe9tUM8wH7CxvAV62E8xE6+01fJZ97sH6bkxmvFkGWqfMXUvurXOOAHWI3d4VyCiaJBFzkroD/AQ8BI6H0tAw==",
   "success": true,
-  "projectFilePath": "E:\\project\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
-=======
-  "dgSpecHash": "pCdop2LtPtV+bpCfKDXgnS7kGbdOfL7SMG5cA4hIZDNDllAMQHfDdmHEzIgVue0aaZx/0gTQRFRXEyoQnZ5cIg==",
-  "success": true,
-  "projectFilePath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+  "projectFilePath": "D:\\Project\\project - Copy\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

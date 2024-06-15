@@ -15,6 +15,9 @@ namespace BussinessLogic.DTO
     {
         public MappingConfig()
         {
+            CreateMap<DataAccess.Models.Brand, Brand.BrandDTO>().ReverseMap();
+            CreateMap<DataAccess.Models.Feedback, Feedback.FeedbackDTO>().ReverseMap();
+            CreateMap<DataAccess.Models.Promotion, Promotion.PromotionDTO>().ReverseMap();
             CreateMap<DataAccess.Models.Product, Product.ProductDTO>().ReverseMap();
             CreateMap<DataAccess.EntityModel.ProductModel, ProductModelDTO>().ReverseMap();
             CreateMap<DataAccess.Models.Order, OrderDTO>().ReverseMap();

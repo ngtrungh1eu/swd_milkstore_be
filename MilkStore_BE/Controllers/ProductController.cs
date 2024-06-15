@@ -21,6 +21,12 @@ namespace MIlkStore_BE.Controllers
             return Ok(await _service.ListAllProduct());
         }
 
+        [HttpGet("ViewListProductPromotion")]
+        public async Task<ActionResult<List<ProductDTO>>> GetListProductPromotion()
+        {
+            return Ok(await _service.GetListProductPromotion());
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

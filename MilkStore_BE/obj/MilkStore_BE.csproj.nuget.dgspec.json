@@ -1,31 +1,17 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "E:\\project\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {}
+    "D:\\Project\\project - Copy\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {}
   },
   "projects": {
-    "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
+    "D:\\Project\\project - Copy\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+        "projectUniqueName": "D:\\Project\\project - Copy\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
         "projectName": "BussinessLogic",
-        "projectPath": "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+        "projectPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
         "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-        "outputPath": "E:\\project\\swd_milkstore_be\\BussinessLogic\\obj\\",
-=======
-    "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {}
-  },
-  "projects": {
-    "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
-        "projectName": "BussinessLogic",
-        "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
-        "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-        "outputPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\obj\\",
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+        "outputPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\BussinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ROG STRIX\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -42,13 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-<<<<<<< HEAD
-              "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
-=======
-              "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+              "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -114,25 +95,14 @@
         }
       }
     },
-<<<<<<< HEAD
-    "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
+    "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+        "projectPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-        "outputPath": "E:\\project\\swd_milkstore_be\\DataAccess\\obj\\",
-=======
-    "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
-        "projectName": "DataAccess",
-        "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-        "outputPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\obj\\",
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+        "outputPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ROG STRIX\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -224,25 +194,14 @@
         }
       }
     },
-<<<<<<< HEAD
-    "E:\\project\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {
+    "D:\\Project\\project - Copy\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\project\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+        "projectUniqueName": "D:\\Project\\project - Copy\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
         "projectName": "MilkStore_BE",
-        "projectPath": "E:\\project\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+        "projectPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
         "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-        "outputPath": "E:\\project\\swd_milkstore_be\\MilkStore_BE\\obj\\",
-=======
-    "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
-        "projectName": "MilkStore_BE",
-        "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
-        "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-        "outputPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\MilkStore_BE\\obj\\",
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+        "outputPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\MilkStore_BE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ROG STRIX\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -259,13 +218,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-<<<<<<< HEAD
-              "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
-                "projectPath": "E:\\project\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
-=======
-              "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
-                "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+              "D:\\Project\\project - Copy\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
+                "projectPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
               }
             }
           }

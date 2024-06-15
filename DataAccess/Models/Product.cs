@@ -33,5 +33,6 @@ namespace DataAccess.Models
         public virtual ICollection<Promotion> Promotes { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
         public virtual ICollection<ProductOrder> ProductOrders { get; set; }
+
     }
 }

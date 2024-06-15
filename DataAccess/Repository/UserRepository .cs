@@ -18,6 +18,10 @@ namespace DataAccess.Repository
         Task<bool> AddUserAsync(User user, string password);
         void Update(User user);
         Task<bool> SaveChangesAsync();
+        Task<User> GetUserById(int id);
+        Task<List<User>> ListAllUser();
+        Task UpdateFavoriteUser(User user, Product product);
+        Task DeleteFavorite(User user, Product product);
     }
 
     public class UserRepository : IUserRepository
@@ -71,6 +75,53 @@ namespace DataAccess.Repository
         public async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        async Task<User> IUserRepository.GetUserById(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+        }
+
+        public async Task<List<User>> ListAllUser()
+        {
+            // return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(u => u.Products) // Eager load Products collection
+                .ToListAsync();
+        }
+
+        async Task IUserRepository.UpdateFavoriteUser(User u, Product p)
+        {
+            if (u.Products == null)
+            {
+                u.Products = new List<Product>();
+            }
+            foreach(Product item in u.Products)
+            {
+                if(p.ProductId == item.ProductId)
+                {
+                    return;
+                }
+            }
+            u.Products.Add(p);
+            await _context.SaveChangesAsync();
+        }
+
+        async Task IUserRepository.DeleteFavorite(User user, Product product)
+        {
+            if (user.Products == null)
+            {
+                user = await _context.Users
+                    .Include(u => u.Products)
+                    .FirstOrDefaultAsync(u => u.Id == user.Id);
+            }
+            var favoriteToRemove = user.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+
+            if (favoriteToRemove != null)
+            {
+                user.Products.Remove(favoriteToRemove);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

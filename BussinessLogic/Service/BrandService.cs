@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using BussinessLogic.DTO;
-using BussinessLogic.DTO.BrandDTO;
+using BussinessLogic.DTO.Brand;
 using DataAccess.Models;
 using DataAccess.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace BussinessLogic.Service
 {

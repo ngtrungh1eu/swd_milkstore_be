@@ -4,7 +4,6 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,10 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240612113437_InitialCreate")]
-    partial class InitialCreate
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,7 +154,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreOrderId")
+                    b.Property<int?>("PreOrderId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Rate")
@@ -402,21 +401,17 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -438,17 +433,11 @@ namespace DataAccess.Migrations
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetTokenExpires")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -459,12 +448,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VerificationToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("VerifiedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

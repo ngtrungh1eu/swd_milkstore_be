@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "3lvrAfmq4PtA5NFj/w1oK8N/W+/cjXbqokdnqPBVZlIQagTJIOmMwR0NZnd17aiBKxqU2KFeTLcLahlRt/V6Aw==",
+  "dgSpecHash": "Gws32+BNd9O0YsW0p2bwP1oPhGMa/8R7vJRqz0a43ehy2ZKSklSvQX+TKtiHL+kXyWf5B2ogExSYFNduk8RIyQ==",
   "success": true,
-  "projectFilePath": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
-=======
-  "dgSpecHash": "RyTf9jOoAdu2tveRTGnMe+9ypp0VZERggIsVHBGpJ1Sv+c7RqLWETFa7YEfqZd64Yz1ESLrrvDwpgrirAE6luA==",
-  "success": true,
-  "projectFilePath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+  "projectFilePath": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
@@ -61,8 +55,8 @@
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\ROG STRIX\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\ROG STRIX\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
     "C:\\Users\\ROG STRIX\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512"
   ],
   "logs": []

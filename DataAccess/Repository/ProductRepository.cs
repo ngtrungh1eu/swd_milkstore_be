@@ -18,6 +18,7 @@ namespace DataAccess.Repository
         Task<bool> CreateProduct(Product product);
         Task<bool> UpdateProduct(Product product);
         Task<bool> DeleteProduct(Product product);
+        Task<ICollection<Product>> GetListProductPromotion();
     }
 
     public class ProductRepository : IProductRepository
@@ -80,6 +81,16 @@ namespace DataAccess.Repository
         async Task<Product> IProductRepository.GetProductById(int id)
         {
             return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+        }
+
+
+        async Task<ICollection<Product>> IProductRepository.GetListProductPromotion()
+        {
+            List<Product> productsInPromotion = await _context.Products
+                .Where(p => p.Promotes.Any()) // Chỉ lấy những sản phẩm có ít nhất một khuyến mãi
+                .ToListAsync();
+
+            return productsInPromotion;
         }
     }
 }

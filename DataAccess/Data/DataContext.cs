@@ -94,9 +94,9 @@ namespace DataAccess.Data
 
             // Configure many-to-many relationship between User and Product
             modelBuilder.Entity<User>()
-                .HasMany(x => x.Products)
-                .WithMany(y => y.Users)
-                .UsingEntity(j => j.ToTable("Favorite"));
+               .HasMany(x => x.Products)
+               .WithMany(y => y.Users)
+               .UsingEntity(j => j.ToTable("Favorite"));
 
             // Configure one-to-many relationship between User and Order
             modelBuilder.Entity<User>()
@@ -146,6 +146,8 @@ namespace DataAccess.Data
                 .WithOne(f => f.PreOrder)
                 .HasForeignKey<Feedback>(f => f.PreOrderId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }

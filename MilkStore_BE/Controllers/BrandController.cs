@@ -1,4 +1,4 @@
-﻿using BussinessLogic.DTO.BrandDTO;
+﻿using BussinessLogic.DTO.Brand;
 using BussinessLogic.Service;
 using Microsoft.AspNetCore.Mvc;
 

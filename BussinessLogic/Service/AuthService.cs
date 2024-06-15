@@ -1,4 +1,6 @@
-﻿using DataAccess.Models;
+﻿using BussinessLogic.DTO.Brand;
+using BussinessLogic.DTO;
+using DataAccess.Models;
 using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,14 @@ using System.Threading.Tasks;
 
 namespace BussinessLogic.Service
 {
-    public class AuthService
+    public interface IAuthService
+    {
+        Task<User> AuthenticateUserAsync(string username, string password);
+        Task<bool> RegisterUserAsync(User user, string password);
+        void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
+
+    }
+    public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
 
@@ -18,7 +27,7 @@ namespace BussinessLogic.Service
             _userRepository = userRepository;
         }
 
-        public async Task<User> AuthenticateUserAsync(string username, string password)
+        async Task<User> IAuthService.AuthenticateUserAsync(string username, string password)
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
@@ -29,13 +38,13 @@ namespace BussinessLogic.Service
             return user;
         }
 
-        public async Task<bool> RegisterUserAsync(User user, string password)
+        async Task<bool> IAuthService.RegisterUserAsync(User user, string password)
         {
             return await _userRepository.AddUserAsync(user, password);
         }
 
 
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        void IAuthService.CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
             {

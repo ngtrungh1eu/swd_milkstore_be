@@ -1,4 +1,5 @@
-﻿using BussinessLogic.Service;
+﻿using BussinessLogic.DTO.Product;
+using BussinessLogic.Service;
 using DataAccess.Models;
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -9,13 +10,22 @@ namespace MilkStore_BE.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         private readonly ICartRepository _cartRepository;
+        private readonly IUserService _userService;
 
-        public UserController(AuthService authService, ICartRepository cartRepository)
+        public UserController(ICartRepository cartRepository, IUserService userService, IAuthService authService)
         {
             _authService = authService;
             _cartRepository = cartRepository;
+            _userService = userService;
+        }
+
+        [HttpGet]
+
+        public async Task<ActionResult<List<User>>> GetUserList()
+        {
+            return Ok(await _userService.ListAllUser());
         }
 
         [HttpPost("authenticate")]

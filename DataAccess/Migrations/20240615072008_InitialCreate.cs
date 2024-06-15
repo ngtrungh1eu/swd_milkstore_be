@@ -92,6 +92,8 @@ namespace DataAccess.Migrations
                     UserId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<bool>(type: "bit", nullable: true),
@@ -99,13 +101,6 @@ namespace DataAccess.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDisable = table.Column<bool>(type: "bit", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    VerificationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VerifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PasswordResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResetTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

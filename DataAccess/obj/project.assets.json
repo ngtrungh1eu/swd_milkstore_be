@@ -2383,19 +2383,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "E:\\project\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+      "projectPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-      "outputPath": "E:\\project\\swd_milkstore_be\\DataAccess\\obj\\",
-=======
-      "projectUniqueName": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
-      "projectName": "DataAccess",
-      "projectPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
-      "outputPath": "D:\\win\\NGUYENXUANQUANG\\2024.Summer\\SWD392\\swd_milkstore_be\\DataAccess\\obj\\",
->>>>>>> 4942129ec4ce0f5eb8dd203e35cb373a692e1833
+      "outputPath": "D:\\Project\\project - Copy\\swd_milkstore_be\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ROG STRIX\\AppData\\Roaming\\NuGet\\NuGet.Config",
