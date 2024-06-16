@@ -26,6 +26,6 @@ namespace DataAccess.Models
 
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        public Feedback Feedback { get; set; }
+        public virtual Feedback Feedback { get; set; }
     }
 }

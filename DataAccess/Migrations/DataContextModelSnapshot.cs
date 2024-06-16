@@ -103,6 +103,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("TotalItem")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -151,6 +154,64 @@ namespace DataAccess.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Favorite", b =>
+                {
+                    b.Property<int>("FavoriteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteId"), 1L, 1);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isPromote")
+                        .HasColumnType("bit");
+
+                    b.HasKey("FavoriteId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.FavoriteProduct", b =>
+                {
+                    b.Property<int>("FavoriteProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteProductId"), 1L, 1);
+
+                    b.Property<int>("FavoriteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ProductPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Promote")
+                        .HasColumnType("int");
+
+                    b.HasKey("FavoriteProductId");
+
+                    b.HasIndex("FavoriteId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("FavoriteProducts");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Feedback", b =>
                 {
                     b.Property<int>("FeedbackId")
@@ -181,13 +242,17 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("FeedbackId");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("PreOrderId")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -526,7 +591,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("Favorite", (string)null);
+                    b.ToTable("ProductUser");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Blog", b =>
@@ -570,11 +635,41 @@ namespace DataAccess.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Favorite", b =>
+                {
+                    b.HasOne("DataAccess.Models.User", "User")
+                        .WithOne("Favorite")
+                        .HasForeignKey("DataAccess.Models.Favorite", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.FavoriteProduct", b =>
+                {
+                    b.HasOne("DataAccess.Models.Favorite", "Favorite")
+                        .WithMany("FavoriteProducts")
+                        .HasForeignKey("FavoriteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.Product", "Product")
+                        .WithMany("FavoriteProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Favorite");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Feedback", b =>
                 {
                     b.HasOne("DataAccess.Models.Order", "Order")
-                        .WithOne("Feedback")
-                        .HasForeignKey("DataAccess.Models.Feedback", "OrderId")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -584,9 +679,17 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
 
                     b.Navigation("PreOrder");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Order", b =>
@@ -700,10 +803,14 @@ namespace DataAccess.Migrations
                     b.Navigation("CartItems");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Favorite", b =>
+                {
+                    b.Navigation("FavoriteProducts");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Order", b =>
                 {
-                    b.Navigation("Feedback")
-                        .IsRequired();
+                    b.Navigation("Feedbacks");
 
                     b.Navigation("ProductOrders");
                 });
@@ -717,6 +824,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("FavoriteProducts");
 
                     b.Navigation("PreOrder")
                         .IsRequired();
@@ -734,6 +843,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Blogs");
 
                     b.Navigation("Cart")
+                        .IsRequired();
+
+                    b.Navigation("Favorite")
                         .IsRequired();
 
                     b.Navigation("Orders");

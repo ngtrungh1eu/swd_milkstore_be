@@ -24,7 +24,7 @@ namespace DataAccess.Models
 
         public int UserId { get; set; }
         public User User { get; set; }
-        public Feedback Feedback { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<ProductOrder> ProductOrders { get; set; }
     }
 }
