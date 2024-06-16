@@ -14,6 +14,7 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartId { get; set; }
         public int TotalItem { get; set; }
+        public int TotalPrice { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }

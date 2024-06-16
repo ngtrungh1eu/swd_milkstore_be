@@ -44,6 +44,8 @@ namespace DataAccess.Data
         public DbSet<ProductOrder> ProductOrders { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,11 +94,11 @@ namespace DataAccess.Data
                 .HasForeignKey(ci => ci.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure many-to-many relationship between User and Product
-            modelBuilder.Entity<User>()
-                .HasMany(x => x.Products)
-                .WithMany(y => y.Users)
-                .UsingEntity(j => j.ToTable("Favorite"));
+            // Configure one-to-one relationship between User and Favorite
+            modelBuilder.Entity<Favorite>()
+                .HasOne(f => f.User)
+                .WithOne(u => u.Favorite)
+                .HasForeignKey<Favorite>(f => f.UserId);
 
             // Configure one-to-many relationship between User and Order
             modelBuilder.Entity<User>()
@@ -123,21 +125,19 @@ namespace DataAccess.Data
             modelBuilder.Entity<User>()
                 .HasMany(u => u.PreOrders)
                 .WithOne(pr => pr.User)
-                .HasForeignKey(pr => pr.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(pr => pr.UserId);
 
-            // Configure one-to-one relationship Product User and PreOrder
+            // Configure one-to-one relationship Product and PreOrder
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.PreOrder)
                 .WithOne(pr => pr.Product)
-                .HasForeignKey<PreOrder>(pr => pr.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<PreOrder>(pr => pr.ProductId);
 
-            // Configure one-to-one relationship between Order and Feedback
+            // Configure one-to-many relationship between Order and Feedback
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Feedback)
+                .HasMany(o => o.Feedbacks)
                 .WithOne(f => f.Order)
-                .HasForeignKey<Feedback>(f => f.OrderId)
+                .HasForeignKey(f => f.OrderId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             // Configure one-to-one relationship between PreOrder and Feedback
@@ -146,6 +146,20 @@ namespace DataAccess.Data
                 .WithOne(f => f.PreOrder)
                 .HasForeignKey<Feedback>(f => f.PreOrderId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // Configure many-to-one relationship between FavoriteProduct and Favorite
+            modelBuilder.Entity<FavoriteProduct>()
+                .HasOne(fp => fp.Favorite)
+                .WithMany(f => f.FavoriteProducts)
+                .HasForeignKey(fp => fp.FavoriteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure many-to-one relationship between FavoriteProduct and Product
+            modelBuilder.Entity<FavoriteProduct>()
+                .HasOne(fp => fp.Product)
+                .WithMany(p => p.FavoriteProducts)
+                .HasForeignKey(fp => fp.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

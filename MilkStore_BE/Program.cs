@@ -4,21 +4,18 @@ using BussinessLogic.Service;
 using DataAccess.Data;
 using DataAccess.Repository;
 
-var AllowSpecificOrigins = "_allowSpecificOrigin";
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: AllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("https://localhost:7269")
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod();
-                      });
+    options.AddDefaultPolicy(build =>
+    {
+        build.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+    });
 });
 
 builder.Services.AddControllers();
@@ -51,9 +48,9 @@ app.UseSwagger();
 
 app.UseSwaggerUI();
 
-app.UseCors(AllowSpecificOrigins);
-
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

@@ -36,6 +36,7 @@ namespace DataAccess.Models
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public Cart Cart { get; set; }
+        public Favorite Favorite { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<PreOrder> PreOrders { get; set; }
