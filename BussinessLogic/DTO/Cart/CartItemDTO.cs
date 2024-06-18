@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessLogic.DTO.NewFolder
+namespace BussinessLogic.DTO.Cart
 {
     public class CartItemDTO
     {
