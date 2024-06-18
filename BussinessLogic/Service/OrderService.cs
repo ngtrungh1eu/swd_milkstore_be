@@ -82,7 +82,7 @@ namespace BussinessLogic.Service
 
                 if (createdOrder == null)
                 {
-                    _response.Error = "Repo Error";
+                    _response.Message = "Repo Error";
                     _response.Success = false;
                     _response.Data = null;
                     return _response;
