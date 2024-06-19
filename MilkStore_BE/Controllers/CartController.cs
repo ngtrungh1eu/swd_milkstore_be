@@ -31,7 +31,7 @@ namespace MilkStore_BE.Controllers
 
             if (cart.Success == false && cart.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create order");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
                 return StatusCode(500, ModelState);
             }
 
@@ -56,7 +56,7 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create order");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
                 return StatusCode(500, ModelState);
             }
 
@@ -73,9 +73,15 @@ namespace MilkStore_BE.Controllers
                 return BadRequest();
             }
 
+            if (result.Success == false && result.Message == "Product quantity has to be > 0")
+            {
+                ModelState.AddModelError("", $"Product quantity has to be > 0");
+                return StatusCode(403, ModelState);
+            }
+
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create order");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
                 return StatusCode(500, ModelState);
             }
 
@@ -92,6 +98,12 @@ namespace MilkStore_BE.Controllers
                 return BadRequest();
             }
 
+            if (result.Success == false && result.Message == "Product quantity has to be > 0")
+            {
+                ModelState.AddModelError("", $"Product quantity has to be > 0");
+                return StatusCode(403, ModelState);
+            }
+
             if (result.Success == false && result.Message == "Repo Error")
             {
                 ModelState.AddModelError("", $"Some thing went wrong in respository layer when create cart");
@@ -100,7 +112,7 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create order");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
                 return StatusCode(500, ModelState);
             }
 
@@ -125,7 +137,7 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create order");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
                 return StatusCode(500, ModelState);
             }
 

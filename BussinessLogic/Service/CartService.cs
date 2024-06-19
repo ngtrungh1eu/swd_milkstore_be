@@ -15,9 +15,9 @@ namespace BussinessLogic.Service
     {
         Task<ServiceResponse<CartDTO>> GetCart(int userID);
         Task<ServiceResponse<CartDTO>> CreateCart(int userId);
-        Task<ServiceResponse<CartDTO>> AddToCart(int cartId, int productId, int quantity);
-        Task<ServiceResponse<CartDTO>> UpdateProductQuantity(int cartId, int productId, int quantity);
-        Task<ServiceResponse<CartDTO>> RemoveProduct(int cartId, int productId);
+        Task<ServiceResponse<CartDTO>> AddToCart(int userId, int productId, int quantity);
+        Task<ServiceResponse<CartDTO>> UpdateProductQuantity(int userId, int productId, int quantity);
+        Task<ServiceResponse<CartDTO>> RemoveProduct(int userId, int productId);
     }
     public class CartService : ICartService
     {
@@ -35,6 +35,13 @@ namespace BussinessLogic.Service
             ServiceResponse<CartDTO> _response = new();
             try
             {
+                if (quantity <= 0)
+                {
+                    _response.Success = false;
+                    _response.Message = "Product quantity has to be > 0";
+                    return _response;
+                }
+
                 var addProduct = await _repository.AddToCart(cartId, productId, quantity);
 
                 if (addProduct == null)
@@ -121,12 +128,12 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.RemoveProduct(int cartId, int productId)
+        async Task<ServiceResponse<CartDTO>> ICartService.RemoveProduct(int userId, int productId)
         {
             ServiceResponse<CartDTO> _response = new();
             try
             {
-                var existingCart = await _repository.GetCart(cartId);
+                var existingCart = await _repository.GetCart(userId);
 
                 if (existingCart == null)
                 {
@@ -136,7 +143,7 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                var removeProduct = await _repository.RemoveProduct(cartId, productId);
+                var removeProduct = await _repository.RemoveProduct(userId, productId);
 
                 if (removeProduct == null)
                 {
@@ -161,12 +168,19 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.UpdateProductQuantity(int cartId, int productId, int quantity)
+        async Task<ServiceResponse<CartDTO>> ICartService.UpdateProductQuantity(int userId, int productId, int quantity)
         {
             ServiceResponse<CartDTO> _response = new();
             try
             {
-                var existingCart = await _repository.GetCart(cartId);
+                if (quantity <= 0)
+                {
+                    _response.Success = false;
+                    _response.Message = "Product quantity has to be > 0";
+                    return _response;
+                }
+
+                var existingCart = await _repository.GetCart(userId);
 
                 if (existingCart == null)
                 {
@@ -176,7 +190,7 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                var updateQuantity = await _repository.UpdateProductQuantity(cartId, productId, quantity);
+                var updateQuantity = await _repository.UpdateProductQuantity(userId, productId, quantity);
 
                 if (updateQuantity == null)
                 {

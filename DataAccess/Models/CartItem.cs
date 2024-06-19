@@ -22,7 +22,9 @@ namespace DataAccess.Models
 
         public string ProductName { get; set; }
         public string Image {  get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Item in Cart quantity must exists.")]
         public int Quantity { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "UnitPrice cannot be negative.")]
         public double UnitPrice { get; set; }
     }
 }
