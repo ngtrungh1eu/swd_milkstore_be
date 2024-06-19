@@ -13,7 +13,7 @@ namespace DataAccess.Repository
     {
         Task<Cart> GetCart(int cartId);
         Task<Cart> CreateCart(int userId);
-        Task<Cart> AddToCart(int cartId, int productId, int quantity);
+        Task<Cart> AddToCart(int userId, int productId, int quantity);
         Task<Cart> UpdateProductQuantity(int userId, int productId, int quantity);
         Task<Cart> RemoveProduct(int cartId, int productId);
     }
@@ -26,12 +26,12 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<Cart> ICartRepository.AddToCart(int cartId, int productId, int quantity)
+        async Task<Cart> ICartRepository.AddToCart(int userId, int productId, int quantity)
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .ThenInclude(ci => ci.Product)
-                .FirstOrDefaultAsync(c => c.CartId == cartId);
+                .FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (cart == null)
             {
@@ -60,15 +60,9 @@ namespace DataAccess.Repository
 
                 _context.CartItems.Add(cartItem);
             }
-            else
-            {
-                cartItem.Quantity += quantity;
-                cartItem.UnitPrice = cartItem.Quantity * product.ProductPrice;
-                _context.CartItems.Update(cartItem);
-            }
 
-            cart.TotalItem += cart.CartItems.Sum(ci => ci.Quantity);
-            cart.TotalPrice += cart.CartItems.Sum(ci => ci.UnitPrice);
+            cart.TotalItem = cart.TotalItem - cart.TotalItem + cart.CartItems.Sum(ci => ci.Quantity);
+            cart.TotalPrice = cart.TotalPrice - cart.TotalPrice + cart.CartItems.Sum(ci => ci.UnitPrice);
 
             _context.Carts.Update(cart);
             await _context.SaveChangesAsync();
@@ -98,16 +92,16 @@ namespace DataAccess.Repository
                 .FirstOrDefaultAsync(c => c.CartId == cartId);
         }
 
-        async Task<Cart> ICartRepository.RemoveProduct(int cartId, int productId)
+        async Task<Cart> ICartRepository.RemoveProduct(int userId, int productId)
         {
-           var cart = await _context.Carts.FirstOrDefaultAsync(c => c.CartId == cartId);
+           var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (cart == null)
             {
                 return null;
             }
 
-            var cartItem  = await _context.CartItems.FirstOrDefaultAsync(ci => (ci.CartId == cartId) && (ci.ProductId == productId));
+            var cartItem  = await _context.CartItems.FirstOrDefaultAsync(ci => (ci.CartId == cart.CartId) && (ci.ProductId == productId));
 
             if (cartItem == null)
             {
@@ -125,16 +119,16 @@ namespace DataAccess.Repository
             return cart;
         }
 
-        async Task<Cart> ICartRepository.UpdateProductQuantity(int cartId, int productId, int quantity)
+        async Task<Cart> ICartRepository.UpdateProductQuantity(int userId, int productId, int quantity)
         {
-            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.CartId == cartId);
+            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (cart == null)
             {
                 return null;
             }
 
-            var cartItem = await _context.CartItems.FirstOrDefaultAsync(ci => (ci.CartId == cartId) && (ci.ProductId == productId));
+            var cartItem = await _context.CartItems.FirstOrDefaultAsync(ci => (ci.CartId == cart.CartId) && (ci.ProductId == productId));
 
             if (cartItem == null || quantity < 0)
             {

@@ -52,7 +52,8 @@ namespace MIlkStore_BE.Controllers
 
             if (newProduct.Success == false && newProduct.Message == "Negative value does not allowed")
             {
-                return BadRequest(newProduct);
+                ModelState.AddModelError("", "Negative value does not allowed!");
+                return StatusCode(403, ModelState);
             }
 
             if (newProduct.Success == false && newProduct.Message == "RepoError")
@@ -88,7 +89,8 @@ namespace MIlkStore_BE.Controllers
 
             if (updateProduct.Success == false && updateProduct.Message == "Negative value does not allowed")
             {
-                return BadRequest(updateProduct);
+                ModelState.AddModelError("", "Negative value does not allowed!");
+                return StatusCode(403, ModelState);
             }
 
             if (updateProduct.Success == false && updateProduct.Message == "RepoError")
