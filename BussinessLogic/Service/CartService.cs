@@ -13,11 +13,7 @@ namespace BussinessLogic.Service
 {
     public interface ICartService
     {
-<<<<<<< Updated upstream
-        Task<ServiceResponse<CartDTO>> GetCart(int cartId);
-=======
-        Task<ServiceResponse<CartDTO>> GetCart(int userId);
->>>>>>> Stashed changes
+        Task<ServiceResponse<CartDTO>> GetCart(int userID);
         Task<ServiceResponse<CartDTO>> CreateCart(int userId);
         Task<ServiceResponse<CartDTO>> AddToCart(int userId, int productId, int quantity);
         Task<ServiceResponse<CartDTO>> UpdateProductQuantity(int userId, int productId, int quantity);
@@ -101,12 +97,12 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.GetCart(int cartId)
+        async Task<ServiceResponse<CartDTO>> ICartService.GetCart(int userId)
         {
             ServiceResponse<CartDTO> _response = new();
             try
             {
-                var cart = await _repository.GetCart(cartId);
+                var cart = await _repository.GetCart(userId);
                
                 if (cart == null)
                 {

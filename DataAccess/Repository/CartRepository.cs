@@ -11,7 +11,7 @@ namespace DataAccess.Repository
 {
     public interface ICartRepository
     {
-        Task<Cart> GetCart(int cartId);
+        Task<Cart> GetCart(int userId);
         Task<Cart> CreateCart(int userId);
         Task<Cart> AddToCart(int userId, int productId, int quantity);
         Task<Cart> UpdateProductQuantity(int userId, int productId, int quantity);
@@ -85,11 +85,11 @@ namespace DataAccess.Repository
             return cart;
         }
 
-        async Task<Cart> ICartRepository.GetCart(int cartId)
+        async Task<Cart> ICartRepository.GetCart(int userId)
         {
             return await _context.Carts
                 .Include(c => c.CartItems)
-                .FirstOrDefaultAsync(c => c.CartId == cartId);
+                .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
         async Task<Cart> ICartRepository.RemoveProduct(int userId, int productId)

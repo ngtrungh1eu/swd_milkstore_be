@@ -22,21 +22,17 @@ namespace MilkStore_BE.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetCart(int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest(id);
-            }
-
             var cart = await _service.GetCart(id);
 
-            if (cart == null)
+            if (cart.Success == false && cart.Message == "Not Found")
             {
-<<<<<<< Updated upstream
-                return NotFound();
-=======
+                return BadRequest();
+            }
+
+            if (cart.Success == false && cart.Message == "Error")
+            {
                 ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
                 return StatusCode(500, ModelState);
->>>>>>> Stashed changes
             }
 
             return Ok(cart);
