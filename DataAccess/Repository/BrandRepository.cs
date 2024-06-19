@@ -57,10 +57,14 @@ namespace DataAccess.Repository
 
         public async Task<bool> DeleteBrand(Brand brand)
         {
-         /*   var productsToDelete = await _context.Products.Where(p => p.BrandId == brand.BrandId).ToListAsync();
-            _context.Products.RemoveRange(productsToDelete);
-            await _context.SaveChangesAsync();*/
-
+            /*   var productsToDelete = await _context.Products.Where(p => p.BrandId == brand.BrandId).ToListAsync();
+               _context.Products.RemoveRange(productsToDelete);
+               await _context.SaveChangesAsync();*/
+            var productExistBrand = await _context.Products.Where(p => p.BrandId == brand.BrandId).ToListAsync();
+            foreach (var product in productExistBrand)
+            {
+                product.isDelete = true;
+            }
             _context.Brands.Remove(brand);
             return await _context.SaveChangesAsync() > 0;
         }

@@ -8,6 +8,7 @@ using AutoMapper;
 using BussinessLogic.DTO;
 using BussinessLogic.DTO.Product;
 using BussinessLogic.DTO.ProductDTO;
+using DataAccess.EntityModel;
 using DataAccess.Models;
 using DataAccess.Repository;
 using Microsoft.VisualBasic;
@@ -100,7 +101,6 @@ namespace BussinessLogic.Service
                     _response.Data = null;
                     return _response;
                 }
-
                 var _producDto = _mapper.Map<ProductDTO>(existingProduct);
                 _response.Success = true;
                 _response.Data = _producDto;

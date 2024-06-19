@@ -14,6 +14,7 @@ namespace BussinessLogic.DTO.Feedback
         public int Rate { get; set; }
         public string Comment { get; set; }
         public int? ReplyId { get; set; }
+        public int ProductId { get; set; }
         public int OrderId { get; set; }
         public int? PreOrderId { get; set; }
     }

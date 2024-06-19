@@ -8,6 +8,8 @@ using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MilkStore_BE;
+using System.Text.Json;
 
 namespace MIlkStore_BE.Controllers
 {
@@ -26,6 +28,8 @@ namespace MIlkStore_BE.Controllers
             _context = context;
         }
 
+
+
         [HttpPost]
         public async Task<ActionResult> AddFavorite(AddFavoriteDTO favoriteDto)
         {
@@ -42,6 +46,27 @@ namespace MIlkStore_BE.Controllers
                 await _userService.UpdateFavoriteUser(user, product);
 
                 return Ok("Product added to favorites.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetAllFavourite(int id)
+        {
+            try
+            {
+                var favouriteList = await _userService.GetFavoriteUserById(id); 
+
+                var json = JsonSerializer.Serialize(favouriteList, JsonSerializerOptionsProvider.Options);
+                return new ContentResult
+                {
+                    Content = json,
+                    ContentType = "application/json",
+                    StatusCode = 200
+                };
+                return Ok(favouriteList);
             }
             catch (Exception ex)
             {

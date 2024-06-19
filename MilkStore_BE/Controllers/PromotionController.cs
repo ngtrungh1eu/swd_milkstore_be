@@ -23,7 +23,7 @@ namespace MIlkStore_BE.Controllers
             return Ok(await _service.ListAllPromotion());
         }
 
-        [HttpGet("Model/{id}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PromotionDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -40,6 +40,29 @@ namespace MIlkStore_BE.Controllers
                 return NotFound();
             }
             return Ok(ServiceFound);
+        }
+        [HttpPost("/promotionId/productId")]
+        public async Task<ActionResult<DataAccess.Models.Promotion>> AddProduct(int promotionId, int productId)
+        {
+           
+            var newPromotion = await _service.AddPromotionProduct(promotionId,productId);
+            if (newPromotion.Success == false)
+            {
+                return BadRequest(newPromotion);
+            }
+
+            if (newPromotion.Success == false && newPromotion.Message == "RepoError")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when adding product ");
+                return StatusCode(500, ModelState);
+            }
+
+            if (newPromotion.Success == false && newPromotion.Message == "Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when adding product ");
+                return StatusCode(500, ModelState);
+            }
+            return Ok(newPromotion.Data);
         }
 
         [HttpPost]
@@ -70,8 +93,8 @@ namespace MIlkStore_BE.Controllers
             return Ok(newPromotion.Data);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdatePromotion(PromotionDTO request)
+        [HttpPut("{promotionId}")]
+        public async Task<ActionResult> UpdatePromotion(int promotionId, PromotionDTO request)
         {
             if (request == null)
             {
@@ -85,7 +108,7 @@ namespace MIlkStore_BE.Controllers
             }
 
 
-            var updatePromotion = await _service.UpdatePromotion(request);
+            var updatePromotion = await _service.UpdatePromotion(promotionId,request);
 
             if (updatePromotion.Success == false && updatePromotion.Message == "NotFound")
             {
@@ -136,5 +159,6 @@ namespace MIlkStore_BE.Controllers
             return NoContent();
 
         }
+
     }
 }

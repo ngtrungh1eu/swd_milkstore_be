@@ -70,6 +70,7 @@ namespace DataAccess.Migrations
                     isPreOrder = table.Column<bool>(type: "bit", nullable: true),
                     PreOrderAmount = table.Column<int>(type: "int", nullable: true),
                     isPromote = table.Column<bool>(type: "bit", nullable: true),
+                    isDelete = table.Column<bool>(type: "bit", nullable: true),
                     BrandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

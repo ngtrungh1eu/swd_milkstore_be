@@ -77,9 +77,9 @@ namespace DataAccess.Repository
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<Order> IOrderRepository.GetOrderById(int id)
+        async Task<Order?> IOrderRepository.GetOrderById(int id)
         {
-            return await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == id);
+            return await _context.Orders.Include(x => x.ProductOrders).FirstOrDefaultAsync(o => o.OrderId == id);
         }
 
         async Task<ICollection<Order>> IOrderRepository.GetOrderList()

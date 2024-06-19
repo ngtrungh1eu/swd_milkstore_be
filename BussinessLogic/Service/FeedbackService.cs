@@ -23,16 +23,18 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<Feedback>> CreateFeedback(FeedbackDTO feedback);
         Task<ServiceResponse<Feedback>> DeleteFeedback(int id);
         Task<ServiceResponse<Feedback>> GetFeedbackById(int id);
-        Task<List<Feedback>> ListAllFeedback();
+        Task<List<Feedback>> ListAllFeedback(int? productId);
         Task<ServiceResponse<Feedback>> UpdateFeedback(FeedbackDTO feedback);
     }
     public class FeedbackService : IFeedbackService
     {
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
-        public FeedbackService(IFeedbackRepository feedbackRepository, IMapper mapper)
+        public FeedbackService(IFeedbackRepository feedbackRepository, IOrderRepository orderRepository, IMapper mapper)
         {
             _feedbackRepository = feedbackRepository;
+            _orderRepository = orderRepository;
             _mapper = mapper;
         }
 
@@ -80,14 +82,35 @@ namespace BussinessLogic.Service
             ServiceResponse<Feedback> _response = new();
             try
             {
+                var order = await _orderRepository.GetOrderById(feedbackDto.OrderId);
+                if (order == null)
+                {
+                    _response.Error = "Order is not existed";
+                    _response.Success = false;
+                    return _response;
+                }
+                if (order.Status != "completed")
+                {
+                    _response.Error = $"Order is {order.Status}, can't not send feedback";
+                    _response.Success = false;
+                    return _response;
+                }
+                if (!order.ProductOrders.Any(x => x.ProductId == feedbackDto.ProductId))
+                {
+                    // Cái này là tránh trường hợp nó mua sản phẩm A nhưng đi feedback cho sản phẩm B nhé
+                    _response.Error = $"This order can't has product: {feedbackDto.ProductId}!";
+                    _response.Success = false;
+                    return _response;
+                }
+
                 Feedback feedback = new Feedback
                 {
-                    OrderId = feedbackDto.OrderId,
                     Comment = feedbackDto.Comment,
                     Rate = feedbackDto.Rate,
-                    ReplyId = feedbackDto.ReplyId,
+                    ReplyId = order.UserId,
                     CreateAt = DateTime.Now,
                     UpdateAt = DateTime.Now,
+                    OrderId = feedbackDto.OrderId
                 };
                 if (feedbackDto.PreOrderId != null)
                 {
@@ -117,8 +140,10 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<List<Feedback>> IFeedbackService.ListAllFeedback()
+        async Task<List<Feedback>> IFeedbackService.ListAllFeedback(int? productId)
         {
+            if (productId.HasValue)
+                return (await _feedbackRepository.ListAllFeedback()).Where(x => x.ProductId == productId).ToList();
             return await _feedbackRepository.ListAllFeedback();
         }
 

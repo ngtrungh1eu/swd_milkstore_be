@@ -24,6 +24,7 @@ namespace BussinessLogic.Service
         Task UpdateFavoriteUser(User user, Product product);
         Task<List<User>> ListAllUser();
         Task DeleteFavorite(User user, Product product);
+        Task<User> GetFavoriteUserById(int userId);
     }
     public class UserService : IUserService
     {
@@ -54,6 +55,12 @@ namespace BussinessLogic.Service
         async Task IUserService.DeleteFavorite(User user, Product product)
         {
             await _userRepository.DeleteFavorite(user, product);
+        }
+
+        
+        async Task<User> IUserService.GetFavoriteUserById(int userId)
+        {
+            return await _userRepository.GetAllFavourite(userId);
         }
     }
 }

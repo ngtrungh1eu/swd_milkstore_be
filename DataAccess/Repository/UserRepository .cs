@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,8 @@ namespace DataAccess.Repository
         Task<List<User>> ListAllUser();
         Task UpdateFavoriteUser(User user, Product product);
         Task DeleteFavorite(User user, Product product);
+
+        Task<User> GetAllFavourite(int userId);
     }
 
     public class UserRepository : IUserRepository
@@ -122,6 +125,15 @@ namespace DataAccess.Repository
                 user.Products.Remove(favoriteToRemove);
                 await _context.SaveChangesAsync();
             }
+        }
+
+       
+
+        public async Task<User> GetAllFavourite(int userId)
+        {
+            return await _context.Users
+                    .Include(u => u.Products)
+                    .FirstOrDefaultAsync(u => u.Id == userId);
         }
     }
 }

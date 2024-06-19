@@ -13,6 +13,7 @@ namespace BussinessLogic.DTO.Promotion
         public string PromotionName { get; set; }
         public DateTime StartAt { get; set; }
         public DateTime EndAt { get; set; }
+        public bool Status => StartAt <= DateTime.UtcNow && DateTime.UtcNow <= EndAt;
         public int Promote { get; set; }
         public string? PromotionImg { get; set; }
     }

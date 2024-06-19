@@ -177,7 +177,6 @@ namespace BussinessLogic.Service
                     response.Data = false;
                     return response;
                 }
-
                 var isDeleted = await _brandRepository.DeleteBrand(brand);
                 if (!isDeleted)
                 {

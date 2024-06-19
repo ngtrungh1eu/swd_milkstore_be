@@ -22,18 +22,21 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<List<PromotionDTO>>> ListAllPromotion();
         Task<ServiceResponse<PromotionModelDTO>> GetPromotionModelById(int id);
         Task<ServiceResponse<PromotionDTO>> CreatePromotion(PromotionDTO promotion);
-        Task<ServiceResponse<PromotionDTO>> UpdatePromotion(PromotionDTO promotion);
+        Task<ServiceResponse<PromotionDTO>> UpdatePromotion(int promotionId,PromotionDTO promotion);
         Task<ServiceResponse<PromotionDTO>> DeletePromotion(int id);
+        Task<ServiceResponse<PromotionDTO>> AddPromotionProduct(int promotionId,int productId);
 
     }
     public class PromotionService : IPromotionService
     {
         private readonly IPromotionRepository _promotionRepository;
         private readonly IMapper _mapper;
-        public PromotionService(IPromotionRepository productRepository, IMapper mapper)
+        private readonly IProductRepository _productRepository;
+        public PromotionService(IPromotionRepository productRepository, IMapper mapper,IProductRepository productRepository1)
         {
             _promotionRepository = productRepository;
             _mapper = mapper;
+            _productRepository = productRepository1;
         }
 
         async Task<ServiceResponse<List<PromotionDTO>>> IPromotionService.ListAllPromotion()
@@ -71,6 +74,12 @@ namespace BussinessLogic.Service
                 {
                     _response.Success = false;
                     _response.Message = "Not Found";
+                    return _response;
+                }
+                if(promotion.EndAt < DateTime.UtcNow)
+                {
+                    _response.Success = false;
+                    _response.Message = "Coupon expire.";
                     return _response;
                 }
                 List<ProductDTO> listDto = new List<ProductDTO>();
@@ -158,13 +167,13 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<PromotionDTO>> IPromotionService.UpdatePromotion(PromotionDTO request)
+        async Task<ServiceResponse<PromotionDTO>> IPromotionService.UpdatePromotion(int promotionId, PromotionDTO request)
         {
             ServiceResponse<PromotionDTO> _response = new();
             try
             {
                
-                var existingPromotion = await _promotionRepository.GetPromotionById(request.PromotionId);
+                var existingPromotion = await _promotionRepository.GetPromotionById(promotionId);
                 if (existingPromotion == null)
                 {
                     _response.Success = false;
@@ -229,6 +238,44 @@ namespace BussinessLogic.Service
                 _response.Data = _producDto;
                 _response.Message = "Deleted";
                 return _response;
+            }
+            catch (Exception ex)
+            {
+                _response.Success = false;
+                _response.Data = null;
+                _response.Message = "Error";
+                _response.ErrorMessages = new List<string> { Convert.ToString(ex.Message) };
+            }
+
+            return _response;
+        }
+
+        public async Task<ServiceResponse<PromotionDTO>> AddPromotionProduct(int promotionId, int productId)
+        {
+            ServiceResponse<PromotionDTO> _response = new();
+            try
+            {
+                Product product =  await _productRepository.GetProductById(productId);
+                if(product == null)
+                {
+                    _response.Error = "Product not found";
+                    _response.Success = false;
+                    return _response;
+                }
+                Promotion promotion = await _promotionRepository.GetPromotionById(promotionId);
+                if (promotion == null)
+                {
+                    _response.Error = "Promotion not found";
+                    _response.Success = false;
+                    return _response;
+                }
+
+                await _promotionRepository.UpdateProductPromotion(promotion, product);
+                promotion = await _promotionRepository.GetPromotionById(promotionId);
+
+                _response.Success = true;
+                _response.Data = _mapper.Map<PromotionDTO>(promotion);
+                _response.Message = "Created";
             }
             catch (Exception ex)
             {

@@ -3,6 +3,7 @@ using BussinessLogic.DTO;
 using BussinessLogic.Service;
 using DataAccess.Data;
 using DataAccess.Repository;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

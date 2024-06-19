@@ -105,7 +105,6 @@ namespace MilkStore_BE.Controllers
 
                 return StatusCode(500, response);
             }
-
             return NoContent();
         }
     }

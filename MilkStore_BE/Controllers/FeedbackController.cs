@@ -19,9 +19,9 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Feedback>>> GetPromotionList()
+        public async Task<ActionResult<List<Feedback>>> GetPromotionList(int? productId)
         {
-            return Ok(await _service.ListAllFeedback());
+            return Ok(await _service.ListAllFeedback(productId));
         }
 
         [HttpGet("{id}")]

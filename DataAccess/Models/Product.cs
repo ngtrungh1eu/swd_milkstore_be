@@ -25,6 +25,7 @@ namespace DataAccess.Models
         public bool? isPreOrder { get; set; }
         public int? PreOrderAmount { get; set; }
         public bool? isPromote { get; set; }
+        public bool? isDelete { get; set; } = false;
         
         public int BrandId { get; set; }
         public Brand Brand { get; set; }

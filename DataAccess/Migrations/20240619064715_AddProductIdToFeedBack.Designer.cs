@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240615072008_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240619064715_AddProductIdToFeedBack")]
+    partial class AddProductIdToFeedBack
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,6 +158,9 @@ namespace DataAccess.Migrations
 
                     b.Property<int?>("PreOrderId")
                         .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Rate")
@@ -313,6 +316,9 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("isDelete")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("isPreOrder")
                         .HasColumnType("bit");

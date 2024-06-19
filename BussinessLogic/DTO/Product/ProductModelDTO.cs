@@ -25,5 +25,6 @@ namespace BussinessLogic.DTO.ProductDTO
         public bool? isPreOrder { get; set; }
         public int? PreOrderAmount { get; set; }
         public int? isPromote { get; set; }
+        public bool isDelete { get; set; }
     }
 }

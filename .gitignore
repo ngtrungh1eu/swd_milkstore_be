@@ -1,2 +1,8 @@
-
+.vs/
+BussinessLogic/obj/
+BussinessLogic/bin/
+DataAccess/obj/
+DataAccess/bin/
+MilkStore_BE/obj/
+MilkStore_BE/bin/
 *.vsidx
