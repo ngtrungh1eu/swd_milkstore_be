@@ -19,10 +19,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityModel\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

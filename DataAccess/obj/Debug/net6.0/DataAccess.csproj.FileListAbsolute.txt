@@ -27,3 +27,18 @@ E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\Data
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.pdb
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 E:\FPT\4th Year\SWD392\SU24\BE\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.dll
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.sourcelink.json
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.dll
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
+D:\newnewPROJECT\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

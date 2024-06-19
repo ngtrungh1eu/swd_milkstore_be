@@ -233,6 +233,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("PreOrderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
