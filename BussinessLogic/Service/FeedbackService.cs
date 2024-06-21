@@ -123,10 +123,7 @@ namespace BussinessLogic.Service
                     ProductId = feedbackDto.ProductId,
                     UserId = order.UserId,
                 };
-                if (feedbackDto.PreOrderId != null)
-                {
-                    feedback.PreOrderId = (int)feedbackDto.PreOrderId;
-                }
+               
                 if (!await _feedbackRepository.CreateFeedback(feedback))
                 {
                     _response.Error = "ReporError";
@@ -164,7 +161,7 @@ namespace BussinessLogic.Service
             try
             {
 
-                var existingFeedback = await _feedbackRepository.GetFeedbackById(request.FeedbackId??0);
+                var existingFeedback = await _feedbackRepository.GetFeedbackById(request.FeedbackId);
                 if (existingFeedback == null)
                 {
                     _response.Success = false;

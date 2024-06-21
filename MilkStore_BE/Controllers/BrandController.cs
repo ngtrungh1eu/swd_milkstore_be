@@ -70,14 +70,14 @@ namespace MilkStore_BE.Controllers
             return Ok(response.Data);
         }
 
-        [HttpPut("UpdateBrand")]
-        public async Task<ActionResult> UpdateBrand(BrandDTO brandDTO)
+        [HttpPut("UpdateBrand/{id}")]
+        public async Task<ActionResult> UpdateBrand(int id, [FromBody]BrandDTO brandDTO)
         {
-            if (brandDTO == null)
+            if (brandDTO == null || id <= 0)
             {
                 return BadRequest("Brand data is null");
             }
-
+            brandDTO.BrandId = id;
             var response = await _service.UpdateBrand(brandDTO);
             if (!response.Success)
             {
@@ -92,7 +92,7 @@ namespace MilkStore_BE.Controllers
             return Ok(response.Data);
         }
 
-        [HttpDelete("{id}/DeleteBrand")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBrand(int id)
         {
             var response = await _service.DeleteBrand(id);

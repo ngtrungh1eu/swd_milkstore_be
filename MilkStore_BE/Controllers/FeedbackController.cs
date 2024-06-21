@@ -44,10 +44,13 @@ namespace MIlkStore_BE.Controllers
         //    return Ok(ServiceFound);
         //}
 
-        [HttpPost]
-        public async Task<ActionResult<DataAccess.Models.Feedback>> AddService(FeedbackDTO request)
+        [HttpPost("/feedbackId/productId/orderId/")]
+        public async Task<ActionResult<DataAccess.Models.Feedback>> AddService(int feedbackId, int productId, int orderId, FeedbackDTO request)
         {
-           
+            if (request == null || feedbackId <= 0 || productId <= 0 || orderId <= 0)
+            {
+                return BadRequest(ModelState);
+            }
             var newFeedback = await _service.CreateFeedback(request);
             if (newFeedback.Success == false)
             {
@@ -68,13 +71,16 @@ namespace MIlkStore_BE.Controllers
             return Ok("Add feedback success");
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateFeedback(FeedbackDTO request)
+        [HttpPut("/feedbackId/productId/orderId/")]
+        public async Task<ActionResult> UpdateFeedback(int feedbackId,int productId, int orderId,FeedbackDTO request)
         {
-            if (request == null)
+            if (request == null || feedbackId <= 0 || productId <= 0 || orderId <= 0)
             {
                 return BadRequest(ModelState);
             }
+            request.FeedbackId = feedbackId;
+            request.ProductId = productId;
+            request.OrderId = orderId;
 
             var updateFeedback = await _service.UpdateFeedback(request);
 
