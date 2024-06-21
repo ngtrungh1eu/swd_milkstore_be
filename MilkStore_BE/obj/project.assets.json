@@ -3957,19 +3957,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {}
+    "C:\\Users\\ROG STRIX\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\MIlkStore_BE.csproj",
-      "projectName": "MIlkStore_BE",
-      "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\MIlkStore_BE.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\obj\\",
+      "projectUniqueName": "D:\\PRJREal\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+      "projectName": "MilkStore_BE",
+      "projectPath": "D:\\PRJREal\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+      "packagesPath": "C:\\Users\\ROG STRIX\\.nuget\\packages\\",
+      "outputPath": "D:\\PRJREal\\swd_milkstore_be\\MilkStore_BE\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ROG STRIX\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3977,14 +3977,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
-              "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
+            "D:\\PRJREal\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
+              "projectPath": "D:\\PRJREal\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
             }
           }
         }
@@ -3993,6 +3994,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4039,6 +4045,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.31, 6.0.31]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.31, 6.0.31]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.31, 6.0.31]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.31, 6.0.31]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -4047,7 +4071,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
