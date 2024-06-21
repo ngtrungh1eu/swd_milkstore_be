@@ -48,7 +48,7 @@ namespace DataAccess.Repository
             return false;
 
         }
-
+        
         public async Task<bool> UpdateBrand(Brand brand)
         {
             _context.Brands.Update(brand);

@@ -49,14 +49,13 @@ namespace MIlkStore_BE.Controllers
             }
         }
 
-
-        [HttpPost]
-        public async Task<ActionResult> AddFavorite(FavoriteModel favoriteDto)
+        [HttpPost("/productId/userId/")]
+        public async Task<ActionResult> AddFavorite(int productId, int userId)
         {
             try
             {
-                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == favoriteDto.ProductId);
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == favoriteDto.UserId);
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
                 if (product == null || user == null)
                 {
@@ -98,13 +97,13 @@ namespace MIlkStore_BE.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpDelete]
-        public async Task<ActionResult> DeleteFavorite(FavoriteModel favoriteDto)
+        [HttpDelete("/productId/userId")]
+        public async Task<ActionResult> DeleteFavorite(int productId, int userId)
         {
             try
             {
-                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == favoriteDto.ProductId);
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == favoriteDto.UserId);
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
                 if (product == null || user == null)
                 {
