@@ -28,16 +28,20 @@ namespace MilkStore_BE.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Order>> GetOrderById(int id)
         {
-            if (id <= 0)
+            var order = await _service.GetOrderById(id);
+
+            if (order.Success == false && order.Message == "Not Found")
             {
-                return BadRequest(id);
+                return BadRequest();
             }
-            var OrderFound = await _service.GetOrderById(id);
-            if (OrderFound == null)
+
+            if (order.Success == false && order.Message == "Error")
             {
-                return NotFound();
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when display order");
+                return StatusCode(500, ModelState);
             }
-            return Ok(OrderFound);
+
+            return Ok(order);
         }
 
         [HttpPost("CreateOrder/{id}")]

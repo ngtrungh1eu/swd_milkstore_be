@@ -37,6 +37,8 @@ namespace DataAccess.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Vote> Votes { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -72,6 +74,32 @@ namespace DataAccess.Data
                 .HasOne(b => b.User)
                 .WithMany(u => u.Blogs)
                 .HasForeignKey(b => b.UserId);
+
+            // Configure one-to-many relationship between Blog and Comment
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Blog)
+                .WithMany(b => b.Comments)
+                .HasForeignKey(c => c.BlogId);
+
+            // Configure one-to-many relationship between User and Comment
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Configure one-to-many relationship between Blog and Vote
+            modelBuilder.Entity<Vote>()
+                .HasOne(c => c.Blog)
+                .WithMany(b => b.Votes)
+                .HasForeignKey(c => c.BlogId);
+
+            // Configure one-to-many relationship between User and Vote
+            modelBuilder.Entity<Vote>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Votes)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Configure one-to-one relationship between User and Cart
             modelBuilder.Entity<User>()

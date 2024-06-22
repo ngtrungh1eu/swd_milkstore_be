@@ -233,7 +233,7 @@ namespace BussinessLogic.Service
                 if (existingProduct == null)
                 {
                     _response.Success = false;
-                    _response.Message = "Error";
+                    _response.Message = "Not Found";
                     _response.Data = null;
                     return _response;
                 }

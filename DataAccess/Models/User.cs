@@ -32,7 +32,6 @@ namespace DataAccess.Models
         public string? PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
 
-        public virtual ICollection<Blog> Blogs { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public Cart Cart { get; set; }
@@ -40,5 +39,8 @@ namespace DataAccess.Models
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<PreOrder> PreOrders { get; set; }
+        public virtual ICollection<Blog> Blogs { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

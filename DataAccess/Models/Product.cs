@@ -21,13 +21,13 @@ namespace DataAccess.Models
         [Range(0, double.MaxValue, ErrorMessage = "Product price cannot be negative.")]
         public double ProductPrice { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Product quantity cannot be negative.")]
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Age cannot be negative.")]
         public int ByAge { get; set; }
-        public bool? isPreOrder { get; set; }
+        public bool isPreOrder { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Pre-Order amount cannot be negative.")]
         public int? PreOrderAmount { get; set; }
-        public bool? isPromote { get; set; }
+        public bool isPromote { get; set; }
         public bool isDisable { get; set; }
         
         public int BrandId { get; set; }

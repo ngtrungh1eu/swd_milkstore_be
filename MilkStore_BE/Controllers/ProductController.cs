@@ -28,16 +28,20 @@ namespace MIlkStore_BE.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<DataAccess.Models.Product>> GetProductById(int id)
         {
-            if (id <= 0)
+            var product = await _service.GetProductById(id);
+
+            if (product.Success == false && product.Message == "Not Found")
             {
-                return BadRequest(id);
+                return BadRequest();
             }
-            var ServiceFound = await _service.GetProductById(id);
-            if (ServiceFound == null)
+
+            if (product.Success == false && product.Message == "Error")
             {
-                return NotFound();
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when display product");
+                return StatusCode(500, ModelState);
             }
-            return Ok(ServiceFound);
+
+            return Ok(product);
         }
         
         [HttpPost("CreateProduct")]
@@ -82,7 +86,7 @@ namespace MIlkStore_BE.Controllers
 
             var updateProduct = await _service.UpdateProduct(request);
 
-            if (updateProduct.Success == false && updateProduct.Message == "NotFound")
+            if (updateProduct.Success == false && updateProduct.Message == "Not Found")
             {
                 return StatusCode(404, updateProduct);
             }

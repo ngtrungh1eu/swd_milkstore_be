@@ -31,7 +31,7 @@ namespace MilkStore_BE.Controllers
 
             if (cart.Success == false && cart.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when display cart");
                 return StatusCode(500, ModelState);
             }
 
@@ -81,7 +81,7 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when adding item");
                 return StatusCode(500, ModelState);
             }
 
@@ -106,13 +106,13 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in respository layer when create cart");
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when update item");
                 return StatusCode(500, ModelState);
             }
 
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when update item");
                 return StatusCode(500, ModelState);
             }
 
@@ -131,13 +131,13 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in respository layer when create cart");
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when remove item");
                 return StatusCode(500, ModelState);
             }
 
             if (result.Success == false && result.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when create cart");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when remove item");
                 return StatusCode(500, ModelState);
             }
 
