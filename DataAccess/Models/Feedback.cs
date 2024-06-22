@@ -12,13 +12,15 @@ namespace DataAccess.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int FeedbackId {  get; set; }
+        public int FeedbackId { get; set; }
+        [Range(1, 5)]
         public int Rate { get; set; }
         public string Comment { get; set; }
         public int? ReplyId { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
 
+        public int ProductId { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
 
