@@ -13,13 +13,11 @@ namespace DataAccess.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BrandId { get; set; }
-        [Required]
         [StringLength(50)]
         public string BrandName { get; set; }
-        [Required]
-        public string BrandImg {  get; set; }
-        [Required]
-        public string MadeIn { get; set; }
+        public string? BrandImg {  get; set; }
+        public string? MadeIn { get; set; }
+        public string description { get; set; }
         public virtual ICollection<Product> Products  { get; set; }
     }
 }

@@ -7,7 +7,6 @@ using System.Xml.Linq;
 using AutoMapper;
 using BussinessLogic.DTO;
 using BussinessLogic.DTO.Product;
-using BussinessLogic.DTO.ProductDTO;
 using DataAccess.Models;
 using DataAccess.Repository;
 using Microsoft.VisualBasic;
@@ -18,10 +17,10 @@ namespace BussinessLogic.Service
     public interface IProductService
     {
         Task<ServiceResponse<List<ProductDTO>>> ListAllProduct();
-        Task<ServiceResponse<ProductModelDTO>> GetProductModelById(int id);
         Task<ServiceResponse<ProductDTO>> GetProductById(int id);
         Task<ServiceResponse<ProductDTO>> CreateProduct(ProductDTO product);
         Task<ServiceResponse<ProductDTO>> UpdateProduct(ProductDTO product);
+        Task<ServiceResponse<ProductDTO>> DisableProduct(int id);
         Task<ServiceResponse<ProductDTO>> DeleteProduct(int id);
     }
     public class ProductService : IProductService
@@ -39,13 +38,18 @@ namespace BussinessLogic.Service
             ServiceResponse<ProductDTO> _response = new();
             try
             {
+                if (request.ProductPrice < 0 || request.Quantity < 0 || request.ByAge < 0 || request.PreOrderAmount < 0)
+                {
+                    _response.Success = false;
+                    _response.Message = "Negative value does not allowed";
+                    return _response;
+                }
+
                 Product _newProduct = new Product()
                 {
                     ProductName = request.ProductName,
                     ProductImg = request.ProductImg,
-                    ProductTitle = request.ProductTitle,
                     ProductDescription = request.ProductDescription,
-                    Rate = request.Rate,
                     ByAge = request.ByAge,
                     ProductPrice = request.ProductPrice,
                     Quantity = request.Quantity,
@@ -53,12 +57,11 @@ namespace BussinessLogic.Service
                     PreOrderAmount = request.PreOrderAmount,
                     isPromote = request.isPromote,
                     BrandId = request.BrandId,
-                    ProductPromoteId = request.ProductPromoteId,
                 };
 
                 if (!await _productRepository.CreateProduct(_newProduct))
                 {
-                    _response.Error = "ReporError";
+                    _response.Error = "RepoError";
                     _response.Success = false;
                     _response.Data = null;
                     return _response;
@@ -118,6 +121,48 @@ namespace BussinessLogic.Service
             return _response;
         }
 
+        async Task<ServiceResponse<ProductDTO>> IProductService.DisableProduct(int id)
+        {
+            ServiceResponse<ProductDTO> _response = new();
+            try
+            {
+                var existingProduct = await _productRepository.GetProductById(id);
+                if (existingProduct == null)
+                {
+                    _response.Success = false;
+                    _response.Message = "Not Found";
+                    _response.Data = null;
+                    return _response;
+                }
+
+                if (!await _productRepository.DisableProduct(id))
+                {
+                    _response.Success=false;
+                    _response.Message = "Repo Error";
+                    _response.Data = null;
+                    return _response;
+                }
+
+                if (existingProduct != null && existingProduct.isDisable == false)
+                {
+                    var disableProduct = await _productRepository.DisableProduct(id);
+                    _response.Success = true;
+                    _response.Data = _mapper.Map<ProductDTO>(disableProduct);
+                    _response.Message = "Disabled";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _response.Success = false;
+                _response.Data = null;
+                _response.Message = "Error";
+                _response.ErrorMessages = new List<string> { Convert.ToString(ex.Message) };
+            }
+
+            return _response;
+        }
+
         async Task<ServiceResponse<ProductDTO>> IProductService.GetProductById(int id)
         {
             ServiceResponse<ProductDTO> _response = new();
@@ -131,34 +176,6 @@ namespace BussinessLogic.Service
                     return _response;
                 }
                 var prodcutDto = _mapper.Map<ProductDTO>(product);
-                _response.Success = true;
-                _response.Message = "OK";
-                _response.Data = prodcutDto;
-
-            }
-            catch (Exception ex)
-            {
-                _response.Success = false;
-                _response.Message = "Error";
-                _response.Data = null;
-                _response.ErrorMessages = new List<string> { Convert.ToString(ex.Message) };
-            }
-            return _response;
-        }
-
-        async Task<ServiceResponse<ProductModelDTO>> IProductService.GetProductModelById(int id)
-        {
-            ServiceResponse<ProductModelDTO> _response = new();
-            try
-            {
-                var product = await _productRepository.GetProductModelById(id);
-                if (product == null)
-                {
-                    _response.Success = false;
-                    _response.Message = "Not Found";
-                    return _response;
-                }
-                var prodcutDto = _mapper.Map<ProductModelDTO>(product);
                 _response.Success = true;
                 _response.Message = "OK";
                 _response.Data = prodcutDto;
@@ -205,20 +222,25 @@ namespace BussinessLogic.Service
             try
             {
                 var existingProduct = await _productRepository.GetProductById(request.ProductId);
+
+                if (request.ProductPrice < 0 || request.Quantity < 0 || request.ByAge < 0 || request.PreOrderAmount < 0)
+                {
+                    _response.Success = false;
+                    _response.Message = "Negative value does not allowed";
+                    return _response;
+                }
+
                 if (existingProduct == null)
                 {
                     _response.Success = false;
-                    _response.Message = "Error";
+                    _response.Message = "Not Found";
                     _response.Data = null;
                     return _response;
                 }
 
                 existingProduct.ProductName = request.ProductName;
                 existingProduct.ProductImg = request.ProductImg;
-                existingProduct.ProductTitle = request.ProductTitle;
-                existingProduct.ProductTitle = request.ProductTitle;
                 existingProduct.ProductDescription = request.ProductDescription;
-                existingProduct.Rate = request.Rate;
                 existingProduct.ByAge = request.ByAge;
                 existingProduct.ProductPrice = request.ProductPrice;
                 existingProduct.Quantity = request.Quantity;
@@ -226,7 +248,6 @@ namespace BussinessLogic.Service
                 existingProduct.PreOrderAmount = request.PreOrderAmount;
                 existingProduct.isPromote = request.isPromote;
                 existingProduct.BrandId = request.BrandId;
-                existingProduct.ProductPromoteId = request.ProductPromoteId;
 
 
                 if (!await _productRepository.UpdateProduct(existingProduct))
