@@ -55,7 +55,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateBrand")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult<BrandDTO>> CreateBrand(BrandDTO brandDTO)
         {
             if (brandDTO == null)
@@ -73,7 +73,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateBrand/{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> UpdateBrand(int id, [FromBody]BrandDTO brandDTO)
         {
             if (brandDTO == null || id <= 0)
@@ -96,7 +96,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> DeleteBrand(int id)
         {
             var response = await _service.DeleteBrand(id);

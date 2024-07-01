@@ -26,7 +26,7 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<Cart> ICartRepository.AddToCart(int userId, int productId, int quantity)
+        public async Task<Cart> AddToCart(int userId, int productId, int quantity)
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
@@ -70,7 +70,7 @@ namespace DataAccess.Repository
             return cart;
         }
 
-        async Task<Cart> ICartRepository.CreateCart(int userId)
+        public async Task<Cart> CreateCart(int userId)
         {
             var cart = new Cart
             {
@@ -85,14 +85,14 @@ namespace DataAccess.Repository
             return cart;
         }
 
-        async Task<Cart> ICartRepository.GetCart(int userId)
+        public async Task<Cart> GetCart(int userId)
         {
             return await _context.Carts
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
-        async Task<Cart> ICartRepository.RemoveProduct(int userId, int productId)
+        public async Task<Cart> RemoveProduct(int userId, int productId)
         {
            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
 
@@ -119,7 +119,7 @@ namespace DataAccess.Repository
             return cart;
         }
 
-        async Task<Cart> ICartRepository.UpdateProductQuantity(int userId, int productId, int quantity)
+        public async Task<Cart> UpdateProductQuantity(int userId, int productId, int quantity)
         {
             var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
 

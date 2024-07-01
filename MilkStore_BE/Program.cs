@@ -80,6 +80,35 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+        policy.RequireClaim("RoleId", "1"));
+    
+    options.AddPolicy("Staff", policy =>
+        policy.RequireClaim("RoleId", "2"));
+
+    options.AddPolicy("Customer", policy =>
+        policy.RequireClaim("RoleId", "3"));
+
+    options.AddPolicy("AllRoles", policy =>
+    policy.RequireAssertion(context =>
+        context.User.HasClaim(c =>
+            (c.Type == "RoleId" && c.Value == "1") ||   // Admin
+            (c.Type == "RoleId" && c.Value == "2") ||   // Staff
+            (c.Type == "RoleId" && c.Value == "3")      // Customer
+        )
+    ));
+
+    options.AddPolicy("Manager", policy =>
+    policy.RequireAssertion(context =>
+        context.User.HasClaim(c =>
+            (c.Type == "RoleId" && c.Value == "1") ||   // Admin
+            (c.Type == "RoleId" && c.Value == "2")      // Staff
+        )
+    ));
+});
+
 builder.Services.AddDbContext<DataContext>(option =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -115,6 +144,9 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+
+builder.Services.AddScoped<IVoteRepository, VoteRepository>();
+builder.Services.AddScoped<IVoteService, VoteService>();
 
 var app = builder.Build();
 

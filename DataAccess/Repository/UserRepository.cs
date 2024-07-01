@@ -36,19 +36,19 @@ namespace DataAccess.Repository
             _configuration = configuration;
         }
 
-        async Task<bool> IUserRepository.CreateStaff(User user)
+        public async Task<bool> CreateStaff(User user)
         {
             _context.Users.Update(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IUserRepository.DeleteUser(User user)
+        public async Task<bool> DeleteUser(User user)
         {
             _context.Users.Remove(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IUserRepository.DisableUser(int id)
+        public async Task<bool> DisableUser(int id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
@@ -63,17 +63,17 @@ namespace DataAccess.Repository
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<ICollection<User>> IUserRepository.GetAllUser()
+        public async Task<ICollection<User>> GetAllUser()
         {
             return await _context.Users.ToListAsync();
         }
 
-        async Task<User> IUserRepository.GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        async Task<bool> IUserRepository.UpdateAccount(User user)
+        public async Task<bool> UpdateAccount(User user)
         {
             _context.Users.Remove(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;

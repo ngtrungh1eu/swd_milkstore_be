@@ -17,7 +17,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,7 +41,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateCart/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<IActionResult> CreateCart(int id)
         {
             var result = await _service.CreateCart(id);
@@ -67,7 +67,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("AddToCart/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<IActionResult> AddToCart(int id, int productId, int quantity)
         {
             var result = await _service.AddToCart(id, productId, quantity);
@@ -93,7 +93,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateQuantity/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<IActionResult> EditProductQuantity(int id, int productId, int quantity)
         {
             var result = await _service.UpdateProductQuantity(id, productId, quantity);
@@ -125,7 +125,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpDelete("RemoveProduct/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<IActionResult> RemoveProductFromCart(int id, int productId)
         {
             var result = await _service.RemoveProduct(id, productId);

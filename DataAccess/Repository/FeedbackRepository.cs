@@ -23,17 +23,17 @@ namespace DataAccess.Repository
         {
             _context = context;
         }
-        async Task<bool> IFeedbackRepository.DeleteFeedback(Feedback f)
+        public async Task<bool> DeleteFeedback(Feedback f)
         {
             _context.Feedbacks.Remove(f);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
-        async Task<bool> IFeedbackRepository.UpdateFeedback(Feedback existingFeedback)
+        public async Task<bool> UpdateFeedback(Feedback existingFeedback)
         {
             _context.Feedbacks.Update(existingFeedback);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
-        async Task<Feedback> IFeedbackRepository.GetFeedbackById(int id)
+        public async Task<Feedback> GetFeedbackById(int id)
         {
             return await _context.Feedbacks.FirstOrDefaultAsync(p => p.FeedbackId == id);
         }
@@ -43,7 +43,7 @@ namespace DataAccess.Repository
             return await _context.Feedbacks.ToListAsync();
         }
 
-        async Task<bool> IFeedbackRepository.CreateFeedback(Feedback f)
+        public async Task<bool> CreateFeedback(Feedback f)
         {
             _context.Feedbacks.Add(f);
             return await _context.SaveChangesAsync() > 0 ? true : false;

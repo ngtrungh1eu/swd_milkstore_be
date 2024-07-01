@@ -43,7 +43,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPost("/promotionId/productId")]
-        [Authorize(Roles = "Admin,Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult<DataAccess.Models.Promotion>> AddProduct(int promotionId, int productId)
         {
            
@@ -68,7 +68,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult<DataAccess.Models.Promotion>> AddService(PromotionDTO request)
         {
             if(request.Promote < 0)
@@ -97,7 +97,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPut("{promotionId}")]
-        [Authorize(Roles = "Admin,Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult> UpdatePromotion(int promotionId, PromotionDTO request)
         {
             if (request == null)
@@ -137,7 +137,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult> DeletePromotion(int id)
         {
             var deletePromotion = await _service.DeletePromotion(id);

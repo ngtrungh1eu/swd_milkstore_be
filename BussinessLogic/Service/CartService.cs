@@ -30,7 +30,7 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.AddToCart(int userId, int productId, int quantity)
+        public async Task<ServiceResponse<CartDTO>> AddToCart(int userId, int productId, int quantity)
         {
             ServiceResponse<CartDTO> _response = new();
             try
@@ -67,7 +67,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.CreateCart(int userId)
+        public async Task<ServiceResponse<CartDTO>> CreateCart(int userId)
         {
             ServiceResponse<CartDTO> _response = new();
             try
@@ -97,7 +97,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.GetCart(int userId)
+        public async Task<ServiceResponse<CartDTO>> GetCart(int userId)
         {
             ServiceResponse<CartDTO> _response = new();
             try
@@ -128,7 +128,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.RemoveProduct(int userId, int productId)
+        public async Task<ServiceResponse<CartDTO>> RemoveProduct(int userId, int productId)
         {
             ServiceResponse<CartDTO> _response = new();
             try
@@ -168,7 +168,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CartDTO>> ICartService.UpdateProductQuantity(int userId, int productId, int quantity)
+        public async Task<ServiceResponse<CartDTO>> UpdateProductQuantity(int userId, int productId, int quantity)
         {
             ServiceResponse<CartDTO> _response = new();
             try

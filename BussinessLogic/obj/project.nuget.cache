@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IQmN5j8O/K/PwDWNVKptxJKwD4RW32XDaTpTs3SE0DTLrbhfcM+LyGzIL/pMSf7zmYDHmA/pKv8KZR/fQn5hsw==",
+  "dgSpecHash": "pVlASQAf0LgfF1yNy7mskcXegPZOiPu3k/01Sv6BG1eY1wx+x0FXCbecwzEAnskG+mxtHObXuJVMb0eJuWc0aw==",
   "success": true,
-  "projectFilePath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+  "projectFilePath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

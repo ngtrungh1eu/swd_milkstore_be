@@ -24,7 +24,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> GetAllFavourite(int id)
         {
             try
@@ -52,7 +52,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPost("/productId/userId/")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> AddFavorite(int productId, int userId)
         {
             try
@@ -101,7 +101,7 @@ namespace MIlkStore_BE.Controllers
             }
         }
         [HttpDelete("/productId/userId")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> DeleteFavorite(int productId, int userId)
         {
             try

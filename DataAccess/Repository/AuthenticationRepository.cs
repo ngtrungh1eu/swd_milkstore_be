@@ -38,7 +38,7 @@ namespace DataAccess.Repository
 
         public async Task<TokenModel> Login(SignInModel model)
         {
-            var user = await _context.Users.Include(u => u.Role).SingleOrDefaultAsync(u => u.UserName == model.UserName && u.Password == model.Password);
+            var user = await _context.Users.Include(u => u.Role).SingleOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
 
             if (user == null)
             {
@@ -49,7 +49,8 @@ namespace DataAccess.Repository
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Id", user.Id.ToString()),
-                new Claim("RoleId", user.RoleId.ToString())
+                new Claim("RoleId", user.RoleId.ToString()),
+                new Claim("Role", user.Role.RoleType)
             };
 
             var authenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
@@ -118,7 +119,8 @@ namespace DataAccess.Repository
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Id", refreshTokenEntity.UserId.ToString()),
-                new Claim("RoleId", refreshTokenEntity.User.RoleId.ToString())
+                new Claim("RoleId", refreshTokenEntity.User.RoleId.ToString()),
+                new Claim(ClaimTypes.Role, refreshTokenEntity.User.Role.RoleType)
             };
 
             var authenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));

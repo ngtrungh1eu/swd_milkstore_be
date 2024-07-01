@@ -14,23 +14,21 @@ namespace MilkStore_BE.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
-        private readonly IUserRepository _repository;
 
-        public UserController(IUserService service, IUserRepository repository)
+        public UserController(IUserService service)
         {
             _service = service;
-            _repository = repository;
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult<List<UserModel>>> GetUserList()
         {
             return Ok(await _service.GetAllUser());
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AllRoles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,8 +51,8 @@ namespace MilkStore_BE.Controllers
             return Ok(user);
         }
 
-        [HttpPost("CreateProduct")]
-        [Authorize(Roles = "Admin")]
+        [HttpPost("CreateStaff")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult<User>> CreateStaff(UserModel request)
         {
             var newStaff = await _service.CreateStaff(request);
@@ -84,9 +82,9 @@ namespace MilkStore_BE.Controllers
             return Ok(newStaff.Data);
         }
 
-        [HttpPut("UpdateProduct/{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateCount(int id, [FromBody] AccountModel request)
+        [HttpPut("UpdateAccount/{id}")]
+        [Authorize(Policy = "AllRoles")]
+        public async Task<ActionResult> UpdateAccount(int id, [FromBody] AccountModel request)
         {
             if (request == null)
             {
@@ -125,8 +123,8 @@ namespace MilkStore_BE.Controllers
 
         }
 
-        [HttpPut("DisableProduct/{id}")]
-        [Authorize(Roles = "Admin")]
+        [HttpPut("DisableAccount/{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> DisableAccount(int id)
         {
             var disableAccount = await _service.DisableUser(id);
@@ -152,6 +150,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             var deleteUser = await _service.DeleteUser(id);

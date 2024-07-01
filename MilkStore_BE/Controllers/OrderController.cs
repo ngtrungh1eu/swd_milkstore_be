@@ -17,14 +17,14 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Staff,Customer")]
+        [Authorize(Policy = "AllRoles")]
         public async Task<ActionResult<List<ProductDTO>>> GetOrderList()
         {
             return Ok(await _service.GetOrderList());
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Staff,Customer")]
+        [Authorize(Policy = "AllRoles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -48,7 +48,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateOrder/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult<Order>> CreateOrder(int id)
         {
 
@@ -73,7 +73,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateProgress/{id}")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Policy = "Staff")]
         public async Task<ActionResult<Order>> UpdateProgress(int id,[FromBody] string status)
         {
             var updateProgress = await _service.UpdateProcess(id);
@@ -98,7 +98,7 @@ namespace MilkStore_BE.Controllers
         }
         
         [HttpPut("CancelOrder/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult<Order>> CancelOrder(int id)
         {
             var cancelOrder = await _service.CancelOrder(id);

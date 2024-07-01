@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HlL8zeoCYr7K13m+FyhxEsuMZPFkStHrYOrs+4FSIIgvYBBHYz0WW53uGRgb5q8lnxicx9ci0Kpnz8Ivs4vckg==",
+  "dgSpecHash": "EVjYlXGIC0HEprgow/3siDB5Mr6sNX3MLeLVqSk1R43COBCbm5vz/pYluGZX2UUYa1RpfBe0K9hoAKOyGNcrRA==",
   "success": true,
-  "projectFilePath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+  "projectFilePath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

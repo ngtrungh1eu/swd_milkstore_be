@@ -28,23 +28,23 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<int> IBlogRepository.CountNotUseful(int blogId)
+        public async Task<int> CountNotUseful(int blogId)
         {
             return await _context.Votes.CountAsync(v => v.BlogId == blogId && v.VoteType == false);
         }
 
-        async Task<int> IBlogRepository.CountUseful(int blogId)
+        public async Task<int> CountUseful(int blogId)
         {
             return await _context.Votes.CountAsync(v => v.BlogId == blogId && v.VoteType == true);
         }
 
-        async Task<bool> IBlogRepository.CreateBlog(Blog blog)
+        public async Task<bool> CreateBlog(Blog blog)
         {
             _context.Blogs.Add(blog);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IBlogRepository.DeleteBlog(Blog blog)
+        public async Task<bool> DeleteBlog(Blog blog)
         {
             _context.Blogs.Remove(blog);
             return await _context.SaveChangesAsync() > 0 ? true : false;
@@ -76,7 +76,7 @@ namespace DataAccess.Repository
             return blogDetail;
         }
 
-        async Task<bool> IBlogRepository.UpdateBlog(Blog blog, int userId)
+        public async Task<bool> UpdateBlog(Blog blog, int userId)
         {
             var existingBlog = await _context.Blogs.FirstOrDefaultAsync(b => (b.BlogId == blog.BlogId) && (b.UserId == userId));
 

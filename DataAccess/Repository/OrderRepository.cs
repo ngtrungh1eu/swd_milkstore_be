@@ -27,7 +27,7 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<bool> IOrderRepository.CancelOrder(int id)
+        public async Task<bool> CancelOrder(int id)
         {
             var order = await _context.Orders
                 .Include(o => o.ProductOrders)
@@ -53,7 +53,7 @@ namespace DataAccess.Repository
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<Order> IOrderRepository.CreateOrder(int cartId)
+        public async Task<Order> CreateOrder(int cartId)
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
@@ -131,7 +131,7 @@ namespace DataAccess.Repository
             return order;
         }
 
-        async Task<Order> IOrderRepository.GetOrderById(int id)
+        public async Task<Order> GetOrderById(int id)
         {
             return await _context.Orders
                 .Include(o => o.ProductOrders)
@@ -143,7 +143,7 @@ namespace DataAccess.Repository
             return await _context.Orders.ToListAsync();
         }
 
-        async Task<bool> IOrderRepository.UpdateProcess(int id)
+        public async Task<bool> UpdateProcess(int id)
         {
             var order = await _context.Orders.FindAsync(id);
             if (order == null || order.Status == "cancelled")

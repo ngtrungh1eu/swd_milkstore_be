@@ -32,7 +32,7 @@ namespace BussinessLogic.Service
 
         }
 
-        async Task<ServiceResponse<CommentDTO>> ICommentService.DeleteComment(int id)
+        public async Task<ServiceResponse<CommentDTO>> DeleteComment(int id)
         {
             ServiceResponse<CommentDTO> _response = new();
             try
@@ -70,7 +70,7 @@ namespace BussinessLogic.Service
             return _response; ;
         }
 
-        async Task<ServiceResponse<CommentDTO>> ICommentService.UpdateComment(int userId, CommentDTO comment)
+        public async Task<ServiceResponse<CommentDTO>> UpdateComment(int userId, CommentDTO comment)
         {
             ServiceResponse<CommentDTO> _response = new();
             try
@@ -111,7 +111,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CommentDTO>> ICommentService.CreateComment(int userId, CommentDTO comment)
+        public async Task<ServiceResponse<CommentDTO>> CreateComment(int userId, CommentDTO comment)
         {
             ServiceResponse<CommentDTO> _response = new();
             try
@@ -142,7 +142,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<CommentDTO>> ICommentService.GetCommentById(int id)
+        public async Task<ServiceResponse<CommentDTO>> GetCommentById(int id)
         {
             ServiceResponse<CommentDTO> _response = new();
             try

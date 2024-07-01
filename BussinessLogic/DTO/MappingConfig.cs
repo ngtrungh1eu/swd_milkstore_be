@@ -18,6 +18,8 @@ namespace BussinessLogic.DTO
         public MappingConfig()
         {
             CreateMap<DataAccess.Models.User, UserDTO>().ReverseMap();
+            CreateMap<DataAccess.Models.User, UserModel>().ReverseMap();
+            CreateMap<DataAccess.Models.User, AccountModel>().ReverseMap();
             CreateMap<DataAccess.Models.Product, Product.ProductDTO>().ReverseMap();
             CreateMap<DataAccess.Models.Order, OrderDTO>().ReverseMap();
             CreateMap<ProductOrder, ProductOrderDTO>().ReverseMap();

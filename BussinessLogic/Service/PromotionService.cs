@@ -38,7 +38,7 @@ namespace BussinessLogic.Service
             _productRepository = productRepository1;
         }
 
-        async Task<ServiceResponse<List<PromotionDTO>>> IPromotionService.ListAllPromotion()
+        public async Task<ServiceResponse<List<PromotionDTO>>> ListAllPromotion()
         {
             ServiceResponse<List<PromotionDTO>> _response = new();
             try
@@ -63,7 +63,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<PromotionModelDTO>> IPromotionService.GetPromotionModelById(int id)
+        public async Task<ServiceResponse<PromotionModelDTO>> GetPromotionModelById(int id)
         {
             ServiceResponse<PromotionModelDTO> _response = new();
             try
@@ -127,7 +127,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<PromotionDTO>> IPromotionService.CreatePromotion(PromotionDTO request)
+        public async Task<ServiceResponse<PromotionDTO>> CreatePromotion(PromotionDTO request)
         {
             ServiceResponse<PromotionDTO> _response = new();
             try
@@ -165,7 +165,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<PromotionDTO>> IPromotionService.UpdatePromotion(int promotionId, PromotionDTO request)
+        public async Task<ServiceResponse<PromotionDTO>> UpdatePromotion(int promotionId, PromotionDTO request)
         {
             ServiceResponse<PromotionDTO> _response = new();
             try
@@ -209,7 +209,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<PromotionDTO>> IPromotionService.DeletePromotion(int id)
+        public async Task<ServiceResponse<PromotionDTO>> DeletePromotion(int id)
         {
             ServiceResponse<PromotionDTO> _response = new();
             try

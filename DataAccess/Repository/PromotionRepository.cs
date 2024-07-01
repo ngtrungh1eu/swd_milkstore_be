@@ -29,29 +29,29 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<ICollection<Promotion>> IPromotionRepository.ListAllPromotion()
+        public async Task<ICollection<Promotion>> ListAllPromotion()
         {
             return await _context.Promotions.ToListAsync();
         }
 
-        async Task<bool> IPromotionRepository.CreatePromotion(Promotion promotion)
+        public async Task<bool> CreatePromotion(Promotion promotion)
         {
             _context.Promotions.Add(promotion);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IPromotionRepository.UpdatePromotion(Promotion promotion)
+        public async Task<bool> UpdatePromotion(Promotion promotion)
         {
             _context.Promotions.Update(promotion);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<Promotion> IPromotionRepository.GetPromotionById(int id)
+        public async Task<Promotion> GetPromotionById(int id)
         {
             return await _context.Promotions.FirstOrDefaultAsync(p => p.PromotionId == id);
         }
 
-        async Task<PromotionModel> IPromotionRepository.GetPromotionModelById(int id)
+        public async Task<PromotionModel> GetPromotionModelById(int id)
         {
             var query = from pm in _context.Promotions
                         where pm.PromotionId == id
@@ -91,7 +91,7 @@ namespace DataAccess.Repository
             promotionModel.Products = productsOfPromotion;
             return promotionModel;
         }
-        async Task<bool> IPromotionRepository.DeletePromotion(Promotion promotion)
+        public async Task<bool> DeletePromotion(Promotion promotion)
         {
             _context.Promotions.Remove(promotion);
             return await _context.SaveChangesAsync() > 0 ? true : false;

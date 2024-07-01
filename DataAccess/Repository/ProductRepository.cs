@@ -27,35 +27,35 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<ICollection<Product>> IProductRepository.ListAllProduct()
+        public async Task<ICollection<Product>> ListAllProduct()
         {
             return await _context.Products.ToListAsync();
         }
 
-        async Task<bool> IProductRepository.CreateProduct(Product product)
+        public async Task<bool> CreateProduct(Product product)
         {
             _context.Products.Add(product);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IProductRepository.UpdateProduct(Product product)
+        public async Task<bool> UpdateProduct(Product product)
         {
             _context.Products.Update(product);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IProductRepository.DeleteProduct(Product product)
+        public async Task<bool> DeleteProduct(Product product)
         {
             _context.Products.Remove(product);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<Product> IProductRepository.GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
             return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
-        async Task<bool> IProductRepository.DisableProduct(int id)
+        public async Task<bool> DisableProduct(int id)
         {
             var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
             if (product == null || product.isDisable == true)

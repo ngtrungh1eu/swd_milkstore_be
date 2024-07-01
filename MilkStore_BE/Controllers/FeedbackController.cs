@@ -46,7 +46,7 @@ namespace MIlkStore_BE.Controllers
         //}
 
         [HttpPost("/productId/orderId/")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult<DataAccess.Models.Feedback>> AddService(int productId, int orderId, FeedbackDTO request)
         {
             if (request == null || productId <= 0 || orderId <= 0)
@@ -77,7 +77,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPut("/feedbackId/productId/orderId/")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> UpdateFeedback(int feedbackId,int productId, int orderId,FeedbackDTO request)
         {
             if (request == null || feedbackId <= 0 || productId <= 0 || orderId <= 0)
@@ -111,7 +111,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> DeleteFeedback(int id)
         {
             var deleteFeedback = await _service.DeleteFeedback(id);

@@ -32,7 +32,7 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        async Task<ServiceResponse<List<UserModel>>> IUserService.GetAllUser()
+        public async Task<ServiceResponse<List<UserModel>>> GetAllUser()
         {
             ServiceResponse<List<UserModel>> _response = new();
 
@@ -59,7 +59,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<UserModel>> IUserService.GetUserById(int id)
+        public async Task<ServiceResponse<UserModel>> GetUserById(int id)
         {
             ServiceResponse<UserModel> _response = new();
 
@@ -88,14 +88,14 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<UserModel>> IUserService.CreateStaff(UserModel request)
+        public async Task<ServiceResponse<UserModel>> CreateStaff(UserModel request)
         {
             ServiceResponse<UserModel> _response = new();
             try
             {
                 User _newStaff = new User()
                 {
-                    UserName = request.UserName,
+                    Username = request.Username,
                     Password = request.Password,
                     FullName = request.FullName,
                     DateOfBirth = request.DateOfBirth,
@@ -110,7 +110,7 @@ namespace BussinessLogic.Service
 
                 if (!await _repository.CreateStaff(_newStaff))
                 {
-                    _response.Error = "Repo Error";
+                    _response.Message = "Repo Error";
                     _response.Success = false;
                     _response.Data = null;
                     return _response;
@@ -131,7 +131,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<UserModel>> IUserService.DeleteUser(int id)
+        public async Task<ServiceResponse<UserModel>> DeleteUser(int id)
         {
             ServiceResponse<UserModel> _response = new();
             try
@@ -170,7 +170,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<UserModel>> IUserService.DisableUser(int id)
+        public async Task<ServiceResponse<UserModel>> DisableUser(int id)
         {
             ServiceResponse<UserModel> _response = new();
             try
@@ -212,7 +212,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<AccountModel>> IUserService.UpdateAccount(AccountModel account)
+        public async Task<ServiceResponse<AccountModel>> UpdateAccount(AccountModel account)
         {
             ServiceResponse<AccountModel> _response = new();
             try

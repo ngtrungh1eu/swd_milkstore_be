@@ -32,7 +32,7 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        async Task<ServiceResponse<OrderDTO>> IOrderService.CancelOrder(int id)
+        public async Task<ServiceResponse<OrderDTO>> CancelOrder(int id)
         {
             ServiceResponse<OrderDTO> _response = new();
             try
@@ -73,7 +73,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<OrderDTO>> IOrderService.CreateOrder(int cartId)
+        public async Task<ServiceResponse<OrderDTO>> CreateOrder(int cartId)
         {
             ServiceResponse<OrderDTO> _response = new();
             try
@@ -103,7 +103,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<OrderDTO>> IOrderService.GetOrderById(int id)
+        public async Task<ServiceResponse<OrderDTO>> GetOrderById(int id)
         {
             ServiceResponse<OrderDTO> _response = new();
             try
@@ -131,7 +131,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<List<OrderDTO>>> IOrderService.GetOrderList()
+        public async Task<ServiceResponse<List<OrderDTO>>> GetOrderList()
         {
             ServiceResponse<List<OrderDTO>> _response = new();
             try
@@ -156,7 +156,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<OrderDTO>> IOrderService.UpdateProcess(int id)
+        public async Task<ServiceResponse<OrderDTO>> UpdateProcess(int id)
         {
             ServiceResponse<OrderDTO> _response = new();
             try

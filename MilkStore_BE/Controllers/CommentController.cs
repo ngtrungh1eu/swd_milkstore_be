@@ -38,7 +38,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateComment/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult<Comment>> CreateComment(int id, int userId, [FromBody] CommentDTO request)
         {
             request.BlogId = id;
@@ -61,7 +61,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateComment/{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> UpdateComment(int id, int userId, [FromBody] CommentDTO request)
         {
             request.CommentId = id;
@@ -90,7 +90,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Policy = "Customer")]
         public async Task<ActionResult> DeleteComment(int id)
         {
             var deleteComment = await _service.DeleteComment(id);

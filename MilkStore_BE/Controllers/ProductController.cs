@@ -46,7 +46,7 @@ namespace MIlkStore_BE.Controllers
         }
         
         [HttpPost("CreateProduct")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult<DataAccess.Models.Product>> CreateProduct(ProductDTO request)
         {
             var newProduct = await _service.CreateProduct(request);
@@ -77,7 +77,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPut("UpdateProduct/{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductDTO request)
         {
             if (request == null)
@@ -118,7 +118,7 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpPut("DisableProduct/{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult> DisableProduct(int id)
         {
             var disableProduct = await _service.DisableProduct(id);

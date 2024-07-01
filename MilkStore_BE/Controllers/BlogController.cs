@@ -66,7 +66,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateBlog")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Policy = "Staff")]
         public async Task<ActionResult<Blog>> CreateBlog(BlogDTO request)
         {
             var newBlog = await _service.CreateBlog(request);
@@ -87,7 +87,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateBlog/{id}")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Policy = "Staff")]
         public async Task<ActionResult> UpdateBlog(int id, int userId, [FromBody] BlogDTO request)
         {
             request.BlogId = id;
@@ -116,7 +116,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpDelete("DeleteBlog/{id}")]
-        [Authorize(Roles = "Admin,Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult> DeleteBlog(int id)
         {
             var deleteBlog = await _service.DeleteBlog(id);

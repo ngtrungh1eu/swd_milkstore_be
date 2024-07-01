@@ -12,10 +12,12 @@ namespace BussinessLogic.DTO.User
     {
 
         [Required]
-        [Range(2, 15, ErrorMessage = "Username must contains as least 2 characters")]
-        public string UserName { get; set; }
+        [MinLength(2, ErrorMessage = "Username must contain at least 2 characters")]
+        [MaxLength(15, ErrorMessage = "Username must contain at most 15 characters")]
+        public string Username { get; set; }
         [Required]
-        [Range(8, 50, ErrorMessage = "Password must contains as least 8 characters")]
+        [MinLength(8, ErrorMessage = "Password must contain at least 8 characters")]
+        [MaxLength(50, ErrorMessage = "Password must contain at most 50 characters")]
         public string Password { get; set; }
         public string FullName { get; set; }
         public DateTime? DateOfBirth { get; set; }

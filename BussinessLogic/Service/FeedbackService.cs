@@ -37,7 +37,7 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        async Task<ServiceResponse<Feedback>> IFeedbackService.DeleteFeedback(int id)
+        public async Task<ServiceResponse<Feedback>> DeleteFeedback(int id)
         {
             ServiceResponse<Feedback> _response = new();
             try
@@ -74,9 +74,9 @@ namespace BussinessLogic.Service
 
             return _response;
         }
-    
 
-    async Task<ServiceResponse<Feedback>> IFeedbackService.CreateFeedback(FeedbackDTO feedbackDto)
+
+        public async Task<ServiceResponse<Feedback>> CreateFeedback(FeedbackDTO feedbackDto)
         {
             ServiceResponse<Feedback> _response = new();
             try
@@ -146,8 +146,8 @@ namespace BussinessLogic.Service
 
             return _response;
         }
-     
-        async Task<List<Feedback>> IFeedbackService.ListAllFeedback(int? productId)
+
+        public async Task<List<Feedback>> ListAllFeedback(int? productId)
         {
             if (productId.HasValue)
                 return (await _feedbackRepository.ListAllFeedback()).Where(x => x.ProductId == productId).ToList();
@@ -155,7 +155,7 @@ namespace BussinessLogic.Service
         }
 
 
-        async Task<ServiceResponse<Feedback>> IFeedbackService.UpdateFeedback(FeedbackDTO request)
+        public async Task<ServiceResponse<Feedback>> UpdateFeedback(FeedbackDTO request)
         {
             ServiceResponse<Feedback> _response = new();
             try
@@ -196,7 +196,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<Feedback>> IFeedbackService.GetFeedbackById(int id)
+        public async Task<ServiceResponse<Feedback>> GetFeedbackById(int id)
         {
             ServiceResponse<Feedback> _response = new();
             try

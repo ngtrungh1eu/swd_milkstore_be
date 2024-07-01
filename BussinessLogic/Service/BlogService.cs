@@ -35,7 +35,7 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        async Task<ServiceResponse<BlogDTO>> IBlogService.CreateBlog(BlogDTO request)
+        public async Task<ServiceResponse<BlogDTO>> CreateBlog(BlogDTO request)
         {
             ServiceResponse<BlogDTO> _response = new();
             try
@@ -78,7 +78,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<BlogDTO>> IBlogService.DeleteBlog(int id)
+        public async Task<ServiceResponse<BlogDTO>> DeleteBlog(int id)
         {
             ServiceResponse<BlogDTO> _response = new();
 
@@ -119,7 +119,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<ICollection<BlogDTO>>> IBlogService.GetAllBlog()
+        public async Task<ServiceResponse<ICollection<BlogDTO>>> GetAllBlog()
         {
             ServiceResponse<ICollection<BlogDTO>> _response = new();
             try
@@ -149,7 +149,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<BlogDTO>> IBlogService.GetBlogById(int id)
+        public async Task<ServiceResponse<BlogDTO>> GetBlogById(int id)
         {
             ServiceResponse<BlogDTO> _response = new();
             try
@@ -178,7 +178,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<ICollection<CommentDTO>>> IBlogService.GetCommentByBlog(int blogId)
+        public async Task<ServiceResponse<ICollection<CommentDTO>>> GetCommentByBlog(int blogId)
         {
             ServiceResponse<ICollection<CommentDTO>> _response = new();
             try
@@ -207,7 +207,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<BlogDTO>> IBlogService.UpdateBlog(BlogDTO blog, int userId)
+        public async Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int userId)
         {
             ServiceResponse<BlogDTO> _response = new();
             try

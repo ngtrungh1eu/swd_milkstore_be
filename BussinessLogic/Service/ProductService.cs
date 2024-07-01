@@ -33,7 +33,7 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        async Task<ServiceResponse<ProductDTO>> IProductService.CreateProduct(ProductDTO request)
+        public async Task<ServiceResponse<ProductDTO>> CreateProduct(ProductDTO request)
         {
             ServiceResponse<ProductDTO> _response = new();
             try
@@ -61,7 +61,7 @@ namespace BussinessLogic.Service
 
                 if (!await _productRepository.CreateProduct(_newProduct))
                 {
-                    _response.Error = "RepoError";
+                    _response.Message = "RepoError";
                     _response.Success = false;
                     _response.Data = null;
                     return _response;
@@ -82,7 +82,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<ProductDTO>> IProductService.DeleteProduct(int id)
+        public async Task<ServiceResponse<ProductDTO>> DeleteProduct(int id)
         {
             ServiceResponse<ProductDTO> _response = new();
             try
@@ -121,7 +121,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<ProductDTO>> IProductService.DisableProduct(int id)
+        public async Task<ServiceResponse<ProductDTO>> DisableProduct(int id)
         {
             ServiceResponse<ProductDTO> _response = new();
             try
@@ -163,7 +163,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<ProductDTO>> IProductService.GetProductById(int id)
+        public async Task<ServiceResponse<ProductDTO>> GetProductById(int id)
         {
             ServiceResponse<ProductDTO> _response = new();
             try
@@ -191,7 +191,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<List<ProductDTO>>> IProductService.ListAllProduct()
+        public async Task<ServiceResponse<List<ProductDTO>>> ListAllProduct()
         {
             ServiceResponse<List<ProductDTO>> _response = new();
             try
@@ -216,7 +216,7 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        async Task<ServiceResponse<ProductDTO>> IProductService.UpdateProduct(ProductDTO request)
+        public async Task<ServiceResponse<ProductDTO>> UpdateProduct(ProductDTO request)
         {
             ServiceResponse<ProductDTO> _response = new();
             try
