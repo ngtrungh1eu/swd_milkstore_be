@@ -24,7 +24,7 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<PromotionDTO>> UpdatePromotion(int promotionId,PromotionDTO promotion);
         Task<ServiceResponse<PromotionDTO>> DeletePromotion(int id);
         Task<ServiceResponse<PromotionDTO>> AddPromotionProduct(int promotionId,int productId);
-
+        Task<ServiceResponse<PromotionDTO>> RemoveProductFromPromotion(int promotionId, int productId);
     }
     public class PromotionService : IPromotionService
     {
@@ -285,5 +285,37 @@ namespace BussinessLogic.Service
 
             return _response;
         }
+
+        public async Task<ServiceResponse<PromotionDTO>> RemoveProductFromPromotion(int promotionId, int productId)
+        {
+            ServiceResponse<PromotionDTO> response = new();
+            try
+            {
+                Promotion promotion = await _promotionRepository.GetPromotionById(promotionId);
+                if (promotion == null)
+                {
+                    response.Success = false;
+                    response.Message = "Promotion not found";
+                    return response;
+                }
+
+                await _promotionRepository.RemoveProductFromPromotion(promotionId, productId);
+
+                promotion = await _promotionRepository.GetPromotionById(promotionId);
+                response.Data = _mapper.Map<PromotionDTO>(promotion);
+                response.Success = true;
+                response.Message = "Product removed from promotion";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Error";
+                response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return response;
+        }
+
     }
+
+
 }

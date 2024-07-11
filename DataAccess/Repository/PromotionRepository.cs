@@ -19,6 +19,7 @@ namespace DataAccess.Repository
         Task<Promotion> GetPromotionById(int id);
         Task<bool> DeletePromotion(Promotion promotion);
         Task UpdateProductPromotion(Promotion promotion, Product product);
+        Task RemoveProductFromPromotion(int promotionId, int productId);
     }
 
     public class PromotionRepository : IPromotionRepository
@@ -107,5 +108,23 @@ namespace DataAccess.Repository
             _context.Entry(existed).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task RemoveProductFromPromotion(int promotionId, int productId) 
+        {
+            var promotion = await _context.Promotions.Include(p => p.Products)
+                                                     .FirstOrDefaultAsync(p => p.PromotionId == promotionId);
+
+            if (promotion != null)
+            {
+                var product = promotion.Products.FirstOrDefault(p => p.ProductId == productId);
+                if (product != null)
+                {
+                    promotion.Products.Remove(product);
+                    _context.Entry(promotion).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
     }
 }

@@ -4009,11 +4009,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+      "projectUniqueName": "D:\\CODENEW\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
       "projectName": "MilkStore_BE",
-      "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+      "projectPath": "D:\\CODENEW\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\obj\\",
+      "outputPath": "D:\\CODENEW\\swd_milkstore_be\\MilkStore_BE\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4030,8 +4030,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
-              "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
+            "D:\\CODENEW\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
+              "projectPath": "D:\\CODENEW\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
             }
           }
         }
@@ -4040,6 +4040,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4090,6 +4095,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.30, 6.0.30]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.30, 6.0.30]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.30, 6.0.30]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.30, 6.0.30]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -4098,7 +4121,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205\\RuntimeIdentifierGraph.json"
       }
     }
   }
