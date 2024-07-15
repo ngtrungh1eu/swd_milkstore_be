@@ -36,37 +36,20 @@ namespace DataAccess.Repository
 
         public async Task<bool> CreateBrand(Brand brand)
         {
-            try
-            {
-                await _context.Brands.AddAsync(brand);
-                return await _context.SaveChangesAsync() > 0 ? true : false;
-
-            }catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            return false;
-
+            _context.Brands.Add(brand);
+            return await _context.SaveChangesAsync() > 0 ? true : false;
         }
-        
+
         public async Task<bool> UpdateBrand(Brand brand)
         {
             _context.Brands.Update(brand);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
         public async Task<bool> DeleteBrand(Brand brand)
         {
-            /*   var productsToDelete = await _context.Products.Where(p => p.BrandId == brand.BrandId).ToListAsync();
-               _context.Products.RemoveRange(productsToDelete);
-               await _context.SaveChangesAsync();*/
-            var productExistBrand = await _context.Products.Where(p => p.BrandId == brand.BrandId).ToListAsync();
-            foreach (var product in productExistBrand)
-            {
-                product.isDisable = true;
-            }
             _context.Brands.Remove(brand);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
     }

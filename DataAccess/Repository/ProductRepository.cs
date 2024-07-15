@@ -12,6 +12,7 @@ namespace DataAccess.Repository
     public interface IProductRepository
     {
         Task<ICollection<Product>> ListAllProduct();
+        Task<ICollection<Product>> DisplayProduct();
         Task<Product> GetProductById(int id);
         Task<bool> CreateProduct(Product product);
         Task<bool> UpdateProduct(Product product);
@@ -29,7 +30,81 @@ namespace DataAccess.Repository
 
         public async Task<ICollection<Product>> ListAllProduct()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _context.Products
+                                .Include(p => p.Brand)
+                                .Include(p => p.ProductPromotes)
+                                    .ThenInclude(pp => pp.Promotion)
+                                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                var feedback = await _context.Feedbacks
+                                .Where(f => f.ProductId == product.ProductId)
+                                .ToListAsync();
+
+                if (feedback.Count > 0)
+                {
+                    product.Rate = feedback.Average(f => f.Rate);
+                }
+                else
+                {
+                    product.Rate = 0;
+                }
+
+                product.ProductBrand = product.Brand?.BrandName ?? "Unknown";
+
+                // Kiểm tra nếu ProductPromotes không null trước khi truy cập
+                if (product.ProductPromotes != null)
+                {
+                    var promotion = product.ProductPromotes
+                        .Select(pp => pp.Promotion)
+                        .FirstOrDefault(p => p.StartAt <= DateTime.Now && p.EndAt >= DateTime.Now);
+
+                    product.Discount = promotion?.Promote ?? 0;
+                }
+            }
+
+            return products;
+        }
+
+        public async Task<ICollection<Product>> DisplayProduct()
+        {
+            var products = await _context.Products
+                                .Include(p => p.Brand)
+                                .Include(p => p.ProductPromotes)
+                                    .ThenInclude(pp => pp.Promotion)
+                                .Where(p => !p.isDisable)
+                                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                var feedback = await _context.Feedbacks
+                                .Where(f => f.ProductId == product.ProductId)
+                                .ToListAsync();
+
+                if (feedback.Count > 0)
+                {
+                    product.Rate = feedback.Average(f => f.Rate);
+                }
+                else
+                {
+                    product.Rate = 0;
+                }
+
+                product.ProductBrand = product.Brand?.BrandName ?? "Unknown";
+
+                // Kiểm tra nếu ProductPromotes không null trước khi truy cập
+                if (product.ProductPromotes != null)
+                {
+                    var promotion = product.ProductPromotes
+                        .Select(pp => pp.Promotion)
+                        .FirstOrDefault(p => p.StartAt <= DateTime.Now && p.EndAt >= DateTime.Now);
+
+                    product.Discount = promotion?.Promote ?? 0;
+                }
+            }
+
+            return products;
         }
 
         public async Task<bool> CreateProduct(Product product)
@@ -52,7 +127,29 @@ namespace DataAccess.Repository
 
         public async Task<Product> GetProductById(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            var product = await  _context.Products
+                            .Include(p => p.Brand)
+                            .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product != null)
+            {
+                var feedbacks = await _context.Feedbacks
+                                    .Where(f => f.ProductId == product.ProductId)
+                                    .ToListAsync();
+
+                if (feedbacks.Count > 0)
+                {
+                    product.Rate = feedbacks.Average(f => f.Rate);
+                }
+                else
+                {
+                    product.Rate = 0;
+                }
+
+                product.ProductBrand = product.Brand.BrandName;
+            }
+
+            return product;
         }
 
         public async Task<bool> DisableProduct(int id)

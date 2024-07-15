@@ -35,80 +35,104 @@ namespace MilkStore_BE.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<BrandDTO>> GetBrandById(int id)
         {
-            if (id <= 0)
+            var brand = await _service.GetBrandById(id);
+
+            if (brand.Success == false && brand.Message == "Not Found")
             {
-                return BadRequest("Invalid ID");
+                return BadRequest();
             }
 
-            var response = await _service.GetBrandById(id);
-            if (!response.Success)
+            if (brand.Success == false && brand.Message == "Error")
             {
-                if (response.Message == "NotFound")
-                {
-                    return NotFound(response);
-                }
-
-                return StatusCode(500, response);
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when display brand");
+                return StatusCode(500, ModelState);
             }
 
-            return Ok(response.Data);
+            return Ok(brand);
         }
 
         [HttpPost("CreateBrand")]
         [Authorize(Policy = "Admin")]
-        public async Task<ActionResult<BrandDTO>> CreateBrand(BrandDTO brandDTO)
+        public async Task<ActionResult<BrandDTO>> CreateBrand(BrandDTO request)
         {
-            if (brandDTO == null)
+            var newBrand = await _service.CreateBrand(request);
+
+            if (newBrand.Success == false && newBrand.Message == "Existed")
             {
-                return BadRequest("Brand data is null");
+                return StatusCode(409, newBrand);
             }
 
-            var response = await _service.CreateBrand(brandDTO);
-            if (!response.Success)
+            if (newBrand.Success == false && newBrand.Message == "Repo Error")
             {
-                return StatusCode(500, response);
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when create brand {request}");
+                return StatusCode(500, ModelState);
             }
 
-            return Ok(response.Data);
+            if (newBrand.Success == false && newBrand.Message == "Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when create brand {request}");
+                return StatusCode(500, ModelState);
+            }
+            return Ok(newBrand.Data);
         }
 
         [HttpPut("UpdateBrand/{id}")]
         [Authorize(Policy = "Admin")]
-        public async Task<ActionResult> UpdateBrand(int id, [FromBody]BrandDTO brandDTO)
+        public async Task<ActionResult> UpdateBrand(int id, [FromBody] BrandDTO request)
         {
-            if (brandDTO == null || id <= 0)
+            if (request == null)
             {
-                return BadRequest("Brand data is null");
-            }
-            brandDTO.BrandId = id;
-            var response = await _service.UpdateBrand(brandDTO);
-            if (!response.Success)
-            {
-                if (response.Message == "NotFound")
-                {
-                    return NotFound(response);
-                }
-
-                return StatusCode(500, response);
+                return BadRequest(ModelState);
             }
 
-            return Ok(response.Data);
+            request.BrandId = id;
+
+            var updateBrand = await _service.UpdateBrand(request);
+
+            if (updateBrand.Success == false && updateBrand.Message == "Not Found")
+            {
+                return StatusCode(404, updateBrand);
+            }
+
+            if (updateBrand.Success == false && updateBrand.Message == "Repo Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when updating brand {request}");
+                return StatusCode(500, ModelState);
+            }
+
+            if (updateBrand.Success == false && updateBrand.Message == "Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when updating brand {request}");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(updateBrand.Data);
         }
 
         [HttpDelete("{id}")]
         [Authorize(Policy = "Admin")]
         public async Task<ActionResult> DeleteBrand(int id)
         {
-            var response = await _service.DeleteBrand(id);
-            if (!response.Success)
-            {
-                if (response.Message == "NotFound")
-                {
-                    return NotFound(response);
-                }
+            var deleteBrand = await _service.DeleteBrand(id);
 
-                return StatusCode(500, response);
+            if (deleteBrand.Success == false && deleteBrand.Message == "Not Found")
+            {
+                ModelState.AddModelError("", "Brand Not found");
+                return StatusCode(404, ModelState);
             }
+
+            if (deleteBrand.Success == false && deleteBrand.Message == "Repo Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting Brrand");
+                return StatusCode(500, ModelState);
+            }
+
+            if (deleteBrand.Success == false && deleteBrand.Message == "Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting Brand");
+                return StatusCode(500, ModelState);
+            }
+
             return NoContent();
         }
     }

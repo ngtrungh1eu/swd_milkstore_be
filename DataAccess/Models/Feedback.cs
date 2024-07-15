@@ -25,9 +25,6 @@ namespace DataAccess.Models
         public User User { get; set; }
 
         public int OrderId { get; set; }
-        public Order Order { get; set; }
-
-        public int PreOrderId { get; set; }
-        public PreOrder PreOrder { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

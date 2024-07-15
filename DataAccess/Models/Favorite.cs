@@ -18,6 +18,6 @@ namespace DataAccess.Models
 
         public int UserId { get; set; }
         public User User { get; set; }
-        public ICollection<FavoriteProduct> FavoriteProducts { get; set; }
+        public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set; }
     }
 }

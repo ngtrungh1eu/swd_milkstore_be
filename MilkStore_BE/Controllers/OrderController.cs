@@ -49,10 +49,10 @@ namespace MilkStore_BE.Controllers
 
         [HttpPost("CreateOrder/{id}")]
         [Authorize(Policy = "Customer")]
-        public async Task<ActionResult<Order>> CreateOrder(int id)
+        public async Task<ActionResult<List<Order>>> CreateOrder(int id)
         {
-
             var newOrder = await _service.CreateOrder(id);
+
             if (newOrder.Success == false && newOrder.Message == "Existed")
             {
                 return StatusCode(409, newOrder);
@@ -60,8 +60,8 @@ namespace MilkStore_BE.Controllers
 
             if (newOrder.Success == false && newOrder.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in respository layer when create order");
-                return StatusCode(500, ModelState);
+                ModelState.AddModelError("", $"Cart is empty, cannot create order");
+                return StatusCode(400, ModelState);
             }
 
             if (newOrder.Success == false && newOrder.Message == "Error")

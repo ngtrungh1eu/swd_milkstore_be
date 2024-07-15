@@ -19,7 +19,7 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<BlogDTO>> GetBlogById(int id);
         Task<ServiceResponse<ICollection<CommentDTO>>> GetCommentByBlog(int blogId);
         Task<ServiceResponse<BlogDTO>> CreateBlog(BlogDTO blog);
-        Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int userId);
+        Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int blogId);
         Task<ServiceResponse<BlogDTO>> DeleteBlog(int id);
     }
     public class BlogService : IBlogService
@@ -207,12 +207,12 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        public async Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int userId)
+        public async Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int blogId)
         {
             ServiceResponse<BlogDTO> _response = new();
             try
             {
-                var existingBlog = await _blogRepository.GetBlogById(blog.BlogId);
+                var existingBlog = await _blogRepository.GetBlogById(blogId);
 
                 if (existingBlog == null)
                 {
@@ -224,7 +224,7 @@ namespace BussinessLogic.Service
 
                 Blog updatedBlog = _mapper.Map<Blog>(blog);
 
-                if (!await _blogRepository.UpdateBlog(updatedBlog, userId))
+                if (!await _blogRepository.UpdateBlog(updatedBlog))
                 {
                     _response.Success = false;
                     _response.Message = "Repo Error";

@@ -10,6 +10,7 @@ using BussinessLogic.DTO.Order;
 using BussinessLogic.DTO.Cart;
 using BussinessLogic.DTO.Promotion;
 using BussinessLogic.DTO.Blog;
+using BussinessLogic.DTO.Product;
 
 namespace BussinessLogic.DTO
 {
@@ -20,7 +21,8 @@ namespace BussinessLogic.DTO
             CreateMap<DataAccess.Models.User, UserDTO>().ReverseMap();
             CreateMap<DataAccess.Models.User, UserModel>().ReverseMap();
             CreateMap<DataAccess.Models.User, AccountModel>().ReverseMap();
-            CreateMap<DataAccess.Models.Product, Product.ProductDTO>().ReverseMap();
+            CreateMap<DataAccess.Models.Product, ProductDTO>().ReverseMap();
+            CreateMap<DataAccess.Models.Product, ProductModel>().ReverseMap();
             CreateMap<DataAccess.Models.Order, OrderDTO>().ReverseMap();
             CreateMap<ProductOrder, ProductOrderDTO>().ReverseMap();
             CreateMap<DataAccess.Models.Cart, CartDTO>().ReverseMap();

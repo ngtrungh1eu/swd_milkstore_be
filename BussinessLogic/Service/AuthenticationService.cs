@@ -21,11 +21,14 @@ namespace BussinessLogic.Service
     }
     public class AuthenticationService : IAuthenticationService
     {
+        private readonly ICartRepository _cartRepository;
+        private readonly IFavoriteRepository _favoriteRepository;
         private readonly IAuthenticaionRepository _repository;
         private readonly IMapper _mapper;
 
-        public AuthenticationService(IAuthenticaionRepository repository, IMapper mapper)
+        public AuthenticationService(ICartRepository cartRepository, IAuthenticaionRepository repository, IMapper mapper)
         {
+            _cartRepository = cartRepository;
             _repository = repository;
             _mapper = mapper;
         }
@@ -118,6 +121,9 @@ namespace BussinessLogic.Service
                     _response.Data = null;
                     return _response;
                 }
+
+                await _cartRepository.CreateCart(_newUser.Id);
+                //await _favoriteRepository.CreateFavorite(_newUser.Id);
 
                 _response.Success = true;
                 _response.Data = _mapper.Map<UserDTO>(_newUser);

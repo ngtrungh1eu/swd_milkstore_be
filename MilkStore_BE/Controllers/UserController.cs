@@ -149,33 +149,33 @@ namespace MilkStore_BE.Controllers
             return Ok(disableAccount.Data);
         }
 
-        [HttpDelete("{id}")]
-        [Authorize(Policy = "Admin")]
-        public async Task<ActionResult> DeleteUser(int id)
-        {
-            var deleteUser = await _service.DeleteUser(id);
+        //[HttpDelete("{id}")]
+        //[Authorize(Policy = "Admin")]
+        //public async Task<ActionResult> DeleteUser(int id)
+        //{
+        //    var deleteUser = await _service.DeleteUser(id);
 
 
-            if (deleteUser.Success == false && deleteUser.Message == "Not Found")
-            {
-                ModelState.AddModelError("", "Service Not found");
-                return StatusCode(404, ModelState);
-            }
+        //    if (deleteUser.Success == false && deleteUser.Message == "Not Found")
+        //    {
+        //        ModelState.AddModelError("", "Service Not found");
+        //        return StatusCode(404, ModelState);
+        //    }
 
-            if (deleteUser.Success == false && deleteUser.Message == "Repo Error")
-            {
-                ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting User");
-                return StatusCode(500, ModelState);
-            }
+        //    if (deleteUser.Success == false && deleteUser.Message == "Repo Error")
+        //    {
+        //        ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting User");
+        //        return StatusCode(500, ModelState);
+        //    }
 
-            if (deleteUser.Success == false && deleteUser.Message == "Error")
-            {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting User");
-                return StatusCode(500, ModelState);
-            }
+        //    if (deleteUser.Success == false && deleteUser.Message == "Error")
+        //    {
+        //        ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting User");
+        //        return StatusCode(500, ModelState);
+        //    }
 
-            return NoContent();
+        //    return NoContent();
 
-        }
+        //}
     }
 }

@@ -30,7 +30,7 @@ namespace DataAccess.Repository
             _context = context;
             _configuration = configuration;
         }
-        async Task<bool> IAuthenticaionRepository.Register(User user)
+        public async Task<bool> Register(User user)
         {
             _context.Users.Add(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;
@@ -38,7 +38,7 @@ namespace DataAccess.Repository
 
         public async Task<TokenModel> Login(SignInModel model)
         {
-            var user = await _context.Users.Include(u => u.Role).SingleOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
+            var user = await _context.Users.Include(u => u.Role).SingleOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password && u.IsDisable == false);
 
             if (user == null)
             {

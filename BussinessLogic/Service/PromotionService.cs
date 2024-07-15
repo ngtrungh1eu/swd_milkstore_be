@@ -21,17 +21,17 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<List<PromotionDTO>>> ListAllPromotion();
         Task<ServiceResponse<PromotionModelDTO>> GetPromotionModelById(int id);
         Task<ServiceResponse<PromotionDTO>> CreatePromotion(PromotionDTO promotion);
-        Task<ServiceResponse<PromotionDTO>> UpdatePromotion(int promotionId,PromotionDTO promotion);
+        Task<ServiceResponse<PromotionDTO>> UpdatePromotion(int promotionId, PromotionDTO promotion);
         Task<ServiceResponse<PromotionDTO>> DeletePromotion(int id);
-        Task<ServiceResponse<PromotionDTO>> AddPromotionProduct(int promotionId,int productId);
-
+        Task<ServiceResponse<PromotionDTO>> AddPromotionProduct(int promotionId, int productId);
+        Task<ServiceResponse<PromotionDTO>> RemoveProductFromPromotion(int promotionId, int productId);
     }
     public class PromotionService : IPromotionService
     {
         private readonly IPromotionRepository _promotionRepository;
         private readonly IMapper _mapper;
         private readonly IProductRepository _productRepository;
-        public PromotionService(IPromotionRepository productRepository, IMapper mapper,IProductRepository productRepository1)
+        public PromotionService(IPromotionRepository productRepository, IMapper mapper, IProductRepository productRepository1)
         {
             _promotionRepository = productRepository;
             _mapper = mapper;
@@ -75,21 +75,21 @@ namespace BussinessLogic.Service
                     _response.Message = "Not Found";
                     return _response;
                 }
-                if(promotion.EndAt < DateTime.UtcNow)
+                if (promotion.EndAt < DateTime.UtcNow)
                 {
                     _response.Success = false;
                     _response.Message = "Coupon expire.";
                     return _response;
                 }
                 List<ProductDTO> listDto = new List<ProductDTO>();
-                for(int i = 0; i < promotion.Products.Count; i++)
+                for (int i = 0; i < promotion.Products.Count; i++)
                 {
                     listDto.Add(new ProductDTO
                     {
                         ProductId = promotion.Products[i].ProductId,
                         ProductName = promotion.Products[i].ProductName,
-                        BrandId = promotion.Products[i].BrandId??0,
-                        ByAge = promotion.Products[i].ByAge??0,
+                        BrandId = promotion.Products[i].BrandId ?? 0,
+                        ByAge = promotion.Products[i].ByAge ?? 0,
                         Quantity = promotion.Products[i].Quantity ?? 0,
                         ProductImg = promotion.Products[i].ProductImg,
                         ProductPrice = promotion.Products[i].ProductPrice ?? 0,
@@ -99,7 +99,7 @@ namespace BussinessLogic.Service
                         isPreOrder = promotion.Products[i].isPreOrder ?? false,
                     });
                 }
-               // var promotionDto = _mapper.Map<PromotionModelDTO>(promotion);
+                // var promotionDto = _mapper.Map<PromotionModelDTO>(promotion);
                 var promotionDto = new PromotionModelDTO
                 {
                     PromotionId = promotion.PromotionId,
@@ -132,7 +132,7 @@ namespace BussinessLogic.Service
             ServiceResponse<PromotionDTO> _response = new();
             try
             {
-             
+
                 Promotion _newProduct = new Promotion()
                 {
                     PromotionName = request.PromotionName,
@@ -170,7 +170,7 @@ namespace BussinessLogic.Service
             ServiceResponse<PromotionDTO> _response = new();
             try
             {
-               
+
                 var existingPromotion = await _promotionRepository.GetPromotionById(promotionId);
                 if (existingPromotion == null)
                 {
@@ -253,8 +253,8 @@ namespace BussinessLogic.Service
             ServiceResponse<PromotionDTO> _response = new();
             try
             {
-                Product product =  await _productRepository.GetProductById(productId);
-                if(product == null)
+                Product product = await _productRepository.GetProductById(productId);
+                if (product == null)
                 {
                     _response.Error = "Product not found";
                     _response.Success = false;
@@ -285,5 +285,35 @@ namespace BussinessLogic.Service
 
             return _response;
         }
+
+        public async Task<ServiceResponse<PromotionDTO>> RemoveProductFromPromotion(int promotionId, int productId)
+        {
+            ServiceResponse<PromotionDTO> response = new();
+            try
+            {
+                Promotion promotion = await _promotionRepository.GetPromotionById(promotionId);
+                if (promotion == null)
+                {
+                    response.Success = false;
+                    response.Message = "Promotion not found";
+                    return response;
+                }
+
+                await _promotionRepository.RemoveProductFromPromotion(promotionId, productId);
+
+                promotion = await _promotionRepository.GetPromotionById(promotionId);
+                response.Data = _mapper.Map<PromotionDTO>(promotion);
+                response.Success = true;
+                response.Message = "Product removed from promotion";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Error";
+                response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return response;
+        }
+
     }
 }

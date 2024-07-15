@@ -17,7 +17,7 @@ namespace BussinessLogic.Service
     {
         Task<ServiceResponse<List<OrderDTO>>> GetOrderList();
         Task<ServiceResponse<OrderDTO>> GetOrderById(int id);
-        Task<ServiceResponse<OrderDTO>> CreateOrder(int cartId);
+        Task<ServiceResponse<List<OrderDTO>>> CreateOrder(int cartId);
         Task<ServiceResponse<OrderDTO>> UpdateProcess(int id);
         Task<ServiceResponse<OrderDTO>> CancelOrder(int id);
     }
@@ -73,14 +73,14 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        public async Task<ServiceResponse<OrderDTO>> CreateOrder(int cartId)
+        public async Task<ServiceResponse<List<OrderDTO>>> CreateOrder(int cartId)
         {
-            ServiceResponse<OrderDTO> _response = new();
+            ServiceResponse<List<OrderDTO>> _response = new();
             try
             {
-                var createdOrder = await _repository.CreateOrder(cartId);
+                var createdOrders = await _repository.CreateOrder(cartId);
 
-                if (createdOrder == null)
+                if (createdOrders == null || !createdOrders.Any())
                 {
                     _response.Message = "Repo Error";
                     _response.Success = false;
@@ -89,8 +89,8 @@ namespace BussinessLogic.Service
                 }
 
                 _response.Success = true;
-                _response.Data = _mapper.Map<OrderDTO>(createdOrder);
-                _response.Message = "Order Created Successfully";
+                _response.Data = _mapper.Map<List<OrderDTO>>(createdOrders);
+                _response.Message = "Orders Created Successfully";
             }
             catch (Exception ex)
             {

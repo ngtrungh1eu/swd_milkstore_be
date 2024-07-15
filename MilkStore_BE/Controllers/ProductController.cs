@@ -17,6 +17,13 @@ namespace MIlkStore_BE.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult<List<ProductDTO>>> DisplayProducts()
+        {
+            return Ok(await _service.DisplayProduct());
+        }
+
+        [HttpGet("ProductList")]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult<List<ProductDTO>>> GetProductList()
         {
             return Ok(await _service.ListAllProduct());
@@ -47,7 +54,7 @@ namespace MIlkStore_BE.Controllers
         
         [HttpPost("CreateProduct")]
         [Authorize(Policy = "Admin")]
-        public async Task<ActionResult<DataAccess.Models.Product>> CreateProduct(ProductDTO request)
+        public async Task<ActionResult<DataAccess.Models.Product>> CreateProduct(ProductModel request)
         {
             var newProduct = await _service.CreateProduct(request);
 
@@ -78,7 +85,7 @@ namespace MIlkStore_BE.Controllers
 
         [HttpPut("UpdateProduct/{id}")]
         [Authorize(Policy = "Admin")]
-        public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductDTO request)
+        public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductModel request)
         {
             if (request == null)
             {
@@ -112,9 +119,7 @@ namespace MIlkStore_BE.Controllers
                 return StatusCode(500, ModelState);
             }
 
-
             return Ok(updateProduct.Data);
-
         }
 
         [HttpPut("DisableProduct/{id}")]

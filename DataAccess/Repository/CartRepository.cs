@@ -38,8 +38,21 @@ namespace DataAccess.Repository
                 return null;
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+            var product = await _context.Products
+                .Include(p => p.Brand)
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
+
             if (product == null)
+            {
+                return null;
+            }
+
+            // Kiểm tra số lượng sản phẩm có sẵn
+            if (product.isPreOrder && product.PreOrderAmount < quantity)
+            {
+                return null;
+            }
+            else if (!product.isPreOrder && product.Quantity < quantity)
             {
                 return null;
             }
@@ -55,10 +68,26 @@ namespace DataAccess.Repository
                     Quantity = quantity,
                     UnitPrice = product.ProductPrice * quantity,
                     ProductName = product.ProductName,
-                    Image = product.ProductImg
+                    BrandName = product.Brand.BrandName,
+                    Image = product.ProductImg,
                 };
 
                 _context.CartItems.Add(cartItem);
+            }
+            else
+            {
+                // Kiểm tra số lượng sản phẩm hiện có khi cập nhật giỏ hàng
+                if (product.isPreOrder && product.PreOrderAmount < cartItem.Quantity + quantity)
+                {
+                    return null;
+                }
+                else if (!product.isPreOrder && product.Quantity < cartItem.Quantity + quantity)
+                {
+                    return null;
+                }
+
+                cartItem.Quantity += quantity;
+                cartItem.UnitPrice = product.ProductPrice * quantity;
             }
 
             cart.TotalItem = cart.TotalItem - cart.TotalItem + cart.CartItems.Sum(ci => ci.Quantity);
@@ -137,9 +166,25 @@ namespace DataAccess.Repository
 
             var product = await _context.Products.FindAsync(productId);
 
-            if (product == null || product.Quantity < quantity - cartItem.Quantity)
+            if (product == null)
             {
                 return null;
+            }
+
+            // Kiểm tra số lượng sản phẩm có sẵn khi cập nhật giỏ hàng
+            if (product.isPreOrder)
+            {
+                if (product.PreOrderAmount < quantity)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                if (product.Quantity < quantity)
+                {
+                    return null;
+                }
             }
 
             cart.TotalItem += quantity - cartItem.Quantity;
@@ -153,7 +198,6 @@ namespace DataAccess.Repository
             await _context.SaveChangesAsync();
 
             return cart;
-
         }
     }
 }

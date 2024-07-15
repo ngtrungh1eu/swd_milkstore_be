@@ -2,6 +2,7 @@
 using BussinessLogic.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace MilkStore_BE.Controllers
 {
@@ -74,7 +75,8 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Not Found")
             {
-                return BadRequest();
+                ModelState.AddModelError("", $"Product not found or Insufficent product quantity");
+                return StatusCode(403, ModelState);
             }
 
             if (result.Success == false && result.Message == "Product quantity has to be > 0")
@@ -111,8 +113,8 @@ namespace MilkStore_BE.Controllers
 
             if (result.Success == false && result.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in respository layer when update item");
-                return StatusCode(500, ModelState);
+                ModelState.AddModelError("", $"Product not found or Insufficent product quantity");
+                return StatusCode(403, ModelState);
             }
 
             if (result.Success == false && result.Message == "Error")

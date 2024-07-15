@@ -52,14 +52,16 @@ namespace DataAccess.Repository
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            if (user == null || user.IsDisable == true)
+            if (user.IsDisable == true)
             {
-                return false;
+                user.IsDisable = false;
+            }
+            else
+            {
+                user.IsDisable = true;
             }
 
-            user.IsDisable = true;
             _context.Users.Update(user);
-
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
@@ -75,7 +77,7 @@ namespace DataAccess.Repository
 
         public async Task<bool> UpdateAccount(User user)
         {
-            _context.Users.Remove(user);
+            _context.Users.Update(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
     }

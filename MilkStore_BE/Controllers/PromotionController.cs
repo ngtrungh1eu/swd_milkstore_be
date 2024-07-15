@@ -42,12 +42,12 @@ namespace MIlkStore_BE.Controllers
             return Ok(ServiceFound);
         }
 
-        [HttpPost("/promotionId/productId")]
+        [HttpPost("promotionId/productId")]
         [Authorize(Policy = "Manager")]
         public async Task<ActionResult<DataAccess.Models.Promotion>> AddProduct(int promotionId, int productId)
         {
-           
-            var newPromotion = await _service.AddPromotionProduct(promotionId,productId);
+
+            var newPromotion = await _service.AddPromotionProduct(promotionId, productId);
             if (newPromotion.Success == false)
             {
                 return BadRequest(newPromotion);
@@ -71,7 +71,7 @@ namespace MIlkStore_BE.Controllers
         [Authorize(Policy = "Manager")]
         public async Task<ActionResult<DataAccess.Models.Promotion>> AddService(PromotionDTO request)
         {
-            if(request.Promote < 0)
+            if (request.Promote < 0)
             {
                 ModelState.AddModelError("", $"Promote cannot be < 0");
                 return StatusCode(500, ModelState);
@@ -112,7 +112,7 @@ namespace MIlkStore_BE.Controllers
             }
 
 
-            var updatePromotion = await _service.UpdatePromotion(promotionId,request);
+            var updatePromotion = await _service.UpdatePromotion(promotionId, request);
 
             if (updatePromotion.Success == false && updatePromotion.Message == "NotFound")
             {
@@ -165,5 +165,22 @@ namespace MIlkStore_BE.Controllers
 
         }
 
+        [HttpDelete("{promotionId}/product/{productId}")] //bac xem cau ham nay tui lam ok ko dr bac xoa 1 product ra khoi promotion nhung ko phai xoa lun cai promotion
+        [Authorize(Policy = "Manager")]
+        public async Task<ActionResult> RemoveProductFromPromotion(int promotionId, int productId)
+        {
+            var result = await _service.RemoveProductFromPromotion(promotionId, productId);
+
+            if (!result.Success)
+            {
+                if (result.Message == "Promotion not found")
+                {
+                    return NotFound(result.Message);
+                }
+                return StatusCode(500, result.Message);
+            }
+
+            return Ok(result.Data);
+        }
     }
 }

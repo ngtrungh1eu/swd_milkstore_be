@@ -21,6 +21,7 @@ namespace DataAccess.Models
         public Product Product {  get; set; }
         
         public string ProductName { get; set; }
+        public string BrandName { get; set; }
         public string Image {  get; set; }
         public int Quantity { get; set; }
         public double? UnitPrice { get; set; }

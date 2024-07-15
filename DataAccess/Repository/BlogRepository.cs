@@ -14,7 +14,7 @@ namespace DataAccess.Repository
         Task<ICollection<Blog>> GetAllBlog();
         Task<Blog> GetBlogById(int id);
         Task<bool> CreateBlog(Blog blog);
-        Task<bool> UpdateBlog(Blog blog, int userId);
+        Task<bool> UpdateBlog(Blog blog);
         Task<bool> DeleteBlog(Blog blog);
         Task<int> CountUseful(int blogId);
         Task<int> CountNotUseful(int blogId);
@@ -76,9 +76,9 @@ namespace DataAccess.Repository
             return blogDetail;
         }
 
-        public async Task<bool> UpdateBlog(Blog blog, int userId)
+        public async Task<bool> UpdateBlog(Blog blog)
         {
-            var existingBlog = await _context.Blogs.FirstOrDefaultAsync(b => (b.BlogId == blog.BlogId) && (b.UserId == userId));
+            var existingBlog = await _context.Blogs.FirstOrDefaultAsync(b => (b.BlogId == blog.BlogId) && (b.UserId == blog.UserId));
 
             if (existingBlog == null)
             {

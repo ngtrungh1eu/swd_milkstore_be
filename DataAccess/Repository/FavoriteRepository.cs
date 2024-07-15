@@ -12,6 +12,7 @@ namespace DataAccess.Repository
     public interface IFavoriteRepository
     {
         Task<Favorite> GetFavoriteByUserId(int userId);
+        Task<Favorite> CreateFavorite(int userId);
         Task AddFavorite(Favorite favorite);
         Task AddFavoriteProduct(FavoriteProduct favoriteProduct);
         Task RemoveFavoriteProduct(FavoriteProduct favoriteProduct);
@@ -22,15 +23,26 @@ namespace DataAccess.Repository
     {
         private readonly DataContext _context;
 
-        public FavoriteRepository(DataContext context)
-        {
-            _context = context;
-        }
 
         public async Task<Favorite> GetFavoriteByUserId(int userId)
         {
             return await _context.Favorites.Include(f => f.FavoriteProducts)
                                             .FirstOrDefaultAsync(f => f.UserId == userId);
+        }
+
+        public async Task<Favorite> CreateFavorite(int userId)
+        {
+            var favorite = new Favorite
+            {
+                UserId = userId,
+                isAvailable = false,
+                isPromote = false,
+            };
+
+            _context.Favorites.Add(favorite);
+            await _context.SaveChangesAsync();
+
+            return favorite;
         }
 
         public async Task AddFavorite(Favorite favorite)

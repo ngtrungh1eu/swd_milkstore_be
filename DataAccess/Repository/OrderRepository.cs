@@ -13,7 +13,7 @@ namespace DataAccess.Repository
     {
         Task<ICollection<Order>> GetOrderList();
         Task<Order> GetOrderById(int id);
-        Task<Order> CreateOrder (int cartId);
+        Task<List<Order>> CreateOrder (int cartId);
         Task<bool> UpdateProcess (int id);
         Task<bool> CancelOrder (int id);
     }
@@ -45,7 +45,15 @@ namespace DataAccess.Repository
                 var product = await _context.Products.FindAsync(productOrder.ProductId);
                 if (product != null)
                 {
-                    product.Quantity += productOrder.Quantity;
+                    if (product.isPreOrder == true)
+                    {
+                        product.PreOrderAmount += productOrder.Quantity;
+                    }
+                    else
+                    {
+                        product.Quantity += productOrder.Quantity;
+                    }
+                    
                     _context.Products.Update(product);
                 }
             }
@@ -53,7 +61,7 @@ namespace DataAccess.Repository
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        public async Task<Order> CreateOrder(int cartId)
+        public async Task<List<Order>> CreateOrder(int cartId)
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
@@ -78,57 +86,123 @@ namespace DataAccess.Repository
             foreach (var item in cart.CartItems)
             {
                 var product = item.Product;
-                if (product == null || product.Quantity < item.Quantity)
+
+                // Kiểm tra nếu sản phẩm là PreOrder
+                if (product.isPreOrder)
                 {
-                    return null;
+                    if (product == null || product.PreOrderAmount < item.Quantity)
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    // Kiểm tra nếu sản phẩm không phải là PreOrder
+                    if (product == null || product.Quantity < item.Quantity)
+                    {
+                        return null;
+                    }
                 }
             }
 
             // Choose a random available staff
-            var staff = await _context.Users.FirstOrDefaultAsync(u => u.Role.Id == 2 && u.status == "Available" );
+            var staff = await _context.Users.FirstOrDefaultAsync(u => u.Role.Id == 2 && u.status == "Available");
 
-            var order = new Order
+            // Separate cart items into preOrder and non-preOrder
+            var preOrderItems = cart.CartItems.Where(item => item.Product.isPreOrder == true).ToList();
+            var nonPreOrderItems = cart.CartItems.Where(item => item.Product.isPreOrder == false).ToList();
+
+            var orders = new List<Order>();
+
+            // Create preOrder order
+            if (preOrderItems.Any())
             {
-                UserId = cart.UserId,
-                DeliverAddress = cart.User.Address,
-                StaffId = null,
-                Phone = cart.User.Phone,
-                FullName = cart.User.FullName,
-                PaymentMethod = "Thanh Toán Khi Nhận Hàng",
-                Status = "processing",
-                OrderDate = DateTime.Now,
-                TotalPrice = cart.CartItems.Sum(item => item.Quantity * item.Product.ProductPrice),
-                ProductOrders = cart.CartItems.Select(item => new ProductOrder
+                var preOrder = new Order
                 {
-                    ProductId = item.ProductId,
-                    Image = item.Image,
-                    ProductName = item.ProductName,                 
-                    Quantity = item.Quantity,
-                    UnitPrice = item.Product.ProductPrice * item.Quantity
-                }).ToList()
-            };
+                    UserId = cart.UserId,
+                    DeliverAddress = cart.User.Address,
+                    StaffId = staff?.Id,
+                    Phone = cart.User.Phone,
+                    FullName = cart.User.FullName,
+                    PaymentMethod = "Thanh Toán Khi Nhận Hàng",
+                    Status = "processing",
+                    OrderDate = DateTime.Now,
+                    TotalPrice = preOrderItems.Sum(item => item.Quantity * item.Product.ProductPrice),
+                    ProductOrders = preOrderItems.Select(item => new ProductOrder
+                    {
+                        ProductId = item.ProductId,
+                        Image = item.Image,
+                        ProductName = item.ProductName,
+                        BrandName = item.BrandName,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.Product.ProductPrice * item.Quantity
+                    }).ToList()
+                };
 
-            _context.Orders.Add(order);
+                orders.Add(preOrder);
+                _context.Orders.Add(preOrder);
 
-            // Update Product Quantity after Create Order
-            foreach (var item in cart.CartItems)
-            {
-                var product = item.Product;
-                if (product != null)
+                // Update Product PreOrderAmount
+                foreach (var item in preOrderItems)
                 {
-                    product.Quantity -= item.Quantity;
-                    _context.Products.Update(product);
+                    var product = item.Product;
+                    if (product != null)
+                    {
+                        product.PreOrderAmount -= item.Quantity;
+                        _context.Products.Update(product);
+                    }
                 }
             }
 
-            // Detlete products in cart
+            // Create nonPreOrder order
+            if (nonPreOrderItems.Any())
+            {
+                var nonPreOrder = new Order
+                {
+                    UserId = cart.UserId,
+                    DeliverAddress = cart.User.Address,
+                    StaffId = staff?.Id,
+                    Phone = cart.User.Phone,
+                    FullName = cart.User.FullName,
+                    PaymentMethod = "Thanh Toán Khi Nhận Hàng",
+                    Status = "processing",
+                    OrderDate = DateTime.Now,
+                    TotalPrice = nonPreOrderItems.Sum(item => item.Quantity * item.Product.ProductPrice),
+                    ProductOrders = nonPreOrderItems.Select(item => new ProductOrder
+                    {
+                        ProductId = item.ProductId,
+                        Image = item.Image,
+                        ProductName = item.ProductName,
+                        BrandName = item.BrandName,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.Product.ProductPrice * item.Quantity
+                    }).ToList()
+                };
+
+                orders.Add(nonPreOrder);
+                _context.Orders.Add(nonPreOrder);
+
+                // Update Product Quantity
+                foreach (var item in nonPreOrderItems)
+                {
+                    var product = item.Product;
+                    if (product != null)
+                    {
+                        product.Quantity -= item.Quantity;
+                        _context.Products.Update(product);
+                    }
+                }
+            }
+
+            // Remove products from cart
             _context.CartItems.RemoveRange(cart.CartItems);
 
             // Clear totalItem in Cart
             cart.TotalItem = 0;
+            cart.TotalPrice = 0;
 
             await _context.SaveChangesAsync();
-            return order;
+            return orders;
         }
 
         public async Task<Order> GetOrderById(int id)

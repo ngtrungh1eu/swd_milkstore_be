@@ -21,6 +21,6 @@ namespace DataAccess.Models
         public int Promote {  get; set; }
         public string? PromotionImg {  get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<ProductPromote> ProductPromotes { get; set; }
     }
 }

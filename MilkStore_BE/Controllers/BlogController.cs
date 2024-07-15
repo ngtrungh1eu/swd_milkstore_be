@@ -88,11 +88,12 @@ namespace MilkStore_BE.Controllers
 
         [HttpPut("UpdateBlog/{id}")]
         [Authorize(Policy = "Staff")]
-        public async Task<ActionResult> UpdateBlog(int id, int userId, [FromBody] BlogDTO request)
+        public async Task<ActionResult> UpdateBlog(int id, [FromQuery] int blogId, [FromBody] BlogDTO request)
         {
-            request.BlogId = id;
+            request.UserId = id;
+            request.BlogId = blogId;
 
-            var updateBlog = await _service.UpdateBlog(request, userId);
+            var updateBlog = await _service.UpdateBlog(request, blogId);
 
             if (updateBlog.Success == false && updateBlog.Message == "Not Found")
             {

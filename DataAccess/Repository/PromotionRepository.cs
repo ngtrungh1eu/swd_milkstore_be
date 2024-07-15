@@ -19,6 +19,7 @@ namespace DataAccess.Repository
         Task<Promotion> GetPromotionById(int id);
         Task<bool> DeletePromotion(Promotion promotion);
         Task UpdateProductPromotion(Promotion promotion, Product product);
+        Task RemoveProductFromPromotion(int promotionId, int productId);
     }
 
     public class PromotionRepository : IPromotionRepository
@@ -68,7 +69,8 @@ namespace DataAccess.Repository
 
             List<ProductModel> productsOfPromotion = _context.Promotions
                 .Where(p => p.PromotionId == promotionModel.PromotionId)
-                .SelectMany(p => p.Products)
+                .SelectMany(p => p.ProductPromotes)
+                .Select(pp => pp.Product)
                 .Select(p => new ProductModel
                 {
                     ProductId = p.ProductId,
@@ -99,13 +101,39 @@ namespace DataAccess.Repository
 
         public async Task UpdateProductPromotion(Promotion promotion, Product product)
         {
-            var existed = await _context.Promotions.Include(x => x.Products).FirstOrDefaultAsync(x => x.PromotionId == promotion.PromotionId);
-            if (existed.Products.Any(x => x.ProductId == product.ProductId))
+            var existed = await _context.Promotions.Include(x => x.ProductPromotes)
+                                                    .FirstOrDefaultAsync(x => x.PromotionId == promotion.PromotionId);
+
+            if (existed.ProductPromotes.Any(x => x.ProductId == product.ProductId))
                 return;
 
-            existed.Products.Add(product);
+            var productPromote = new ProductPromote
+            {
+                PromotionId = promotion.PromotionId,
+                ProductId = product.ProductId,
+            };
+
+            existed.ProductPromotes.Add(productPromote);
             _context.Entry(existed).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task RemoveProductFromPromotion(int promotionId, int productId)
+        {
+            var promotion = await _context.Promotions.Include(p => p.ProductPromotes)
+                                                     .FirstOrDefaultAsync(p => p.PromotionId == promotionId);
+
+            if (promotion != null)
+            {
+                var product = promotion.ProductPromotes.FirstOrDefault(p => p.ProductId == productId);
+                if (product != null)
+                {
+                    promotion.ProductPromotes.Remove(product);
+                    _context.Entry(promotion).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
     }
 }

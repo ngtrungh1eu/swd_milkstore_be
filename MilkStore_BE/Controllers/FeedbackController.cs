@@ -19,8 +19,8 @@ namespace MIlkStore_BE.Controllers
             _service = service;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<Feedback>>> GetFeedbackList(int? id)
+        [HttpGet("product/{id}")]
+        public async Task<ActionResult<List<Feedback>>> GetFeedbackList(int id)
         {
             return Ok(await _service.ListAllFeedback(id));
         }
@@ -45,65 +45,59 @@ namespace MIlkStore_BE.Controllers
         //    return Ok(ServiceFound);
         //}
 
-        [HttpPost("/productId/orderId/")]
+        [HttpPost("AddFeedback/{id}")]
         [Authorize(Policy = "Customer")]
-        public async Task<ActionResult<DataAccess.Models.Feedback>> AddService(int productId, int orderId, FeedbackDTO request)
+        public async Task<ActionResult<FeedbackDTO>> AddFeedback(int id, [FromQuery] int orderId, [FromQuery] int productId, [FromBody] FeedbackDTO request)
         {
-            if (request == null || productId <= 0 || orderId <= 0)
-            {
-                return BadRequest(ModelState);
-            }
+            request.UserId = id;
             request.ProductId = productId;
             request.OrderId = orderId;
 
             var newFeedback = await _service.CreateFeedback(request);
             if (newFeedback.Success == false)
             {
-                return BadRequest(newFeedback);
+                return BadRequest();
             }
 
-            if (newFeedback.Success == false && newFeedback.Message == "RepoError")
+            if (newFeedback.Success == false && newFeedback.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in respository layer when adding product {request}");
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when adding feedback {request}");
                 return StatusCode(500, ModelState);
             }
 
             if (newFeedback.Success == false && newFeedback.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when adding product {request}");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when adding feedback {request}");
                 return StatusCode(500, ModelState);
             }
             return Ok("Add feedback success");
         }
 
-        [HttpPut("/feedbackId/productId/orderId/")]
+        [HttpPut("UpdateFeedback/{id}")]
         [Authorize(Policy = "Customer")]
-        public async Task<ActionResult> UpdateFeedback(int feedbackId,int productId, int orderId,FeedbackDTO request)
+        public async Task<ActionResult> UpdateFeedback(int id, [FromQuery] int orderId, [FromQuery] int productId, [FromQuery] int feedbackId, [FromBody] FeedbackDTO request)
         {
-            if (request == null || feedbackId <= 0 || productId <= 0 || orderId <= 0)
-            {
-                return BadRequest(ModelState);
-            }
+            request.UserId = id;
             request.FeedbackId = feedbackId;
-            request.ProductId = productId;
             request.OrderId = orderId;
+            request.ProductId = productId;
 
-            var updateFeedback = await _service.UpdateFeedback(request);
+            var updateFeedback = await _service.UpdateFeedback(id, orderId, productId, feedbackId, request);
 
-            if (updateFeedback.Success == false && updateFeedback.Message == "NotFound")
+            if (updateFeedback.Success == false && updateFeedback.Message == "Not Found")
             {
-                return Ok(updateFeedback);
+                return BadRequest();
             }
 
-            if (updateFeedback.Success == false && updateFeedback.Message == "RepoError")
+            if (updateFeedback.Success == false && updateFeedback.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in respository layer when updating product {request}");
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when updating feedback {request}");
                 return StatusCode(500, ModelState);
             }
 
             if (updateFeedback.Success == false && updateFeedback.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when updating product {request}");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when updating feedback {request}");
                 return StatusCode(500, ModelState);
             }
 
@@ -117,21 +111,21 @@ namespace MIlkStore_BE.Controllers
             var deleteFeedback = await _service.DeleteFeedback(id);
 
 
-            if (deleteFeedback.Success == false && deleteFeedback.Message == "NotFound")
+            if (deleteFeedback.Success == false && deleteFeedback.Message == "Not Found")
             {
-                ModelState.AddModelError("", "Service Not found");
+                ModelState.AddModelError("", $"Feedback Not found");
                 return StatusCode(404, ModelState);
             }
 
-            if (deleteFeedback.Success == false && deleteFeedback.Message == "RepoError")
+            if (deleteFeedback.Success == false && deleteFeedback.Message == "Repo Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting Feedback");
+                ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting feedback");
                 return StatusCode(500, ModelState);
             }
 
             if (deleteFeedback.Success == false && deleteFeedback.Message == "Error")
             {
-                ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting Feedback");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting feedback");
                 return StatusCode(500, ModelState);
             }
 

@@ -9,6 +9,9 @@ namespace BussinessLogic.DTO.Product
     public class ProductDTO
     {
         public int ProductId { get; set; }
+        public string? ProductBrand { get; set; }
+        public double? Rate { get; set; }
+        public int? Discount { get; set; }
         public string ProductName { get; set; }
         public string? ProductDescription { get; set; }
         public string ProductImg { get; set; }

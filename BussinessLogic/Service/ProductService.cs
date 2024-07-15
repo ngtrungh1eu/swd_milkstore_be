@@ -17,9 +17,10 @@ namespace BussinessLogic.Service
     public interface IProductService
     {
         Task<ServiceResponse<List<ProductDTO>>> ListAllProduct();
+        Task<ServiceResponse<List<ProductDTO>>> DisplayProduct();
         Task<ServiceResponse<ProductDTO>> GetProductById(int id);
-        Task<ServiceResponse<ProductDTO>> CreateProduct(ProductDTO product);
-        Task<ServiceResponse<ProductDTO>> UpdateProduct(ProductDTO product);
+        Task<ServiceResponse<ProductModel>> CreateProduct(ProductModel product);
+        Task<ServiceResponse<ProductModel>> UpdateProduct(ProductModel product);
         Task<ServiceResponse<ProductDTO>> DisableProduct(int id);
         Task<ServiceResponse<ProductDTO>> DeleteProduct(int id);
     }
@@ -33,9 +34,9 @@ namespace BussinessLogic.Service
             _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<ProductDTO>> CreateProduct(ProductDTO request)
+        public async Task<ServiceResponse<ProductModel>> CreateProduct(ProductModel request)
         {
-            ServiceResponse<ProductDTO> _response = new();
+            ServiceResponse<ProductModel> _response = new();
             try
             {
                 if (request.ProductPrice < 0 || request.Quantity < 0 || request.ByAge < 0 || request.PreOrderAmount < 0)
@@ -68,7 +69,7 @@ namespace BussinessLogic.Service
                 }
 
                 _response.Success = true;
-                _response.Data = _mapper.Map<ProductDTO>(_newProduct);
+                _response.Data = _mapper.Map<ProductModel>(_newProduct);
                 _response.Message = "Created";
             }
             catch (Exception ex)
@@ -163,6 +164,31 @@ namespace BussinessLogic.Service
             return _response;
         }
 
+        public async Task<ServiceResponse<List<ProductDTO>>> DisplayProduct()
+        {
+            ServiceResponse<List<ProductDTO>> _response = new();
+            try
+            {
+                var listProduct = await _productRepository.DisplayProduct();
+                var listProductDto = new List<ProductDTO>();
+                foreach (var product in listProduct)
+                {
+                    listProductDto.Add(_mapper.Map<ProductDTO>(product));
+                }
+                _response.Success = true;
+                _response.Data = listProductDto;
+                _response.Message = "OK";
+            }
+            catch (Exception ex)
+            {
+                _response.Success = false;
+                _response.Message = "Error";
+                _response.Data = null;
+                _response.ErrorMessages = new List<string> { Convert.ToString(ex.Message) };
+            }
+            return _response; ;
+        }
+
         public async Task<ServiceResponse<ProductDTO>> GetProductById(int id)
         {
             ServiceResponse<ProductDTO> _response = new();
@@ -216,9 +242,9 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        public async Task<ServiceResponse<ProductDTO>> UpdateProduct(ProductDTO request)
+        public async Task<ServiceResponse<ProductModel>> UpdateProduct(ProductModel request)
         {
-            ServiceResponse<ProductDTO> _response = new();
+            ServiceResponse<ProductModel> _response = new();
             try
             {
                 var existingProduct = await _productRepository.GetProductById(request.ProductId);
@@ -258,7 +284,7 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                var productDto = _mapper.Map<ProductDTO>(existingProduct);
+                var productDto = _mapper.Map<ProductModel>(existingProduct);
                 _response.Success = true;
                 _response.Data = productDto;
                 _response.Message = "Updated";

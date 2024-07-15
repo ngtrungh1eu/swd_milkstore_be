@@ -21,6 +21,7 @@ namespace DataAccess.Models
         public Product Product { get; set; }
 
         public string ProductName { get; set; }
+        public string BrandName { get; set; }
         public string Image {  get; set; }
         [Range(1, int.MaxValue, ErrorMessage = "Item in Cart quantity must exists.")]
         public int Quantity { get; set; }

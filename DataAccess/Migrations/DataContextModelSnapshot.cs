@@ -129,6 +129,10 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"), 1L, 1);
 
+                    b.Property<string>("BrandName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
@@ -267,9 +271,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreOrderId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -288,9 +289,6 @@ namespace DataAccess.Migrations
                     b.HasKey("FeedbackId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("PreOrderId")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -342,55 +340,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.PreOrder", b =>
-                {
-                    b.Property<int>("PreOrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PreOrderId"), 1L, 1);
-
-                    b.Property<string>("DeliverAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreOrderDate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StaffId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("UnitPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PreOrderId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PreOrders");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Product", b =>
@@ -452,6 +401,10 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductOrderId"), 1L, 1);
 
+                    b.Property<string>("BrandName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -479,6 +432,21 @@ namespace DataAccess.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductOrders");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.ProductPromote", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PromotionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "PromotionId");
+
+                    b.HasIndex("PromotionId");
+
+                    b.ToTable("ProductPromotes");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Promotion", b =>
@@ -644,21 +612,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Votes");
                 });
 
-            modelBuilder.Entity("ProductPromotion", b =>
-                {
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PromotesPromotionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsProductId", "PromotesPromotionId");
-
-                    b.HasIndex("PromotesPromotionId");
-
-                    b.ToTable("ProductPromote", (string)null);
-                });
-
             modelBuilder.Entity("DataAccess.Models.Blog", b =>
                 {
                     b.HasOne("DataAccess.Models.User", "User")
@@ -757,12 +710,6 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Models.PreOrder", "PreOrder")
-                        .WithOne("Feedback")
-                        .HasForeignKey("DataAccess.Models.Feedback", "PreOrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -770,8 +717,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Order");
-
-                    b.Navigation("PreOrder");
 
                     b.Navigation("User");
                 });
@@ -783,25 +728,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.PreOrder", b =>
-                {
-                    b.HasOne("DataAccess.Models.Product", "Product")
-                        .WithOne("PreOrder")
-                        .HasForeignKey("DataAccess.Models.PreOrder", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Models.User", "User")
-                        .WithMany("PreOrders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -834,6 +760,25 @@ namespace DataAccess.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.ProductPromote", b =>
+                {
+                    b.HasOne("DataAccess.Models.Product", "Product")
+                        .WithMany("ProductPromotes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.Promotion", "Promotion")
+                        .WithMany("ProductPromotes")
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Promotion");
                 });
 
             modelBuilder.Entity("DataAccess.Models.RefreshToken", b =>
@@ -877,21 +822,6 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ProductPromotion", b =>
-                {
-                    b.HasOne("DataAccess.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Models.Promotion", null)
-                        .WithMany()
-                        .HasForeignKey("PromotesPromotionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DataAccess.Models.Blog", b =>
                 {
                     b.Navigation("Comments");
@@ -921,22 +851,20 @@ namespace DataAccess.Migrations
                     b.Navigation("ProductOrders");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.PreOrder", b =>
-                {
-                    b.Navigation("Feedback")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DataAccess.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
 
                     b.Navigation("FavoriteProducts");
 
-                    b.Navigation("PreOrder")
-                        .IsRequired();
-
                     b.Navigation("ProductOrders");
+
+                    b.Navigation("ProductPromotes");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Promotion", b =>
+                {
+                    b.Navigation("ProductPromotes");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Role", b =>
@@ -957,8 +885,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Orders");
-
-                    b.Navigation("PreOrders");
 
                     b.Navigation("RefreshTokens");
 

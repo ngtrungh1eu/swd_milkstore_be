@@ -16,6 +16,12 @@ namespace DataAccess.Models
         [Required]
         [StringLength(50)]
         public string ProductName { get; set; }
+        [NotMapped]
+        public string? ProductBrand { get; set; }
+        [NotMapped]
+        public double? Rate {  get; set; }
+        [NotMapped]
+        public int? Discount { get; set; }
         public string? ProductDescription { get; set; }
         public string ProductImg {  get; set; }
         [Range(0, double.MaxValue, ErrorMessage = "Product price cannot be negative.")]
@@ -32,10 +38,10 @@ namespace DataAccess.Models
         
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
-        public PreOrder PreOrder { get; set; }
-        public virtual ICollection<Promotion> Promotes { get; set; }
+
         public virtual ICollection<CartItem> CartItems { get; set; }
         public virtual ICollection<ProductOrder> ProductOrders { get; set; }
         public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set;}
+        public virtual ICollection<ProductPromote> ProductPromotes { get; set;}
     }
 }
