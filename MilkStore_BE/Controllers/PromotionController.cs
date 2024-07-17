@@ -76,7 +76,15 @@ namespace MIlkStore_BE.Controllers
                 ModelState.AddModelError("", $"Promote cannot be < 0");
                 return StatusCode(500, ModelState);
             }
+
             var newPromotion = await _service.CreatePromotion(request);
+
+            //
+            if (newPromotion.Success == false)
+            {
+                return BadRequest(newPromotion);
+            }
+            //
             if (newPromotion.Success == false && newPromotion.Message == "Existed")
             {
                 return Ok(newPromotion);
@@ -113,6 +121,13 @@ namespace MIlkStore_BE.Controllers
 
 
             var updatePromotion = await _service.UpdatePromotion(promotionId, request);
+
+            //
+            if (updatePromotion.Success == false)
+            {
+                return BadRequest(updatePromotion);
+            }
+            //
 
             if (updatePromotion.Success == false && updatePromotion.Message == "NotFound")
             {

@@ -28,6 +28,7 @@ namespace DataAccess.Repository
             _context = context;
         }
 
+
         public async Task<ICollection<Product>> ListAllProduct()
         {
             var products = await _context.Products
@@ -52,7 +53,8 @@ namespace DataAccess.Repository
                 }
 
                 product.ProductBrand = product.Brand?.BrandName ?? "Unknown";
-                product.Discount = product.Discount;
+
+                product.Discount = product.Discount; 
             }
 
             return products;
@@ -120,6 +122,8 @@ namespace DataAccess.Repository
         {
             var product = await  _context.Products
                             .Include(p => p.Brand)
+                            .Include(p => p.ProductPromotes) // 
+                                .ThenInclude(pp => pp.Promotion) //
                             .FirstOrDefaultAsync(p => p.ProductId == id);
 
             if (product != null)
@@ -138,6 +142,16 @@ namespace DataAccess.Repository
                 }
 
                 product.ProductBrand = product.Brand.BrandName;
+                //
+                if (product.ProductPromotes != null)
+                {
+                    var promotion = product.ProductPromotes
+                        .Select(pp => pp.Promotion)
+                        .FirstOrDefault(p => p.StartAt <= DateTime.Now && p.EndAt >= DateTime.Now);
+
+                    product.Discount = product.Discount + (promotion?.Promote ?? 0); // Mapping Discount
+                }
+                //
             }
 
             return product;

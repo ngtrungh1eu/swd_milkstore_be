@@ -18,8 +18,7 @@ namespace BussinessLogic.DTO.Promotion
         public int Promote { get; set; }
         public string? PromotionImg { get; set; }
         public List<Product.ProductDTO> Products { get; set; }
+        //public List<ProductDTO> Products { get; set; }
     }
 }
 
-//Nếu em làm ở FE gửi lên theo giờ local thì để DateTime.Now, còn nếu gửi lên là UTC thì phải để DateTime.UtcNow như trên
-// Không ảnh hưởng em, em gửi lên giờ nào thì trong code nhận giờ đó, Swagger nó lấy example là DateTime.UtcNow theo chuẩn của nó thôi

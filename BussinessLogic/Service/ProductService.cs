@@ -45,7 +45,12 @@ namespace BussinessLogic.Service
                     _response.Message = "Negative value does not allowed";
                     return _response;
                 }
-
+                if(request.Discount > 100 || request.Discount < 0)
+                {
+                    _response.Success = false;
+                    _response.Message = "Discount can't more 100 or less 0";
+                    return _response;
+                }
                 Product _newProduct = new Product()
                 {
                     ProductName = request.ProductName,
