@@ -66,7 +66,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPost("CreateBlog")]
-        [Authorize(Policy = "Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult<Blog>> CreateBlog(BlogDTO request)
         {
             var newBlog = await _service.CreateBlog(request);
@@ -87,13 +87,13 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateBlog/{id}")]
-        [Authorize(Policy = "Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult> UpdateBlog(int id, [FromQuery] int blogId, [FromBody] BlogDTO request)
         {
             request.UserId = id;
             request.BlogId = blogId;
 
-            var updateBlog = await _service.UpdateBlog(request, blogId);
+            var updateBlog = await _service.UpdateBlog(request);
 
             if (updateBlog.Success == false && updateBlog.Message == "Not Found")
             {

@@ -20,8 +20,7 @@ namespace DataAccess.Models
         public string? ProductBrand { get; set; }
         [NotMapped]
         public double? Rate {  get; set; }
-        [NotMapped]
-        public int? Discount { get; set; }
+        public int Discount { get; set; }
         public string? ProductDescription { get; set; }
         public string ProductImg {  get; set; }
         [Range(0, double.MaxValue, ErrorMessage = "Product price cannot be negative.")]

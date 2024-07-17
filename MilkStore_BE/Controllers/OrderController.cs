@@ -73,7 +73,7 @@ namespace MilkStore_BE.Controllers
         }
 
         [HttpPut("UpdateProgress/{id}")]
-        [Authorize(Policy = "Staff")]
+        [Authorize(Policy = "Manager")]
         public async Task<ActionResult<Order>> UpdateProgress(int id,[FromBody] string status)
         {
             var updateProgress = await _service.UpdateProcess(id);

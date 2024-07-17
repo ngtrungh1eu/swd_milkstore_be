@@ -78,7 +78,7 @@ namespace DataAccess.Repository
 
         public async Task<bool> UpdateBlog(Blog blog)
         {
-            var existingBlog = await _context.Blogs.FirstOrDefaultAsync(b => (b.BlogId == blog.BlogId) && (b.UserId == blog.UserId));
+            var existingBlog = await _context.Blogs.FirstOrDefaultAsync(b => b.BlogId == blog.BlogId);
 
             if (existingBlog == null)
             {

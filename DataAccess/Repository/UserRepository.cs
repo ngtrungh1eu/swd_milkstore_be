@@ -52,14 +52,7 @@ namespace DataAccess.Repository
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            if (user.IsDisable == true)
-            {
-                user.IsDisable = false;
-            }
-            else
-            {
-                user.IsDisable = true;
-            }
+            user.IsDisable = !user.IsDisable;
 
             _context.Users.Update(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;

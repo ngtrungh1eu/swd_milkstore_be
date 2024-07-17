@@ -50,6 +50,7 @@ namespace BussinessLogic.Service
                 {
                     ProductName = request.ProductName,
                     ProductImg = request.ProductImg,
+                    Discount = request.Discount,
                     ProductDescription = request.ProductDescription,
                     ByAge = request.ByAge,
                     ProductPrice = request.ProductPrice,
@@ -144,14 +145,10 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                if (existingProduct != null && existingProduct.isDisable == false)
-                {
-                    var disableProduct = await _productRepository.DisableProduct(id);
-                    _response.Success = true;
-                    _response.Data = _mapper.Map<ProductDTO>(disableProduct);
-                    _response.Message = "Disabled";
-                }
-
+                var disableProduct = await _productRepository.GetProductById(id);
+                _response.Success = true;
+                _response.Data = _mapper.Map<ProductDTO>(disableProduct);
+                _response.Message = "Updated";
             }
             catch (Exception ex)
             {

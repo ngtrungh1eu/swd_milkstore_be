@@ -30,7 +30,7 @@ namespace DataAccess.Repository
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
+                    .ThenInclude(ci => ci.Product)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (cart == null)
@@ -40,6 +40,8 @@ namespace DataAccess.Repository
 
             var product = await _context.Products
                 .Include(p => p.Brand)
+                .Include(p => p.ProductPromotes)
+                    .ThenInclude(pp => pp.Promotion)
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (product == null)
@@ -59,6 +61,17 @@ namespace DataAccess.Repository
 
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
 
+            // Cập nhật lại giá nếu có Promotion
+            double unitPrice = product.ProductPrice;
+            var promotion = product.ProductPromotes
+                                .Select(pp => pp.Promotion)
+                                .FirstOrDefault(pr => pr.StartAt <= DateTime.Now && pr.EndAt >= DateTime.Now);
+
+            if (promotion != null)
+            {
+                unitPrice *= (1 - (promotion.Promote / 100.0));
+            }
+
             if (cartItem == null)
             {
                 cartItem = new CartItem
@@ -66,7 +79,7 @@ namespace DataAccess.Repository
                     CartId = cart.CartId,
                     ProductId = productId,
                     Quantity = quantity,
-                    UnitPrice = product.ProductPrice * quantity,
+                    UnitPrice = unitPrice * quantity,
                     ProductName = product.ProductName,
                     BrandName = product.Brand.BrandName,
                     Image = product.ProductImg,
@@ -87,7 +100,7 @@ namespace DataAccess.Repository
                 }
 
                 cartItem.Quantity += quantity;
-                cartItem.UnitPrice = product.ProductPrice * quantity;
+                cartItem.UnitPrice = unitPrice * quantity;
             }
 
             cart.TotalItem = cart.TotalItem - cart.TotalItem + cart.CartItems.Sum(ci => ci.Quantity);
@@ -164,7 +177,10 @@ namespace DataAccess.Repository
                 return null;
             }
 
-            var product = await _context.Products.FindAsync(productId);
+            var product = await _context.Products
+                                    .Include(p => p.ProductPromotes)
+                                        .ThenInclude(pp => pp.Promotion)
+                                    .FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (product == null)
             {
@@ -187,10 +203,21 @@ namespace DataAccess.Repository
                 }
             }
 
+            // Cập nhật lại giá nếu có Promotion
+            double unitPrice = product.ProductPrice;
+            var promotion = product.ProductPromotes
+                                .Select(pp => pp.Promotion)
+                                .FirstOrDefault(pr => pr.StartAt <= DateTime.Now && pr.EndAt >= DateTime.Now);
+
+            if (promotion != null)
+            {
+                unitPrice *= (1 - (promotion.Promote / 100.0));
+            }
+
             cart.TotalItem += quantity - cartItem.Quantity;
-            cart.TotalPrice += (quantity - cartItem.Quantity) * cartItem.Product.ProductPrice;
+            cart.TotalPrice += (quantity - cartItem.Quantity) * unitPrice;
             cartItem.Quantity = quantity;
-            cartItem.UnitPrice = quantity * cartItem.Product.ProductPrice;
+            cartItem.UnitPrice = quantity * unitPrice;
 
             _context.CartItems.Update(cartItem);
             _context.Carts.Update(cart);

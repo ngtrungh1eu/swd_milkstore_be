@@ -356,6 +356,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("ByAge")
                         .HasColumnType("int");
 
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PreOrderAmount")
                         .HasColumnType("int");
 

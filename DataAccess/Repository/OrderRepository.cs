@@ -127,7 +127,7 @@ namespace DataAccess.Repository
                     PaymentMethod = "Thanh Toán Khi Nhận Hàng",
                     Status = "processing",
                     OrderDate = DateTime.Now,
-                    TotalPrice = preOrderItems.Sum(item => item.Quantity * item.Product.ProductPrice),
+                    TotalPrice = preOrderItems.Sum(item => item.UnitPrice),
                     ProductOrders = preOrderItems.Select(item => new ProductOrder
                     {
                         ProductId = item.ProductId,
@@ -135,7 +135,7 @@ namespace DataAccess.Repository
                         ProductName = item.ProductName,
                         BrandName = item.BrandName,
                         Quantity = item.Quantity,
-                        UnitPrice = item.Product.ProductPrice * item.Quantity
+                        UnitPrice = item.UnitPrice
                     }).ToList()
                 };
 
@@ -167,7 +167,7 @@ namespace DataAccess.Repository
                     PaymentMethod = "Thanh Toán Khi Nhận Hàng",
                     Status = "processing",
                     OrderDate = DateTime.Now,
-                    TotalPrice = nonPreOrderItems.Sum(item => item.Quantity * item.Product.ProductPrice),
+                    TotalPrice = nonPreOrderItems.Sum(item => item.UnitPrice),
                     ProductOrders = nonPreOrderItems.Select(item => new ProductOrder
                     {
                         ProductId = item.ProductId,
@@ -175,7 +175,7 @@ namespace DataAccess.Repository
                         ProductName = item.ProductName,
                         BrandName = item.BrandName,
                         Quantity = item.Quantity,
-                        UnitPrice = item.Product.ProductPrice * item.Quantity
+                        UnitPrice = item.UnitPrice
                     }).ToList()
                 };
 
@@ -228,11 +228,11 @@ namespace DataAccess.Repository
             switch (order.Status)
             {
                 case "processing":
-                    order.Status = "shipped";
+                    order.Status = "shipping";
                     _context.Orders.Update(order);
                     break;
 
-                case "shipped":
+                case "shipping":
                     order.Status = "completed";
                     _context.Orders.Update(order);
                     break;

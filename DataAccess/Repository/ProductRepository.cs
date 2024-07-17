@@ -52,16 +52,7 @@ namespace DataAccess.Repository
                 }
 
                 product.ProductBrand = product.Brand?.BrandName ?? "Unknown";
-
-                // Kiểm tra nếu ProductPromotes không null trước khi truy cập
-                if (product.ProductPromotes != null)
-                {
-                    var promotion = product.ProductPromotes
-                        .Select(pp => pp.Promotion)
-                        .FirstOrDefault(p => p.StartAt <= DateTime.Now && p.EndAt >= DateTime.Now);
-
-                    product.Discount = promotion?.Promote ?? 0;
-                }
+                product.Discount = product.Discount;
             }
 
             return products;
@@ -100,7 +91,7 @@ namespace DataAccess.Repository
                         .Select(pp => pp.Promotion)
                         .FirstOrDefault(p => p.StartAt <= DateTime.Now && p.EndAt >= DateTime.Now);
 
-                    product.Discount = promotion?.Promote ?? 0;
+                    product.Discount = product.Discount + promotion?.Promote ?? product.Discount;
                 }
             }
 
@@ -155,14 +146,10 @@ namespace DataAccess.Repository
         public async Task<bool> DisableProduct(int id)
         {
             var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
-            if (product == null || product.isDisable == true)
-            {
-                return false;
-            }
 
-            product.isDisable = true;
+            product.isDisable = !product.isDisable;
+
             _context.Products.Update(product);
-
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
     }

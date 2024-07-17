@@ -19,7 +19,7 @@ namespace BussinessLogic.Service
         Task<ServiceResponse<BlogDTO>> GetBlogById(int id);
         Task<ServiceResponse<ICollection<CommentDTO>>> GetCommentByBlog(int blogId);
         Task<ServiceResponse<BlogDTO>> CreateBlog(BlogDTO blog);
-        Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int blogId);
+        Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog);
         Task<ServiceResponse<BlogDTO>> DeleteBlog(int id);
     }
     public class BlogService : IBlogService
@@ -207,12 +207,12 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        public async Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog, int blogId)
+        public async Task<ServiceResponse<BlogDTO>> UpdateBlog(BlogDTO blog)
         {
             ServiceResponse<BlogDTO> _response = new();
             try
             {
-                var existingBlog = await _blogRepository.GetBlogById(blogId);
+                var existingBlog = await _blogRepository.GetBlogById(blog.BlogId);
 
                 if (existingBlog == null)
                 {

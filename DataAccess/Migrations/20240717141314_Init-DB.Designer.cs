@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240714122810_Init-DB")]
+    [Migration("20240717141314_Init-DB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -356,6 +356,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ByAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Discount")
                         .HasColumnType("int");
 
                     b.Property<int?>("PreOrderAmount")

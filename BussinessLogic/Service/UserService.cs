@@ -100,6 +100,7 @@ namespace BussinessLogic.Service
                     FullName = request.FullName,
                     DateOfBirth = request.DateOfBirth,
                     Gender = request.Gender,
+                    Address = request.Address,
                     Phone = request.Phone,
                     Image = request.Image,
                     Email = request.Email,
@@ -192,14 +193,10 @@ namespace BussinessLogic.Service
                     return _response;
                 }
 
-                if (existingUser != null && existingUser.IsDisable == false)
-                {
-                    var disableUser = await _repository.DisableUser(id);
-                    _response.Success = true;
-                    _response.Data = _mapper.Map<UserModel>(disableUser);
-                    _response.Message = "Disabled";
-                }
-
+                var disableUser = await _repository.GetUserById(id);
+                _response.Success = true;
+                _response.Data = _mapper.Map<UserModel>(disableUser);
+                _response.Message = "Updated";
             }
             catch (Exception ex)
             {
