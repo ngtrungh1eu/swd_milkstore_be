@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,23 +82,32 @@ namespace BussinessLogic.Service
                     _response.Message = "Coupon expire.";
                     return _response;
                 }
+                
                 List<ProductDTO> listDto = new List<ProductDTO>();
-                for (int i = 0; i < promotion.Products.Count; i++)
+                foreach (var products in promotion.Products)
                 {
-                    listDto.Add(new ProductDTO
+                    var product = await _productRepository.GetProductById(products.ProductId);
+                    for (int i = 0; i < promotion.Products.Count; i++)
                     {
-                        ProductId = promotion.Products[i].ProductId,
-                        ProductName = promotion.Products[i].ProductName,
-                        BrandId = promotion.Products[i].BrandId ?? 0,
-                        ByAge = promotion.Products[i].ByAge ?? 0,
-                        Quantity = promotion.Products[i].Quantity ?? 0,
-                        ProductImg = promotion.Products[i].ProductImg,
-                        ProductPrice = promotion.Products[i].ProductPrice ?? 0,
-                        PreOrderAmount = promotion.Products[i].PreOrderAmount,
-                        ProductDescription = promotion.Products[i].ProductDescription,
-                        isPromote = promotion.Products[i].isPromote == 1 ? true : false,
-                        isPreOrder = promotion.Products[i].isPreOrder ?? false,
-                    });
+                        listDto.Add(new ProductDTO
+                        {
+                            ProductId = product.ProductId,
+                            ProductName = product.ProductName,
+                            BrandId = product.BrandId,
+                            ByAge = product.ByAge,
+                            Quantity = product.Quantity,
+                            ProductImg = product.ProductImg,
+                            ProductPrice = product.ProductPrice,
+                            PreOrderAmount = product.PreOrderAmount,
+                            ProductDescription = product.ProductDescription,
+                            isPromote = product.isPromote,
+                            isPreOrder = product.isPreOrder,
+                            ProductBrand = product.Brand.BrandName,
+                            Rate = product.Rate,
+                            Discount = product.Discount,
+
+                        });
+                    }
                 }
                 // var promotionDto = _mapper.Map<PromotionModelDTO>(promotion);
                 var promotionDto = new PromotionModelDTO
@@ -132,6 +142,23 @@ namespace BussinessLogic.Service
             ServiceResponse<PromotionDTO> _response = new();
             try
             {
+                if (request.Promote < 0 || request.Promote > 100)
+                {
+                    _response.Success = false;
+                    _response.Message = "Promotion value must be between 0 and 100.";
+                    _response.Data = null;
+                    return _response;
+                }
+
+                var validationResults = new List<ValidationResult>();
+                var validationContext = new ValidationContext(request);
+                if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
+                {
+                    _response.Success = false;
+                    _response.Message = "Validation Error";
+                    _response.ErrorMessages = validationResults.Select(vr => vr.ErrorMessage).ToList();
+                    return _response;
+                }
 
                 Promotion _newProduct = new Promotion()
                 {
@@ -170,6 +197,23 @@ namespace BussinessLogic.Service
             ServiceResponse<PromotionDTO> _response = new();
             try
             {
+                if (request.Promote < 0 || request.Promote > 100)
+                {
+                    _response.Success = false;
+                    _response.Message = "Promotion value must be between 0 and 100.";
+                    _response.Data = null;
+                    return _response;
+                }
+
+                var validationResults = new List<ValidationResult>();
+                var validationContext = new ValidationContext(request);
+                if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
+                {
+                    _response.Success = false;
+                    _response.Message = "Validation Error";
+                    _response.ErrorMessages = validationResults.Select(vr => vr.ErrorMessage).ToList();
+                    return _response;
+                }
 
                 var existingPromotion = await _promotionRepository.GetPromotionById(promotionId);
                 if (existingPromotion == null)

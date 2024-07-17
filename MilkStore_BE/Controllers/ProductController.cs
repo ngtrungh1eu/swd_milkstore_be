@@ -80,6 +80,10 @@ namespace MIlkStore_BE.Controllers
                 ModelState.AddModelError("", $"Some thing went wrong in service layer when adding product {request}");
                 return StatusCode(500, ModelState);
             }
+            if(newProduct.Success == false)
+            {
+                return StatusCode(301,newProduct.Message);
+            }
             return Ok(newProduct.Data);
         }
 

@@ -28,5 +28,6 @@ namespace DataAccess.EntityModel
         public bool? isPreOrder { get; set; }
         public int? PreOrderAmount { get; set; }
         public int? isPromote { get; set; }
+        public int? Discount { get; set; }
     }
 }
