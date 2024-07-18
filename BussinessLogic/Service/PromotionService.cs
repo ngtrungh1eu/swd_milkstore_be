@@ -76,12 +76,8 @@ namespace BussinessLogic.Service
                     _response.Message = "Not Found";
                     return _response;
                 }
-                if (promotion.EndAt < DateTime.UtcNow)
-                {
-                    _response.Success = false;
-                    _response.Message = "Coupon expire.";
-                    return _response;
-                }
+
+                
                 
                 List<ProductDTO> listDto = new List<ProductDTO>();
                 foreach (var products in promotion.Products)
@@ -122,6 +118,15 @@ namespace BussinessLogic.Service
                 _response.Success = true;
                 _response.Message = "OK";
                 _response.Data = promotionDto;
+
+                //kiem tra qua han 
+                if (promotion.EndAt < DateTime.UtcNow)
+                {
+                    _response.Success = false;
+                    _response.Message = "Coupon expire.";
+                    return _response;
+                }
+
 
             }
             catch (Exception ex)
