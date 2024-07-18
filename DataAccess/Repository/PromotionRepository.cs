@@ -103,9 +103,7 @@ namespace DataAccess.Repository
         {
             var existed = await _context.Promotions.Include(x => x.ProductPromotes)
                                                     .FirstOrDefaultAsync(x => x.PromotionId == promotion.PromotionId);
-
-            if (existed.ProductPromotes.Any(x => x.ProductId == product.ProductId))
-                return;
+            
 
             var productPromote = new ProductPromote
             {

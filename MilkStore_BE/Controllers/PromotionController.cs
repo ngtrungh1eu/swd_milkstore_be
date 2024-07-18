@@ -12,6 +12,7 @@ namespace MIlkStore_BE.Controllers
     public class PromotionController : ControllerBase
     {
         private readonly IPromotionService _service;
+        private readonly IProductService _productService;
         public PromotionController(IPromotionService service)
         {
             _service = service;
@@ -46,7 +47,6 @@ namespace MIlkStore_BE.Controllers
         [Authorize(Policy = "Manager")]
         public async Task<ActionResult<DataAccess.Models.Promotion>> AddProduct(int promotionId, int productId)
         {
-
             var newPromotion = await _service.AddPromotionProduct(promotionId, productId);
             if (newPromotion.Success == false)
             {

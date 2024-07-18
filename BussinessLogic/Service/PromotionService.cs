@@ -87,8 +87,6 @@ namespace BussinessLogic.Service
                 foreach (var products in promotion.Products)
                 {
                     var product = await _productRepository.GetProductById(products.ProductId);
-                    for (int i = 0; i < promotion.Products.Count; i++)
-                    {
                         listDto.Add(new ProductDTO
                         {
                             ProductId = product.ProductId,
@@ -107,7 +105,6 @@ namespace BussinessLogic.Service
                             Discount = product.Discount,
 
                         });
-                    }
                 }
                 // var promotionDto = _mapper.Map<PromotionModelDTO>(promotion);
                 var promotionDto = new PromotionModelDTO
@@ -159,7 +156,6 @@ namespace BussinessLogic.Service
                     _response.ErrorMessages = validationResults.Select(vr => vr.ErrorMessage).ToList();
                     return _response;
                 }
-
                 Promotion _newProduct = new Promotion()
                 {
                     PromotionName = request.PromotionName,
@@ -311,8 +307,20 @@ namespace BussinessLogic.Service
                     _response.Success = false;
                     return _response;
                 }
+                if(promotion.ProductPromotes != null)
+                {
+                    var existingProduct = promotion.ProductPromotes.FirstOrDefault(p => p.ProductId == productId);
+                    if (existingProduct != null)
+                    {
+                        _response.Success = false;
+                        _response.Data = null;
+                        _response.Message = "Product was existed in promotion";
+                    }
+                }
 
                 await _promotionRepository.UpdateProductPromotion(promotion, product);
+
+
                 promotion = await _promotionRepository.GetPromotionById(promotionId);
 
                 _response.Success = true;
