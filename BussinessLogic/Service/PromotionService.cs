@@ -312,14 +312,29 @@ namespace BussinessLogic.Service
                     _response.Success = false;
                     return _response;
                 }
-                if(promotion.ProductPromotes != null)
+                var promtions = await _promotionRepository.ListAllPromotion();
+                foreach (var item in promtions)
+                {
+                    if (item.ProductPromotes != null)
+                    {
+                            var existingProduct = item.ProductPromotes.FirstOrDefault(p => p.ProductId == productId);
+                            if (existingProduct != null)
+                            {
+                                _response.Success = false;
+                                _response.Data = null;
+                                _response.Message = "Product was existed in promotion";
+                                return _response;
+                            }
+                    }
+                }
+                if (promotion.ProductPromotes != null)
                 {
                     var existingProduct = promotion.ProductPromotes.FirstOrDefault(p => p.ProductId == productId);
                     if (existingProduct != null)
                     {
                         _response.Success = false;
                         _response.Data = null;
-                        _response.Message = "Product was existed in promotion";
+                        _response.Message = "Product was existed inner promotion";
                     }
                 }
 
