@@ -1,5 +1,4 @@
 ﻿using DataAccess.Data;
-using DataAccess.EntityModel;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +12,11 @@ namespace DataAccess.Repository
     public interface IProductRepository
     {
         Task<ICollection<Product>> ListAllProduct();
-        Task<ProductModel> GetProductModelById(int id);
+        Task<ICollection<Product>> DisplayProduct();
         Task<Product> GetProductById(int id);
         Task<bool> CreateProduct(Product product);
         Task<bool> UpdateProduct(Product product);
+        Task<bool> DisableProduct(int id);
         Task<bool> DeleteProduct(Product product);
     }
 
@@ -28,60 +28,129 @@ namespace DataAccess.Repository
             _context = context;
         }
 
-        async Task<ICollection<Product>> IProductRepository.ListAllProduct()
+        public async Task<ICollection<Product>> ListAllProduct()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _context.Products
+                                .Include(p => p.Brand)
+                                .Include(p => p.ProductPromotes)
+                                    .ThenInclude(pp => pp.Promotion)
+                                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                var feedback = await _context.Feedbacks
+                                .Where(f => f.ProductId == product.ProductId)
+                                .ToListAsync();
+
+                if (feedback.Count > 0)
+                {
+                    product.Rate = feedback.Average(f => f.Rate);
+                }
+                else
+                {
+                    product.Rate = 0;
+                }
+
+                product.ProductBrand = product.Brand?.BrandName ?? "Unknown";
+                product.Discount = product.Discount;
+            }
+
+            return products;
         }
 
-        async Task<ProductModel> IProductRepository.GetProductModelById(int id)
+        public async Task<ICollection<Product>> DisplayProduct()
         {
-            var query = from p in _context.Products
-                        join b in _context.Brands on p.BrandId equals b.BrandId
-                        where p.ProductId == id
-                        select new ProductModel
-                        {
-                           ProductId = p.ProductId,
-                           BrandId = b.BrandId,
-                           ProductPromoteId = p.ProductPromoteId,
-                           ProductImg = p.ProductImg,
-                           ProductName = p.ProductName,
-                           Brand = b.BrandName,
-                           BrandImg = b.BrandImg,
-                           MadeIn = b.MadeIn,
-                           ProductTitle = p.ProductTitle,
-                           ProductDescription = p.ProductDescription,
-                           ByAge = p.ByAge,
-                           ProductPrice = p.ProductPrice,
-                           Quantity = p.Quantity,
-                           Rate = p.Rate,
-                           isPreOrder = p.isPreOrder,
-                           PreOrderAmount = p.PreOrderAmount,
-                           isPromote = p.isPromote
-                        };
-            return await query.FirstOrDefaultAsync();
+            var products = await _context.Products
+                                .Include(p => p.Brand)
+                                .Include(p => p.ProductPromotes)
+                                    .ThenInclude(pp => pp.Promotion)
+                                .Where(p => !p.isDisable)
+                                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                var feedback = await _context.Feedbacks
+                                .Where(f => f.ProductId == product.ProductId)
+                                .ToListAsync();
+
+                if (feedback.Count > 0)
+                {
+                    product.Rate = feedback.Average(f => f.Rate);
+                }
+                else
+                {
+                    product.Rate = 0;
+                }
+
+                product.ProductBrand = product.Brand?.BrandName ?? "Unknown";
+
+                // Kiểm tra nếu ProductPromotes không null trước khi truy cập
+                if (product.ProductPromotes != null)
+                {
+                    var promotion = product.ProductPromotes
+                        .Select(pp => pp.Promotion)
+                        .FirstOrDefault(p => p.StartAt <= DateTime.Now && p.EndAt >= DateTime.Now);
+
+                    product.Discount = product.Discount + promotion?.Promote ?? product.Discount;
+                }
+            }
+
+            return products;
         }
 
-        async Task<bool> IProductRepository.CreateProduct(Product product)
+        public async Task<bool> CreateProduct(Product product)
         {
             _context.Products.Add(product);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IProductRepository.UpdateProduct(Product product)
+        public async Task<bool> UpdateProduct(Product product)
         {
             _context.Products.Update(product);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<bool> IProductRepository.DeleteProduct(Product product)
+        public async Task<bool> DeleteProduct(Product product)
         {
             _context.Products.Remove(product);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        async Task<Product> IProductRepository.GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            var product = await  _context.Products
+                            .Include(p => p.Brand)
+                            .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product != null)
+            {
+                var feedbacks = await _context.Feedbacks
+                                    .Where(f => f.ProductId == product.ProductId)
+                                    .ToListAsync();
+
+                if (feedbacks.Count > 0)
+                {
+                    product.Rate = feedbacks.Average(f => f.Rate);
+                }
+                else
+                {
+                    product.Rate = 0;
+                }
+
+                product.ProductBrand = product.Brand.BrandName;
+            }
+
+            return product;
+        }
+
+        public async Task<bool> DisableProduct(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+
+            product.isDisable = !product.isDisable;
+
+            _context.Products.Update(product);
+            return await _context.SaveChangesAsync() > 0 ? true : false;
         }
     }
 }

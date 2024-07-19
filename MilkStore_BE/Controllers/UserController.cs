@@ -1,147 +1,181 @@
-﻿using DataAccess.Data;
+﻿using BussinessLogic.DTO.Product;
+using BussinessLogic.DTO.User;
+using BussinessLogic.Service;
 using DataAccess.Models;
+using DataAccess.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
 
-namespace LoginAll.Controllers
+namespace MilkStore_BE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IUserService _service;
 
-        public UserController(DataContext context)
+        public UserController(IUserService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterRequest request)
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult<List<UserModel>>> GetUserList()
         {
-            if (_context.Users.Any(u => u.Email == request.Email))
-            {
-                return BadRequest("User already exists");
-            }
-
-            CreatePasswordHash(request.Password,
-
-                out byte[] passwordHash, 
-                out byte[] passwordSalt);
-            var user = new User
-            {
-                Email = request.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                VerificationToken = CreateRandomToken()
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return Ok("User successfully created!");
+            return Ok(await _service.GetAllUser());
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginRequest request)
+        [HttpGet("{id}")]
+        [Authorize(Policy = "AllRoles")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<User>> GetUserById(int id)
         {
-           var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-            if (user == null)
+            var user = await _service.GetUserById(id);
+
+            if (user.Success == false && user.Message == "Not Found")
             {
-                return BadRequest("User not found.  ");
+                return BadRequest();
             }
 
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (user.Success == false && user.Message == "Error")
             {
-                return BadRequest("Password is incorrect");
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when display user");
+                return StatusCode(500, ModelState);
             }
 
-            if (user.VerifiedAt == null)
-            {
-                return BadRequest("Not verified!!!");
-            }
-
-            return Ok($"Welcome back, {user.Email}! :)");
+            return Ok(user);
         }
 
-        [HttpPost("verify")]
-        public async Task<IActionResult> Verify(string token)
+        [HttpPost("CreateStaff")]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult<User>> CreateStaff(UserModel request)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
-            if (user == null)
+            var newStaff = await _service.CreateStaff(request);
+
+            if (newStaff.Success == false && newStaff.Message == "Existed")
             {
-                return BadRequest("Invalid token.");
+                return StatusCode(409, newStaff);
             }
 
-            user.VerifiedAt = DateTime.Now;
-            await _context.SaveChangesAsync();
-           
-
-            return Ok("User verified! :)");
-        }
-
-        [HttpPost("fogot-password")]
-        public async Task<IActionResult> ForgotPassword(string email)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null)
+            if (newStaff.Success == false && newStaff.Message == "Negative value does not allowed")
             {
-                return BadRequest("User not Found.");
+                ModelState.AddModelError("", "Negative value does not allowed!");
+                return StatusCode(403, ModelState);
             }
 
-            user.PasswordResetToken = CreateRandomToken();
-            user.ResetTokenExpires = DateTime.Now.AddDays(1);
-            await _context.SaveChangesAsync();
-
-
-            return Ok("U May Now Reset Your Password");
-        }
-
-        [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.PasswordResetToken == request.Token);
-            if (user == null || user.ResetTokenExpires < DateTime.Now)
+            if (newStaff.Success == false && newStaff.Message == "RepoError")
             {
-                return BadRequest("Invalid Token");
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when adding staff {request}");
+                return StatusCode(500, ModelState);
             }
 
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            user.PasswordResetToken = null;
-            user.ResetTokenExpires = null;
-            await _context.SaveChangesAsync();
-
-
-            return Ok("Password Successfully Reset");
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) 
-        {
-            using (var hmac = new HMACSHA512())
+            if (newStaff.Success == false && newStaff.Message == "Error")
             {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when adding staff {request}");
+                return StatusCode(500, ModelState);
             }
+            return Ok(newStaff.Data);
         }
 
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        [HttpPut("UpdateAccount/{id}")]
+        [Authorize(Policy = "AllRoles")]
+        public async Task<ActionResult> UpdateAccount(int id, [FromBody] AccountModel request)
         {
-            using (var hmac = new HMACSHA512(passwordSalt))
+            if (request == null)
             {
-                var computedHash = hmac
-                    .ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
+                return BadRequest(ModelState);
             }
+
+            request.Id = id;
+
+            var updateAcount = await _service.UpdateAccount(request);
+
+            if (updateAcount.Success == false && updateAcount.Message == "Not Found")
+            {
+                return StatusCode(404, updateAcount);
+            }
+
+            if (updateAcount.Success == false && updateAcount.Message == "Negative value does not allowed")
+            {
+                ModelState.AddModelError("", "Negative value does not allowed!");
+                return StatusCode(403, ModelState);
+            }
+
+            if (updateAcount.Success == false && updateAcount.Message == "RepoError")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in respository layer when updating account {request}");
+                return StatusCode(500, ModelState);
+            }
+
+            if (updateAcount.Success == false && updateAcount.Message == "Error")
+            {
+                ModelState.AddModelError("", $"Some thing went wrong in service layer when updating account {request}");
+                return StatusCode(500, ModelState);
+            }
+
+
+            return Ok(updateAcount.Data);
+
         }
 
-
-        private string CreateRandomToken()
+        [HttpPut("DisableAccount/{id}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult> DisableAccount(int id)
         {
-            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+            var disableAccount = await _service.DisableUser(id);
+
+            if (disableAccount.Success == false && disableAccount.Message == "Not Found")
+            {
+                return StatusCode(404, disableAccount);
+            }
+
+            if (disableAccount.Success == false && disableAccount.Message == "Repo Error")
+            {
+                ModelState.AddModelError("", $"Something went wrong in Repository Layer when disable account");
+                return StatusCode(500, ModelState);
+            }
+
+            if (disableAccount.Success == false && disableAccount.Message == "Error")
+            {
+                ModelState.AddModelError("", $"Something went wrong in Service Layer when disable account");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(disableAccount.Data);
         }
 
+        //[HttpDelete("{id}")]
+        //[Authorize(Policy = "Admin")]
+        //public async Task<ActionResult> DeleteUser(int id)
+        //{
+        //    var deleteUser = await _service.DeleteUser(id);
+
+
+        //    if (deleteUser.Success == false && deleteUser.Message == "Not Found")
+        //    {
+        //        ModelState.AddModelError("", "Service Not found");
+        //        return StatusCode(404, ModelState);
+        //    }
+
+        //    if (deleteUser.Success == false && deleteUser.Message == "Repo Error")
+        //    {
+        //        ModelState.AddModelError("", $"Some thing went wrong in Repository when deleting User");
+        //        return StatusCode(500, ModelState);
+        //    }
+
+        //    if (deleteUser.Success == false && deleteUser.Message == "Error")
+        //    {
+        //        ModelState.AddModelError("", $"Some thing went wrong in service layer when deleting User");
+        //        return StatusCode(500, ModelState);
+        //    }
+
+        //    return NoContent();
+
+        //}
     }
 }

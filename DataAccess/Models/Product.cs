@@ -15,21 +15,32 @@ namespace DataAccess.Models
         public int ProductId { get; set; }
         [Required]
         [StringLength(50)]
-        public string? ProductName { get; set; }
-        public string? ProductTitle { get; set; }
+        public string ProductName { get; set; }
+        [NotMapped]
+        public string? ProductBrand { get; set; }
+        [NotMapped]
+        public double? Rate {  get; set; }
+        public int Discount { get; set; }
         public string? ProductDescription { get; set; }
-        public string? ProductImg {  get; set; }
-        public double? ProductPrice { get; set; }
+        public string ProductImg {  get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Product price cannot be negative.")]
+        public double ProductPrice { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Product quantity cannot be negative.")]
         public int? Quantity { get; set; }
-        public int? Rate { get; set; }
-        public int? ByAge { get; set; }
-        public bool? isPreOrder { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Age cannot be negative.")]
+        public int ByAge { get; set; }
+        public bool isPreOrder { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Pre-Order amount cannot be negative.")]
         public int? PreOrderAmount { get; set; }
-        public int? isPromote { get; set; }
-        public int? BrandId { get; set; }
-        [ForeignKey("BrandId")]
-        public Brand? Brand { get; set; }
-        public int? ProductPromoteId { get; set; }
+        public bool isPromote { get; set; }
+        public bool isDisable { get; set; }
+        
+        public int BrandId { get; set; }
+        public Brand Brand { get; set; }
 
+        public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<ProductOrder> ProductOrders { get; set; }
+        public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set;}
+        public virtual ICollection<ProductPromote> ProductPromotes { get; set;}
     }
 }

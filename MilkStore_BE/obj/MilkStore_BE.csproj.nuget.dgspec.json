@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {}
+    "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {}
   },
   "projects": {
-    "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
+    "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+        "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
         "projectName": "BussinessLogic",
-        "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
+        "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\obj\\",
+        "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
+              "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -81,14 +81,14 @@
         }
       }
     },
-    "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
+    "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
+        "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\DataAccess\\obj\\",
+        "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -144,6 +144,14 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
             }
           },
           "imports": [
@@ -166,14 +174,14 @@
         }
       }
     },
-    "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {
+    "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+        "projectUniqueName": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
         "projectName": "MilkStore_BE",
-        "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
+        "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\MilkStore_BE.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\MilkStore_BE\\obj\\",
+        "outputPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\MilkStore_BE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -190,8 +198,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
-                "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\BE\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
+              "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj": {
+                "projectPath": "E:\\FPT\\4th Year\\SWD392\\SU24\\Fix DB\\swd_milkstore_be\\BussinessLogic\\BussinessLogic.csproj"
               }
             }
           }
@@ -209,6 +217,14 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -229,6 +245,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.5, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
