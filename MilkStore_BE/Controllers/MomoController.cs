@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace MilkStore_BE.Controllers
 {
-    [Route("Checkout/PaymentCallBack")]
+    [Route("/api/Checkout/PaymentCallBack")]
     [ApiController]
     public class MomoController : ControllerBase
     {
@@ -79,8 +79,8 @@ namespace MilkStore_BE.Controllers
                 bool isCartIdValid = int.TryParse(result.cartId, out cartIdInt);
 
 
-                // Tiến hành gọi CreateOrder với cartId đã chuyển thành int
-                var newOrder = await _orderService.CreateOrder(cartIdInt);
+                //Tiến hành gọi CreateOrder với cartId đã chuyển thành int
+               var newOrder = await _orderService.CreateOrder(cartIdInt, "momo");
 
                 if (newOrder.Success == false && newOrder.Message == "Existed")
                 {
@@ -99,8 +99,8 @@ namespace MilkStore_BE.Controllers
                     return StatusCode(500, ModelState);
                 }
                 return Ok(newOrder.Data);
-                //var redirectUrl = $"http://localhost:7269/payment-result?success={isSuccess}&orderId={orderId}";
-                //return Ok(result);
+                //var redirectUrl = $"https://localhost:7269/api/Order/CreateOrder/{cartIdInt}";
+                //return Redirect(redirectUrl);
             }
             catch (ArgumentException ex)
             {

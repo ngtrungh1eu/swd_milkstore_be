@@ -51,7 +51,7 @@ namespace MilkStore_BE.Controllers
         [Authorize(Policy = "Customer")]
         public async Task<ActionResult<List<Order>>> CreateOrder(int id)
         {
-            var newOrder = await _service.CreateOrder(id);
+            var newOrder = await _service.CreateOrder(id, null);
 
             if (newOrder.Success == false && newOrder.Message == "Existed")
             {

@@ -493,6 +493,43 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MilkStore_BE.Controllers.MomoController",
+    "Method": "PaymentCallback",
+    "RelativePath": "api/Checkout/PaymentCallBack",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "errorCode",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MilkStore_BE.Controllers.MomoController",
+    "Method": "CreatePaymentUrl",
+    "RelativePath": "api/Checkout/PaymentCallBack/create-payment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BussinessLogic.DTO.Momo.OrderInfoModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MilkStore_BE.Controllers.CommentController",
     "Method": "GetCommentById",
     "RelativePath": "api/Comment/{id}",
@@ -1424,43 +1461,6 @@
       {
         "Name": "request",
         "Type": "BussinessLogic.DTO.Blog.VoteDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MilkStore_BE.Controllers.MomoController",
-    "Method": "PaymentCallback",
-    "RelativePath": "Checkout/PaymentCallBack",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "orderId",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "errorCode",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MilkStore_BE.Controllers.MomoController",
-    "Method": "CreatePaymentUrl",
-    "RelativePath": "Checkout/PaymentCallBack/create-payment",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "BussinessLogic.DTO.Momo.OrderInfoModel",
         "IsRequired": true
       }
     ],

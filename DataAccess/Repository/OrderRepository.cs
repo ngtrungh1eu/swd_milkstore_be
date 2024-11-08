@@ -19,7 +19,7 @@ namespace DataAccess.Repository
     {
         Task<ICollection<Order>> GetOrderList();
         Task<Order> GetOrderById(int id);
-        Task<List<Order>> CreateOrder(int cartId);
+        Task<List<Order>> CreateOrder(int cartId, string? method);
         Task<bool> UpdateProcess(int id);
         Task<bool> CancelOrder(int id);
     }
@@ -67,7 +67,7 @@ namespace DataAccess.Repository
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        public async Task<List<Order>> CreateOrder(int cartId)
+        public async Task<List<Order>> CreateOrder(int cartId, string? method)
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
@@ -128,7 +128,7 @@ namespace DataAccess.Repository
                     StaffId = staff?.Id,
                     Phone = cart.User.Phone,
                     FullName = cart.User.FullName,
-                    PaymentMethod = "Thanh Toán Khi Nhận Hàng",
+                    PaymentMethod = method != null ? "Thanh Toán bằng momo" : "Thanh Toán Khi Nhận Hàng",
                     Status = "processing",
                     OrderDate = DateTime.Now,
                     TotalPrice = preOrderItems.Sum(item => item.UnitPrice),
@@ -157,7 +157,7 @@ namespace DataAccess.Repository
                     StaffId = staff?.Id,
                     Phone = cart.User.Phone,
                     FullName = cart.User.FullName,
-                    PaymentMethod = "Thanh Toán Khi Nhận Hàng",
+                    PaymentMethod = method != null ? "Thanh Toán bằng momo" : "Thanh Toán Khi Nhận Hàng",
                     Status = "processing",
                     OrderDate = DateTime.Now,
                     TotalPrice = nonPreOrderItems.Sum(item => item.UnitPrice),
@@ -178,23 +178,23 @@ namespace DataAccess.Repository
 
             await _context.SaveChangesAsync();
 
-            // Send message to RabbitMQ
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "update_cart_and_products_queue", durable: false, exclusive: false, autoDelete: false, arguments: null);
+            //// Send message to RabbitMQ
+            //var factory = new ConnectionFactory() { HostName = "localhost" };
+            //using var connection = factory.CreateConnection();
+            //using var channel = connection.CreateModel();
+            //channel.QueueDeclare(queue: "update_cart_and_products_queue", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
-            var updateMessage = new UpdateCartAndProductsMessage
-            {
-                CartId = cartId,
-                CartItems = cart.CartItems.ToList()
-            };
+            //var updateMessage = new UpdateCartAndProductsMessage
+            //{
+            //    CartId = cartId,
+            //    CartItems = cart.CartItems.ToList()
+            //};
 
-            var message = JsonConvert.SerializeObject(updateMessage);
-            var body = Encoding.UTF8.GetBytes(message);
+            //var message = JsonConvert.SerializeObject(updateMessage);
+            //var body = Encoding.UTF8.GetBytes(message);
 
-            channel.BasicPublish(exchange: "", routingKey: "update_cart" +
-                "_and_products_queue", basicProperties: null, body: body);
+            //channel.BasicPublish(exchange: "", routingKey: "update_cart" +
+            //    "_and_products_queue", basicProperties: null, body: body);
 
             return orders;
         }

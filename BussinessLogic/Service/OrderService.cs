@@ -17,7 +17,7 @@ namespace BussinessLogic.Service
     {
         Task<ServiceResponse<List<OrderDTO>>> GetOrderList();
         Task<ServiceResponse<OrderDTO>> GetOrderById(int id);
-        Task<ServiceResponse<List<OrderDTO>>> CreateOrder(int cartId);
+        Task<ServiceResponse<List<OrderDTO>>> CreateOrder(int cartId, string? method);
         Task<ServiceResponse<OrderDTO>> UpdateProcess(int id);
         Task<ServiceResponse<OrderDTO>> CancelOrder(int id);
     }
@@ -73,12 +73,12 @@ namespace BussinessLogic.Service
             return _response;
         }
 
-        public async Task<ServiceResponse<List<OrderDTO>>> CreateOrder(int cartId)
+        public async Task<ServiceResponse<List<OrderDTO>>> CreateOrder(int cartId, string? method)
         {
             ServiceResponse<List<OrderDTO>> _response = new();
             try
             {
-                var createdOrders = await _repository.CreateOrder(cartId);
+                var createdOrders = await _repository.CreateOrder(cartId, method); 
 
                 if (createdOrders == null || !createdOrders.Any())
                 {
