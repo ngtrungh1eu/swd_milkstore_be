@@ -57,3 +57,18 @@ E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\DataAccess\bin\Debug\net6.0\
 E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.pdb
 E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.sourcelink.json
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

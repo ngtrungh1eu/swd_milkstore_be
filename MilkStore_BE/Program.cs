@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Newtonsoft;
 using Newtonsoft.Json.Serialization;
+using BussinessLogic.DTO.Momo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,13 +21,18 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(build =>
     {
-        build.WithOrigins("http://localhost:5173")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
+        build.WithOrigins("http://localhost:5173", "http://localhost:3000", "https://localhost:5172")
+     .AllowAnyHeader()
+     .AllowAnyMethod()
+     .AllowCredentials();
+
     });
 });
 
+
 builder.Services.AddControllers();
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 

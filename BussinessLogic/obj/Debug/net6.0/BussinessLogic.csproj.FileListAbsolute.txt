@@ -63,3 +63,19 @@ E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\BussinessLogic\bin\Debug\net
 E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\DataAccess.pdb
 E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.CopyComplete
 E:\FPT\4th Year\SWD392\SU24\Fix DB\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\ref\BussinessLogic.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\BussinessLogic.deps.json
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\BussinessLogic.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\BussinessLogic.pdb
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\DataAccess.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\bin\Debug\net6.0\DataAccess.pdb
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.AssemblyReference.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.AssemblyInfoInputs.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.AssemblyInfo.cs
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.csproj.CoreCompileInputs.cache
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.sourcelink.json
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\Bussines.273F0448.Up2Date
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\refint\BussinessLogic.dll
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\BussinessLogic.pdb
+C:\Phuongnam\code\C#\EXE201\swd_milkstore_be\BussinessLogic\obj\Debug\net6.0\ref\BussinessLogic.dll
